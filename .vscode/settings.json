@@ -1,0 +1,20 @@
+{
+  // 💡 포맷 및 린트 자동 실행
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true,
+    "source.fixAll.eslint": true
+  },
+
+  // 💡 ESLint가 VSCode에서 경고/에러 표시하도록 활성화
+  "eslint.enable": true,
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+
+  // 💡 Prettier 포맷터를 기본으로 사용
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  // 💡 저장 시 자동 포맷 실행
+  "editor.formatOnSave": true,
+
+  // 💡 ESLint 자동 수정 적용 (var → const 등)
+  "eslint.codeActionsOnSave.rules": null
+}
