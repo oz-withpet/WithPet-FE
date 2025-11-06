@@ -1,3 +1,9 @@
+import SignupForm from "src/features/signup/singupform";
+
 export default function SingupPage() {
-  return <div>회원가입 페이지</div>;
+  return (
+    <main className="">
+      <SignupForm />
+    </main>
+  );
 }
