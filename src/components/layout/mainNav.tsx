@@ -12,7 +12,7 @@ export default function MainNav() {
   return (
     <div
       aria-current={isPostActive ? "page" : undefined}
-      className="fixed top-12 flex h-12 w-full items-center justify-center border-b border-b-gray-200 bg-white aria-[current=page]:top-24"
+      className="flex h-12 w-full items-center justify-center border-b border-b-gray-200 bg-white aria-[current=page]:top-24"
     >
       <div className="flex h-full w-[424px] items-center justify-between">
         <Link

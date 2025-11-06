@@ -10,7 +10,7 @@ export default function SubNav() {
   const isReportedActive = pathname === "/mypage/reported-posts";
 
   return (
-    <div className="fixed top-12 flex h-12 w-full items-center justify-center border-b border-b-gray-200 bg-white">
+    <div className="flex h-12 w-full items-center justify-center border-b border-b-gray-200 bg-white">
       <div className="flex h-full w-[542px] items-center justify-between">
         <Link
           href="/mypage/profile"

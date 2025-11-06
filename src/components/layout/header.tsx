@@ -7,7 +7,7 @@ export default function Header() {
   const isCutActive = /^\/community(\/|$)/.test(pathname);
 
   return (
-    <header className="fixed flex h-12 w-full items-center justify-center border-b border-b-gray-200 bg-white">
+    <header className="flex h-12 w-full items-center justify-center border-b border-b-gray-200 bg-white">
       <nav className="w-wrapper flex items-center justify-between">
         <div className="flex w-[285px] items-center justify-between">
           <Link href="/" className="text-lg font-bold text-gray-900">
