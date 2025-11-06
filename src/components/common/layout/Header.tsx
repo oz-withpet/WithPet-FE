@@ -7,7 +7,7 @@ export default function Header() {
   const isCutActive = /^\/community(\/|$)/.test(pathname);
 
   return (
-    <header className="fixed flex h-12 w-full items-center justify-center border-b border-b-gray-200 bg-white">
+    <header className="flex h-12 w-full items-center justify-center border-b border-b-gray-200 bg-white">
       <nav className="w-wrapper flex items-center justify-between">
         <div className="flex w-[285px] items-center justify-between">
           <Link href="/" className="text-lg font-bold text-gray-900">
@@ -21,7 +21,7 @@ export default function Header() {
             지도
           </Link>
           <Link
-            href="/community"
+            href="/community/category/all"
             aria-current={isCutActive ? "page" : undefined}
             className="text-gray-400 hover:text-orange-300 aria-[current=page]:font-semibold aria-[current=page]:text-orange-300"
           >
