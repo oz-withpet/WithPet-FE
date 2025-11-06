@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 type PostItemProps = { title: string };
 
 export default function PostItem({ title }: PostItemProps) {
@@ -18,11 +16,7 @@ export default function PostItem({ title }: PostItemProps) {
             </div>
           </div>
         </div>
-        <Image
-          src=""
-          alt=""
-          className="h-[124px] w-[124px] rounded-xl bg-thumbnail-200 text-gray-400"
-        />
+        <div className="h-[124px] w-[124px] rounded-xl bg-thumbnail-200 text-gray-400" />
       </div>
       <div className="text-gray-400"> 작성자, 댓글, 올린 날짜</div>
     </div>
