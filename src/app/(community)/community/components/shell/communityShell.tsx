@@ -1,8 +1,8 @@
-import PostItem from "./community/PostItem";
+import PostItem from "../../../../../components/community/PostItem";
 
 export type CommunityCategory = "all" | "free" | "qna" | "info";
 
-export function CommunityList({ category }: { category: CommunityCategory }) {
+export function CommunityShell({ category }: { category: CommunityCategory }) {
   return (
     <div className="w-main mx-auto flex flex-col">
       <div className="flex w-full items-center justify-center p-6">

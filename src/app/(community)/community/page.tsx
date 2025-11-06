@@ -1,5 +1,5 @@
-import { CommunityList } from "@/components/communityList";
+import { CommunityShell } from "@/app/(community)/community/components/shell/communityShell";
 
 export default function Page() {
-  return <CommunityList category="all" />;
+  return <CommunityShell category="all" />;
 }
