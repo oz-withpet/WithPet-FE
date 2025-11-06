@@ -1,10 +1,14 @@
+import { Pagination } from "@mui/material";
+
+import { searchIconSVG } from "@/shared/assets/icons/community/svgIcon";
+
 import PostItem from "../../../../../components/community/PostItem";
 
 export type CommunityCategory = "all" | "free" | "qna" | "info";
 
 export function CommunityShell({ category }: { category: CommunityCategory }) {
   return (
-    <div className="w-main mx-auto flex flex-col">
+    <div className="w-main mx-auto flex flex-col items-center">
       <div className="flex w-full items-center justify-center p-6">
         <div className="w-main flex items-center justify-center">
           <select
@@ -15,10 +19,14 @@ export function CommunityShell({ category }: { category: CommunityCategory }) {
             <option value="title">제목</option>
             <option value="content">내용</option>
           </select>
-          <input
-            type="text"
-            className="h-[48px] w-[480px] rounded-xl border-2 border-orange-300 p-3 text-black outline-none"
-          ></input>
+          <div className="flex h-[48px] w-[480px] items-center rounded-xl border-2 border-orange-300 p-3">
+            <div className="mr-2">{searchIconSVG({ size: "24", color: "#000" })}</div>
+            <input
+              type="text"
+              className="h-[35px] w-[420px] text-black outline-none"
+              placeholder="검색할 제목을 작성해주세요."
+            ></input>
+          </div>
         </div>
       </div>
 
@@ -55,12 +63,16 @@ export function CommunityShell({ category }: { category: CommunityCategory }) {
         </div>
       </div>
 
-      <div className="w-main flex h-[887px] flex-col items-center">
+      <div className="w-main flex flex-col items-center">
         {Array(4)
           .fill("")
           .map((el) => (
             <PostItem key={el} title={category} />
           ))}
+      </div>
+
+      <div className="my-10">
+        <Pagination count={10} />
       </div>
     </div>
   );
