@@ -1,11 +1,9 @@
 import { notFound } from "next/navigation";
 
-import {
-  CommunityShell,
-  type CommunityCategory,
-} from "@/app/(community)/community/components/shell/communityShell";
+import CommunityShell from "@/components/community/shell/CommunityShell";
+import { type CommunityCategory } from "@/types/community";
 
-const CATEGORIES = ["free", "qna", "info"] as const;
+const CATEGORIES = ["all", "free", "qna", "info"] as const;
 type Param = (typeof CATEGORIES)[number];
 
 export async function generateStaticParams() {

@@ -21,7 +21,7 @@ export default function Header() {
             지도
           </Link>
           <Link
-            href="/community"
+            href="/community/category/all"
             aria-current={isCutActive ? "page" : undefined}
             className="text-gray-400 hover:text-orange-300 aria-[current=page]:font-semibold aria-[current=page]:text-orange-300"
           >

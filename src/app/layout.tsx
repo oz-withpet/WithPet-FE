@@ -2,9 +2,9 @@
 import "./globals.css";
 import { usePathname } from "next/navigation";
 
-import Header from "@/components/layout/header";
-import MainNav from "@/components/layout/mainNav";
-import SubNav from "@/components/layout/subNav";
+import Header from "@/components/common/layout/Header";
+import MainNav from "@/components/common/layout/MainNav";
+import SubNav from "@/components/common/layout/SubNav";
 import MSWProvider from "@/providers/MSWProvider";
 import ReduxProvider from "@/store/ReduxProvider";
 

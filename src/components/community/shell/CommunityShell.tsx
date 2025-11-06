@@ -1,12 +1,11 @@
 import { Pagination } from "@mui/material";
 
 import { searchIconSVG } from "@/shared/assets/icons/community/svgIcon";
+import { CommunityCategory } from "@/types/community";
 
-import PostItem from "../../../../../components/community/PostItem";
+import PostItem from "../category/PostItem";
 
-export type CommunityCategory = "all" | "free" | "qna" | "info";
-
-export function CommunityShell({ category }: { category: CommunityCategory }) {
+export default function CommunityShell({ category }: { category: CommunityCategory }) {
   return (
     <div className="w-main mx-auto flex flex-col items-center">
       <div className="flex w-full items-center justify-center p-6">
