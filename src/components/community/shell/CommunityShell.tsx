@@ -68,6 +68,7 @@ export default function CommunityShell({ category }: { category: CommunityCatego
           .map((el) => (
             <PostItem key={el} title={category} />
           ))}
+        {/* <EmptyState /> 게시글 없거나 검색 결과 없을 경우 props로 활용*/}
       </div>
 
       <div className="my-10">
