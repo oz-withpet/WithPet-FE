@@ -11,22 +11,8 @@ export default function MapAside() {
             <h2 className="text-xl">위치 찾기</h2>
             <button className="text-base">현 위치</button>
           </div>
-
           <p className="mb-1 text-sm text-gray-400">시도/시군구 까지 입력이 필요합니다.</p>
-          <div className="mb-4">
-            <MapSelectGroup />
-          </div>
-
-          <div className="mb-4 flex flex-wrap gap-2">
-            {["병원", "카페", "미용실"].map((label) => (
-              <button
-                key={label}
-                className="h-11 rounded bg-gray-300 px-3 py-1 font-medium hover:bg-line-light hover:text-gray-900"
-              >
-                {label}
-              </button>
-            ))}
-          </div>
+          <MapSelectGroup />
         </div>
 
         <div className="flex flex-col gap-3">
