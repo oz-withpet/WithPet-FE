@@ -10,7 +10,7 @@ import {
   MyPageProfileNav,
 } from "@/components/common/mypage/MyPageNav";
 import MSWProvider from "@/providers/MSWProvider";
-import ReduxProvider from "@/store/ReduxProvider";
+import ReduxProvider from "@/shared/store/ReduxProvider";
 
 export default function RootLayout({
   children,
