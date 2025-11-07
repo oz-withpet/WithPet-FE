@@ -2,7 +2,7 @@
 
 import { Map } from "react-kakao-maps-sdk";
 
-import useKakaoLoader from "../../hooks/useKakaoLoader";
+import useKakaoLoader from "../../shared/hooks/useKakaoLoader";
 
 export default function MapContainer() {
   // Kakao SDK 로드

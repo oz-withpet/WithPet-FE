@@ -2,15 +2,11 @@
 import "./globals.css";
 import { usePathname } from "next/navigation";
 
-import CommunityNav from "@/components/common/community/CommunityNav";
-import Header from "@/components/common/layout/Header";
-import {
-  MyPageMainNav,
-  MyPagePostNav,
-  MyPageProfileNav,
-} from "@/components/common/mypage/MyPageNav";
+import Header from "@/components/layout/Header";
+import CommunityNav from "@/features/community/CommunityNav";
+import { MyPageMainNav, MyPagePostNav, MyPageProfileNav } from "@/features/mypage/MyPageNav";
 import MSWProvider from "@/providers/MSWProvider";
-import ReduxProvider from "@/store/ReduxProvider";
+import ReduxProvider from "@/shared/store/ReduxProvider";
 
 export default function RootLayout({
   children,

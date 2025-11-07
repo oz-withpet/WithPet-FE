@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 
-import CommunityShell from "@/components/community/shell/CommunityShell";
+import CommunityShell from "@/features/community/shell/CommunityShell";
 import { type Category } from "@/types/category";
 
 const CATEGORIES = ["all", "free", "qna", "info"] as const;

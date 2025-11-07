@@ -1,13 +1,13 @@
-import { searchIconSVG } from "@/shared/assets/icons/community/svgIcon";
+import { searchIconSVG } from "@/shared/assets/icons/svgIcon";
 import { Category } from "@/types/category";
 
 import PostItem from "../category/PostItem";
 
-export default function CommunityShell({ category }: { category: Category }) {
+export default function MyPagePostsShell({ category }: { category: Category }) {
   return (
-    <div className="w-main mx-auto flex flex-col items-center">
+    <div className="mx-auto flex w-main flex-col items-center">
       <div className="flex w-full items-center justify-center p-6">
-        <div className="w-main flex items-center justify-center">
+        <div className="flex w-main items-center justify-center">
           <select
             name="filterType"
             className="mx-2 h-[40px] w-[125px] rounded-xl border-2 border-orange-300 px-2 text-sm text-black outline-none"
@@ -27,8 +27,8 @@ export default function CommunityShell({ category }: { category: Category }) {
         </div>
       </div>
 
-      <div className="w-main flex items-center py-4">
-        <div className="max-w-main flex items-center">
+      <div className="flex w-main items-center py-4">
+        <div className="flex max-w-main items-center">
           <label className="mr-4 flex cursor-pointer items-center text-gray-400">
             <input
               type="radio"
@@ -60,13 +60,12 @@ export default function CommunityShell({ category }: { category: Category }) {
         </div>
       </div>
 
-      <div className="w-main flex flex-col items-center">
+      <div className="flex w-main flex-col items-center">
         {Array(4)
           .fill("")
           .map((el) => (
             <PostItem key={el} title={category} />
           ))}
-        {/* <EmptyState /> 게시글 없거나 검색 결과 없을 경우 props로 활용*/}
       </div>
     </div>
   );
