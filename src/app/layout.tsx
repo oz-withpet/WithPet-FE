@@ -23,7 +23,7 @@ export default function RootLayout({
             <Header />
             {pathname.includes("community") && <MainNav />}
             {pathname.includes("mypage") && <SubNav />}
-            <main className="m-auto w-full max-w-wrapper">{children}</main>
+            <main className="m-auto w-full max-w-layout">{children}</main>
           </MSWProvider>
         </ReduxProvider>
       </body>
