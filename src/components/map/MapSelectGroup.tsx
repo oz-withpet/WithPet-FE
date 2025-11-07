@@ -1,18 +1,18 @@
-import { useState } from "react";
+// import { useState } from "react";
 
-import CustomSelect from "../common/CustomSelect";
+// import CustomSelect from "../common/CustomSelect";
 
 export default function MapSelectGroup() {
-  const [province, setProvince] = useState("");
-  const provinces = [
-    { label: "서울특별시", value: "11" },
-    { label: "경기도", value: "41" },
-    { label: "부산광역시", value: "26" },
-  ];
+  // const [province, setProvince] = useState("");
+  // const provinces = [
+  //   { label: "서울특별시", value: "11" },
+  //   { label: "경기도", value: "41" },
+  //   { label: "부산광역시", value: "26" },
+  // ];
 
   return (
     <div className="mb-4 flex gap-2">
-      <CustomSelect
+      {/* <CustomSelect
         value={province}
         onChange={setProvince}
         options={provinces}
@@ -31,7 +31,7 @@ export default function MapSelectGroup() {
         options={[]}
         placeholder="읍면동 선택"
         disabled={!province}
-      />
+      /> */}
     </div>
   );
 }
