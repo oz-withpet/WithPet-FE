@@ -20,7 +20,7 @@ export function MyPageMainNav() {
           프로필
         </Link>
         <Link
-          href="/mypage/posts"
+          href="/mypage/posts/all"
           aria-current={isPostActive ? "page" : undefined}
           className="cursor-pointer text-gray-400 hover:font-bold hover:text-orange-400 aria-[current=page]:font-semibold aria-[current=page]:text-orange-300"
         >
@@ -81,7 +81,7 @@ export function MyPageProfileNav() {
 
 export function MyPagePostNav() {
   const pathname = usePathname();
-  const isCutActive = pathname === "/mypage/posts";
+  const isCutActive = pathname === "/mypage/posts/all";
   const isFreeActive = pathname === "/mypage/posts/free";
   const isQnaActive = pathname === "/mypage/posts/qna";
   const isInfoActive = pathname === "/mypage/posts/info";
@@ -90,7 +90,7 @@ export function MyPagePostNav() {
     <div className="flex h-12 w-full items-center justify-center border-b border-b-gray-200 bg-white">
       <div className="flex h-full w-[424px] items-center justify-between">
         <Link
-          href="/mypage/posts"
+          href="/mypage/posts/all"
           aria-current={isCutActive ? "page" : undefined}
           className="cursor-pointer text-gray-400 hover:font-bold hover:text-orange-400 aria-[current=page]:font-semibold aria-[current=page]:text-orange-300"
         >
