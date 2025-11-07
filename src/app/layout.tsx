@@ -2,9 +2,13 @@
 import "./globals.css";
 import { usePathname } from "next/navigation";
 
+import CommunityNav from "@/components/common/community/CommunityNav";
 import Header from "@/components/common/layout/Header";
-import MainNav from "@/components/common/layout/MainNav";
-import SubNav from "@/components/common/layout/SubNav";
+import {
+  MyPageMainNav,
+  MyPagePostNav,
+  MyPageProfileNav,
+} from "@/components/common/mypage/MyPageNav";
 import MSWProvider from "@/providers/MSWProvider";
 import ReduxProvider from "@/store/ReduxProvider";
 
@@ -21,8 +25,10 @@ export default function RootLayout({
         <ReduxProvider>
           <MSWProvider>
             <Header />
-            {pathname.includes("community") && <MainNav />}
-            {pathname.includes("mypage") && <SubNav />}
+            {pathname.includes("community") && <CommunityNav />}
+            {pathname.includes("mypage") && <MyPageMainNav />}
+            {pathname.includes("mypage/profile") && <MyPageProfileNav />}
+            {pathname.includes("mypage/posts") && <MyPagePostNav />}
             <main className="m-auto w-full max-w-layout">{children}</main>
           </MSWProvider>
         </ReduxProvider>

@@ -5,7 +5,7 @@ import { Category } from "@/types/category";
 
 import PostItem from "../category/PostItem";
 
-export default function CommunityShell({ category }: { category: Category }) {
+export default function MyPagePostsShell({ category }: { category: Category }) {
   return (
     <div className="w-main mx-auto flex flex-col items-center">
       <div className="flex w-full items-center justify-center p-6">
@@ -68,7 +68,6 @@ export default function CommunityShell({ category }: { category: Category }) {
           .map((el) => (
             <PostItem key={el} title={category} />
           ))}
-        {/* <EmptyState /> 게시글 없거나 검색 결과 없을 경우 props로 활용*/}
       </div>
 
       <div className="my-10">

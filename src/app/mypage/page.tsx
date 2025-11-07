@@ -1,3 +1,3 @@
-export default function LoginPage() {
-  return <div>로그인 페이지</div>;
+export default function MyPage() {
+  return <div> 페이지</div>;
 }
