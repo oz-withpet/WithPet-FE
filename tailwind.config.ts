@@ -55,7 +55,7 @@ const config: Config = {
         },
       },
       width: {
-        layout: "1440px",
+        layout: "1200px",
         wrapper: "1024px",
         main: "972px",
         modal: "600px",
@@ -65,7 +65,7 @@ const config: Config = {
 
       // 기본 레이아웃 너비
       maxWidth: {
-        layout: "1440px",
+        layout: "1200px",
         wrapper: "1024px",
         main: "972px",
         modal: "600px",
