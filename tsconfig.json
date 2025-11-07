@@ -20,7 +20,10 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@app/*": ["src/app/*"],
+      "@component/*": ["src/component/*"],
+      "@features/*": ["src/features/*"]
     },
     "types": ["kakao.maps.d.ts"]
   },
