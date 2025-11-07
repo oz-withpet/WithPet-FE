@@ -1,5 +1,6 @@
 "use client";
 
+import MapButtonGroup from "./MapButtonGroup";
 import MapSelectGroup from "./MapSelectGroup";
 
 export default function MapAside() {
@@ -13,6 +14,7 @@ export default function MapAside() {
           </div>
           <p className="mb-1 text-sm text-gray-400">시도/시군구 까지 입력이 필요합니다.</p>
           <MapSelectGroup />
+          <MapButtonGroup />
         </div>
 
         <div className="flex flex-col gap-3">
