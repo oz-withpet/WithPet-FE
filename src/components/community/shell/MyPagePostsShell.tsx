@@ -1,5 +1,3 @@
-import { Pagination } from "@mui/material";
-
 import { searchIconSVG } from "@/shared/assets/icons/community/svgIcon";
 import { Category } from "@/types/category";
 
@@ -30,7 +28,7 @@ export default function MyPagePostsShell({ category }: { category: Category }) {
       </div>
 
       <div className="w-main flex items-center py-4">
-        <div className="flex max-w-main items-center">
+        <div className="max-w-main flex items-center">
           <label className="mr-4 flex cursor-pointer items-center text-gray-400">
             <input
               type="radio"
@@ -68,10 +66,6 @@ export default function MyPagePostsShell({ category }: { category: Category }) {
           .map((el) => (
             <PostItem key={el} title={category} />
           ))}
-      </div>
-
-      <div className="my-10">
-        <Pagination count={10} />
       </div>
     </div>
   );

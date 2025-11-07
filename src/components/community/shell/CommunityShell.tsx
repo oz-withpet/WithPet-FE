@@ -1,5 +1,3 @@
-import { Pagination } from "@mui/material";
-
 import { searchIconSVG } from "@/shared/assets/icons/community/svgIcon";
 import { Category } from "@/types/category";
 
@@ -30,7 +28,7 @@ export default function CommunityShell({ category }: { category: Category }) {
       </div>
 
       <div className="w-main flex items-center py-4">
-        <div className="flex max-w-main items-center">
+        <div className="max-w-main flex items-center">
           <label className="mr-4 flex cursor-pointer items-center text-gray-400">
             <input
               type="radio"
@@ -69,10 +67,6 @@ export default function CommunityShell({ category }: { category: Category }) {
             <PostItem key={el} title={category} />
           ))}
         {/* <EmptyState /> 게시글 없거나 검색 결과 없을 경우 props로 활용*/}
-      </div>
-
-      <div className="my-10">
-        <Pagination count={10} />
       </div>
     </div>
   );
