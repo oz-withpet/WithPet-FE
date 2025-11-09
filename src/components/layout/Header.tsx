@@ -1,14 +1,16 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+import Button from "../common/button/Button";
+
 export default function Header() {
   const pathname = usePathname();
   const isMapActive = /^\/map(\/|$)/.test(pathname);
   const isCutActive = /^\/community(\/|$)/.test(pathname);
 
   return (
-    <header className="flex h-12 w-full items-center justify-center border-b border-b-gray-200 bg-white">
-      <nav className="w-wrapper flex items-center justify-between">
+    <header className="flex h-[60px] w-full items-center justify-center border-b border-b-gray-200 bg-white">
+      <nav className="flex w-wrapper items-center justify-between">
         <div className="flex w-[285px] items-center justify-between">
           <Link href="/" className="text-lg font-bold text-gray-900">
             WithPet
@@ -29,17 +31,11 @@ export default function Header() {
           </Link>
         </div>
         <div className="flex items-center justify-center">
-          <Link
-            href="/login"
-            className="border-line-100 mx-2 rounded-md border-[1px] p-2 text-gray-900 hover:bg-black hover:text-white"
-          >
-            로그인
+          <Link href="/login" className="mx-2">
+            <Button className="rounded-md border-[1px] p-2">로그인</Button>
           </Link>
-          <Link
-            href="/signup"
-            className="border-line-100 rounded-md border-[1px] p-2 text-gray-900 hover:bg-black hover:text-white"
-          >
-            회원가입
+          <Link href="/signup" className="mx-2">
+            <Button className="rounded-md border-[1px] p-2">회원가입</Button>
           </Link>
         </div>
       </nav>
