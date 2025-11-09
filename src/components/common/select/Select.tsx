@@ -6,23 +6,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
-
-/**
- * SelectOption 타입
- * @typedef {Object} SelectOption
- * @property {string} label - 셀렉트 항목에 표시될 텍스트
- * @property {string} value - 각 항목의 실제 값
- */
-interface SelectOption {
-  label: string;
-  value: string;
-}
-
-type SelectStatus = "default" | "primary";
+import { type SelectOption, type SelectStatus } from "@/types/ui";
 
 const STATUS_CLASS_MAP: Record<SelectStatus, string> = {
   default: "border-gray-900 hover:bg-gray-900 hover:text-white",
-  primary: "border-orange-200  hover:bg-orange-200",
+  primary: "border-orange-200 hover:bg-orange-200",
+  secondary: "border-gray-300 hover:bg-gray-50",
 };
 
 /**

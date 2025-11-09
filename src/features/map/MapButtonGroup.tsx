@@ -2,14 +2,15 @@
 
 import { useState } from "react";
 
-import Button, { type ButtonStatus } from "@/components/common/button/Button";
+import Button from "@/components/common/button/Button";
+import { type ButtonStatus } from "@/types/ui";
 
-interface Category {
+interface FilterCategory {
   label: string;
   status: ButtonStatus;
 }
 
-const categories: Category[] = [
+const filters: FilterCategory[] = [
   { label: "병원", status: "primary" },
   { label: "호텔", status: "default" },
   { label: "펫샵", status: "danger" },
@@ -26,7 +27,7 @@ export default function MapButtonGroup() {
 
   return (
     <div className="mb-4 flex flex-wrap gap-2">
-      {categories.map(({ label, status }) => (
+      {filters.map(({ label, status }) => (
         <Button
           key={label}
           status={status}

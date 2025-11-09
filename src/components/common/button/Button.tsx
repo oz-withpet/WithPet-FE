@@ -1,8 +1,9 @@
 import { type ButtonHTMLAttributes } from "react";
 
 import { cn } from "@/lib/utils";
+import { type ButtonStatus } from "@/types/ui";
 
-export type ButtonStatus = "default" | "primary" | "danger" | "report" | "disable";
+export type { ButtonStatus } from "@/types/ui";
 
 const ACTIVE_CLASS_MAP: Record<ButtonStatus, string> = {
   default:
