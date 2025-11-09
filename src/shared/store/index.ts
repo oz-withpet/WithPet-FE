@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import mapReducer from "@/features/map/mapSlice";
+import mapReducer from "@/shared/store/mapSlice";
 
 export const store = configureStore({
   reducer: {
