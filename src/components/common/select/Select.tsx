@@ -9,8 +9,8 @@ import { cn } from "@/lib/utils";
 import { type SelectOption, type SelectStatus } from "@/types/ui";
 
 const STATUS_CLASS_MAP: Record<SelectStatus, string> = {
-  default: "border-gray-900 hover:bg-gray-900 hover:text-white",
-  primary: "border-orange-200 hover:bg-orange-200",
+  default: "border-gray-900 hover:bg-gray-900",
+  primary: "border-orange-300 hover:bg-orange-300",
   secondary: "border-gray-300 hover:bg-gray-50",
 };
 
@@ -74,7 +74,7 @@ export default function Select({
           // 기본 스타일
           "w-full flex-1 rounded-md border-2 bg-white text-sm text-gray-900 transition-colors",
           "disabled:cursor-not-allowed disabled:border-gray-300 disabled:bg-gray-300 disabled:placeholder:text-gray-900",
-          "hover:shadow-none focus:ring-0",
+          "hover:text-white hover:shadow-none hover:placeholder:text-white focus:ring-0",
           STATUS_CLASS_MAP[status],
           className,
         )}
@@ -86,7 +86,7 @@ export default function Select({
           <SelectItem
             key={opt.value}
             value={opt.value}
-            className="cursor-pointer text-sm hover:bg-orange-100 focus:bg-orange-100"
+            className="cursor-pointer text-sm hover:bg-orange-200 focus:bg-orange-300"
           >
             {opt.label}
           </SelectItem>

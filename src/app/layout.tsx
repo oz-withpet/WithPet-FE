@@ -25,7 +25,7 @@ export default function RootLayout({
             {pathname.includes("mypage") && <MyPageMainNav />}
             {pathname.includes("mypage/profile") && <MyPageProfileNav />}
             {pathname.includes("mypage/posts") && <MyPagePostNav />}
-            <main className="m-auto w-full max-w-layout">{children}</main>
+            <main className="m-auto w-full max-w-layout py-20">{children}</main>
           </MSWProvider>
         </ReduxProvider>
       </body>
