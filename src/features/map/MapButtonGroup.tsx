@@ -1,19 +1,22 @@
 "use client";
 
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import Button from "@/components/common/button/Button";
 import { useCategories } from "@/shared/hooks/useCategories";
 import type { FilterCategory } from "@/types/mapTypes";
+import type { RootState } from "@/shared/store";
+import { setSelectedCategory } from "@/shared/store/mapSlice";
 
 export default function MapButtonGroup() {
-  const [activeCategoryCode, setActiveCategoryCode] = useState<string | null>(null);
+  const dispatch = useDispatch();
+  const activeCategoryCode = useSelector((state: RootState) => state.map.selectedCategory);
   const { data, isLoading, isError } = useCategories();
 
   const categories: FilterCategory[] = data?.data ?? [];
 
   const handleCategoryClick = (code: string) => {
-    setActiveCategoryCode((previousCode) => (previousCode === code ? null : code));
+    dispatch(setSelectedCategory(activeCategoryCode === code ? null : code));
   };
 
   if (isLoading) {

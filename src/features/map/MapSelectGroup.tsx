@@ -1,10 +1,14 @@
 "use client";
 import { useMemo, useState } from "react";
+import { useDispatch } from "react-redux";
 
 import Select from "@/components/common/select/Select";
 import { useLocations } from "@/shared/hooks/useLocations";
+import type { AppDispatch } from "@/shared/store";
+import { setSelectedLocation } from "@/shared/store/mapSlice";
 
 export default function MapSelectGroup() {
+  const dispatch = useDispatch<AppDispatch>();
   const [province, setProvince] = useState("");
   const [district, setDistrict] = useState("");
   const [neighborhood, setNeighborhood] = useState("");
@@ -44,11 +48,18 @@ export default function MapSelectGroup() {
     setProvince(value);
     setDistrict("");
     setNeighborhood("");
+    dispatch(setSelectedLocation({ province: value, district: "", neighborhood: "" }));
   };
 
   const handleDistrictChange = (value: string) => {
     setDistrict(value);
     setNeighborhood("");
+    dispatch(setSelectedLocation({ district: value, neighborhood: "" }));
+  };
+
+  const handleNeighborhoodChange = (value: string) => {
+    setNeighborhood(value);
+    dispatch(setSelectedLocation({ neighborhood: value }));
   };
 
   const isDistrictDisabled = !province || isDistrictLoading || districtOptions.length === 0;
@@ -74,11 +85,12 @@ export default function MapSelectGroup() {
       />
       <Select
         value={neighborhood}
-        onChange={setNeighborhood}
+        onChange={handleNeighborhoodChange}
         options={neighborhoodOptions}
         placeholder="읍면동"
         disabled={isNeighborhoodDisabled}
         status="primary"
+        onValueChangeCapture={(val) => dispatch(setSelectedLocation({ neighborhood: val }))}
       />
     </div>
   );
