@@ -2,11 +2,11 @@
 import "./globals.css";
 import { usePathname } from "next/navigation";
 
+import ConfirmProvider from "@/components/common/modal/Modal";
 import CommonMainNav from "@/components/common/nav/CommonMainNav";
 import CommonSubNav from "@/components/common/nav/CommonSubNav";
 import Header from "@/components/layout/Header";
 import MSWProvider from "@/providers/MSWProvider";
-import QueryProvider from "@/providers/QueryProvider";
 import ReduxProvider from "@/shared/store/ReduxProvider";
 
 export default function RootLayout({
@@ -19,8 +19,8 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className="bg-background text-gray-100">
-        <ReduxProvider>
-          <QueryProvider>
+        <ConfirmProvider>
+          <ReduxProvider>
             <MSWProvider>
               <Header />
               {pathname.includes("community") && <CommonMainNav page="community" />}
@@ -28,8 +28,8 @@ export default function RootLayout({
               {pathname.includes("mypage/posts") && <CommonMainNav page="mypage" />}
               <main className="m-auto w-full max-w-layout">{children}</main>
             </MSWProvider>
-          </QueryProvider>
-        </ReduxProvider>
+          </ReduxProvider>
+        </ConfirmProvider>
       </body>
     </html>
   );

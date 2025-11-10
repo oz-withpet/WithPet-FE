@@ -1,6 +1,25 @@
+"use client";
+
 import Link from "next/link";
 
+import { useConfirm } from "@/components/common/modal/Modal";
+
 export default function MypageProfileForm() {
+  const confirm = useConfirm();
+
+  const onDelete = async () => {
+    const ok = await confirm({
+      title: "정말 회원탈퇴 하시겠습니까?",
+      description: "이 작업은 되돌릴 수 없습니다.",
+      confirmText: "예",
+      cancelText: "아니오",
+      variant: "destructive",
+    });
+    if (!ok) return;
+    // TODO: 삭제 API 호출
+    console.log("삭제 진행!");
+  };
+
   return (
     <div className="flex w-wrapper items-center justify-center bg-orange-100 p-40 text-gray-900">
       <div className="flex w-edit flex-col rounded-xl border border-gray-300 p-3">
@@ -53,12 +72,12 @@ export default function MypageProfileForm() {
             비밀번호 변경
           </Link>
 
-          <Link
-            href={""}
+          <button
+            onClick={onDelete}
             className="rounded-full border-2 border-orange-300 bg-white px-5 py-3 text-lg font-semibold hover:cursor-pointer hover:bg-orange-300 hover:font-bold hover:text-white"
           >
             회원탈퇴
-          </Link>
+          </button>
         </div>
       </div>
     </div>
