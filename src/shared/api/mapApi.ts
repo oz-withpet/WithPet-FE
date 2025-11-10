@@ -1,4 +1,5 @@
 import type {
+  CategoryResponse,
   DistrictResponse,
   LocationParams,
   NeighborhoodResponse,
@@ -50,3 +51,8 @@ export const getDistricts = (params?: Pick<LocationParams, "province">) =>
  */
 export const getNeighborhoods = (params?: LocationParams) =>
   apiClient<NeighborhoodResponse>(`/api/map/neighborhoods${buildQuery(params)}`);
+
+/**
+ * 지도에서 사용할 카테고리 목록을 조회합니다.
+ */
+export const getCategories = () => apiClient<CategoryResponse>("/api/map/categories");
