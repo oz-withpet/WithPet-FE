@@ -1,13 +1,21 @@
 "use client";
+
 import { useMemo, useState } from "react";
 
 import { useDispatch } from "react-redux";
 
 import Select from "@/components/common/select/Select";
-import { useLocations } from "@/shared/hooks/useLocations";
 import type { AppDispatch } from "@/shared/store";
 import { setSelectedLocation } from "@/shared/store/mapSlice";
 
+import { useLocations } from "../api/useLocations";
+
+/**
+ * 시도 → 시군구 → 읍면동을 순차적으로 선택하는 컴포넌트입니다.
+ *
+ * - React Query로 지역 데이터를 가져오고
+ * - 각 선택값을 Redux `mapSlice.selectedLocation`에 저장합니다.
+ */
 export default function MapSelectGroup() {
   const dispatch = useDispatch<AppDispatch>();
   const [province, setProvince] = useState("");
@@ -45,7 +53,6 @@ export default function MapSelectGroup() {
     [neighborhoodResponse, province, district],
   );
 
-  // 선택된 시/도를 전역 상태에 기록하고 나머지 값을 초기화합니다.
   const handleProvinceChange = (value: string) => {
     setProvince(value);
     setDistrict("");
@@ -53,14 +60,12 @@ export default function MapSelectGroup() {
     dispatch(setSelectedLocation({ province: value, district: "", neighborhood: "" }));
   };
 
-  // 선택된 시/군/구를 전역 상태에 기록합니다.
   const handleDistrictChange = (value: string) => {
     setDistrict(value);
     setNeighborhood("");
     dispatch(setSelectedLocation({ district: value, neighborhood: "" }));
   };
 
-  // 선택된 읍/면/동을 전역 상태에 기록합니다.
   const handleNeighborhoodChange = (value: string) => {
     setNeighborhood(value);
     dispatch(setSelectedLocation({ neighborhood: value }));

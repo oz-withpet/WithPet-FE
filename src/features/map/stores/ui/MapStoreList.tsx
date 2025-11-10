@@ -1,19 +1,25 @@
 "use client";
 
 import { useMemo } from "react";
-
 import { useSelector } from "react-redux";
 
-import MapStoreCard from "@/features/map/MapStoreCard";
 import { cn } from "@/lib/utils";
-import { useStoreQuery } from "@/shared/hooks/useStoreQuery";
 import type { RootState } from "@/shared/store";
 import type { StoreFilters } from "@/types/mapTypes";
+
+import { useStoreQuery } from "../api/useStoreQuery";
+import MapStoreCard from "./MapStoreCard";
 
 interface MapStoreListProps {
   className?: string;
 }
 
+/**
+ * 선택한 지역/카테고리에 맞는 가게 목록을 출력합니다.
+ *
+ * - Redux에 저장된 `selectedLocation`, `selectedCategory`, `center`를 기반으로 필터를 구성합니다.
+ * - `useStoreQuery`가 API를 호출하고, 반환된 목록을 카드 형태로 보여줍니다.
+ */
 export default function MapStoreList({ className }: MapStoreListProps) {
   const { province, district, neighborhood } = useSelector(
     (state: RootState) => state.map.selectedLocation,

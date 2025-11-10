@@ -14,9 +14,6 @@ interface MapStoreCardProps {
 
 /**
  * 지도 사이드바에 노출되는 가게 카드입니다.
- *
- * - 좋아요 버튼은 임시 상태만 관리하며, 추후 공용 컴포넌트로 대체할 예정입니다.
- * - "자세히" 버튼을 누르면 부드럽게 상세 정보가 펼쳐지고 텍스트가 "접기"로 변경됩니다.
  */
 export default function MapStoreCard({
   name,

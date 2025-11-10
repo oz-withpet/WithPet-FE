@@ -5,14 +5,17 @@ import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useDispatch } from "react-redux";
 
-import { mapStoresToListItems } from "@/features/map/mapper/storeMapper";
-import { getStores } from "@/shared/api/mapApi";
+import { getStores } from "@/features/map/api/mapApi";
 import { setStoreMarkers } from "@/shared/store/mapSlice";
 import type { StoreFilters, StoreResponse } from "@/types/mapTypes";
 
+import { mapStoresToListItems } from "./storeMapper";
+
 /**
- * 가게 목록을 가져오고, mapper를 통해 가공한 후 사용.
+ * 가게 목록을 조회하고, 화면에서 쓰기 좋은 형태로 가공한 뒤 반환합니다.
+ *
  * - district 값이 없으면 요청을 보내지 않습니다.
+ * - 응답으로 받은 좌표는 Redux `storeMarkers`에 저장해 지도에서도 재사용합니다.
  */
 export function useStoreQuery(filters: StoreFilters) {
   const dispatch = useDispatch();

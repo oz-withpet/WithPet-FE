@@ -11,7 +11,7 @@ export interface MappedStore {
 }
 
 /**
- * API에서 내려오는 Store 데이터를 화면에서 쓰기 쉬운 형태로 변환.
+ * API에서 내려온 Store 데이터를 UI에서 쓰기 편한 형태로 변환합니다.
  */
 export const mapStoresToListItems = (stores: Store[]): MappedStore[] =>
   stores.map((store) => ({

@@ -2,13 +2,11 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-import { getCategories } from "@/shared/api/mapApi";
+import { getCategories } from "@/features/map/api/mapApi";
 import type { CategoryResponse } from "@/types/mapTypes";
 
 /**
- * 지도 카테고리 목록 가져오는 훅
- *
- * - 성공 시 API에서 받은 data 배열을 가져옵니다.
+ * 지도에서 사용할 카테고리 목록을 조회하는 훅입니다.
  */
 export function useCategories() {
   return useQuery<CategoryResponse, Error>({
