@@ -2,7 +2,7 @@ import PasswordChangeForm from "@/features/mypage/profile/password/ui/PasswordCh
 
 export default function PasswordChangePage() {
   return (
-    <div className="bg-red-300">
+    <div className="flex justify-center">
       <PasswordChangeForm />;
     </div>
   );
