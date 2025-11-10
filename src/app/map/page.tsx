@@ -1,4 +1,4 @@
-import MapLayout from "@/features/map/MapLayout";
+import { MapLayout } from "@/features/map";
 
 export default function MapPage() {
   return (

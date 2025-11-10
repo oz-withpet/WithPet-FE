@@ -1,19 +1,29 @@
 "use client";
 
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import Button from "@/components/common/button/Button";
-import { useCategories } from "@/shared/hooks/useCategories";
+import type { RootState } from "@/shared/store";
+import { setSelectedCategory } from "@/shared/store/mapSlice";
 import type { FilterCategory } from "@/types/mapTypes";
 
+import { useCategories } from "../api/useCategories";
+
+/**
+ * 지도에서 사용할 카테고리 버튼을 렌더링합니다.
+ *
+ * - React Query로 카테고리 목록을 가져온 뒤 버튼으로 노출합니다.
+ * - 선택 결과는 Redux `selectedCategory`에 저장되어 필터링에 활용됩니다.
+ */
 export default function MapButtonGroup() {
-  const [activeCategoryCode, setActiveCategoryCode] = useState<string | null>(null);
+  const dispatch = useDispatch();
+  const activeCategoryCode = useSelector((state: RootState) => state.map.selectedCategory);
   const { data, isLoading, isError } = useCategories();
 
   const categories: FilterCategory[] = data?.data ?? [];
 
   const handleCategoryClick = (code: string) => {
-    setActiveCategoryCode((previousCode) => (previousCode === code ? null : code));
+    dispatch(setSelectedCategory(activeCategoryCode === code ? null : code));
   };
 
   if (isLoading) {
@@ -29,7 +39,7 @@ export default function MapButtonGroup() {
   }
 
   return (
-    <div className="mb-4 flex gap-2 overflow-x-auto overflow-y-hidden pb-1">
+    <div className="flex gap-2 overflow-x-auto overflow-y-hidden pb-1">
       {categories.map((category) => (
         <Button
           key={category.id}
