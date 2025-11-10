@@ -1,5 +1,6 @@
 "use client";
 import { useMemo, useState } from "react";
+
 import { useDispatch } from "react-redux";
 
 import Select from "@/components/common/select/Select";
@@ -44,6 +45,7 @@ export default function MapSelectGroup() {
     [neighborhoodResponse, province, district],
   );
 
+  // 선택된 시/도를 전역 상태에 기록하고 나머지 값을 초기화합니다.
   const handleProvinceChange = (value: string) => {
     setProvince(value);
     setDistrict("");
@@ -51,12 +53,14 @@ export default function MapSelectGroup() {
     dispatch(setSelectedLocation({ province: value, district: "", neighborhood: "" }));
   };
 
+  // 선택된 시/군/구를 전역 상태에 기록합니다.
   const handleDistrictChange = (value: string) => {
     setDistrict(value);
     setNeighborhood("");
     dispatch(setSelectedLocation({ district: value, neighborhood: "" }));
   };
 
+  // 선택된 읍/면/동을 전역 상태에 기록합니다.
   const handleNeighborhoodChange = (value: string) => {
     setNeighborhood(value);
     dispatch(setSelectedLocation({ neighborhood: value }));
@@ -90,7 +94,6 @@ export default function MapSelectGroup() {
         placeholder="읍면동"
         disabled={isNeighborhoodDisabled}
         status="primary"
-        onValueChangeCapture={(val) => dispatch(setSelectedLocation({ neighborhood: val }))}
       />
     </div>
   );

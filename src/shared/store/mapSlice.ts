@@ -37,6 +37,9 @@ const initialState: MapState = {
   storeMarkers: [],
 };
 
+/**
+ * 지도 화면에서 필요한 공통 상태를 관리하는 슬라이스입니다.
+ */
 const mapSlice = createSlice({
   name: "map",
   initialState,
