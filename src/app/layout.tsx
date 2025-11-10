@@ -26,7 +26,7 @@ export default function RootLayout({
               <Header />
               {pathname.includes("community") && <CommonMainNav page="community" />}
               {pathname.includes("mypage") && <CommonSubNav />}
-              {pathname.includes("mypage/profile") && <MyPageProfileNav />}
+              {pathname.includes("mypage/profile/") && <MyPageProfileNav />}
               {pathname.includes("mypage/posts") && <CommonMainNav page="mypage" />}
               <main className="m-auto w-full max-w-layout">{children}</main>
             </MSWProvider>

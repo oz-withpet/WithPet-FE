@@ -1,4 +1,4 @@
-import MypageProfileForm from "@/features/mypage/ui/MypageProfileFomr";
+import MypageProfileForm from "@/features/mypage/profile/ui/MypageProfileForm";
 
 export default function ProfilePage() {
   return (
