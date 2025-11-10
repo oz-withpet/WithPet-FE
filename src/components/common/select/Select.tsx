@@ -14,6 +14,11 @@ const STATUS_CLASS_MAP: Record<SelectStatus, string> = {
   secondary: "border-gray-300 hover:bg-gray-50",
 };
 
+const STATUS_CLASS_ITEM: Record<SelectStatus, string> = {
+  default: "hover:bg-gray-900 focus:bg-gray-900",
+  primary: "hover:bg-orange-200 focus:bg-orange-300",
+  secondary: "hover:bg-gray-300 focus:bg-gray-300",
+};
 /**
  * 공통 Select 컴포넌트
  *
@@ -86,7 +91,10 @@ export default function Select({
           <SelectItem
             key={opt.value}
             value={opt.value}
-            className="cursor-pointer text-sm hover:bg-orange-200 focus:bg-orange-300"
+            className={cn(
+              "cursor-pointer text-sm hover:text-white focus:text-white",
+              STATUS_CLASS_ITEM[status],
+            )}
           >
             {opt.label}
           </SelectItem>
