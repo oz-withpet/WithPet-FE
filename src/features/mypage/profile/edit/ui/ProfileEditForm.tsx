@@ -25,7 +25,7 @@ export default function ProfileEditForm() {
         <form className="flex flex-col justify-between">
           <div className="my-2 flex flex-col">
             <div className="mb-3 text-lg">닉네임</div>
-            <NicknameCheckForm currentNickname={"닉네임"} />
+            <NicknameCheckForm currentNickname="닉네임a" />
           </div>
           <div className="my-2 flex flex-col">
             <div className="mb-3 flex items-center text-red-500">
