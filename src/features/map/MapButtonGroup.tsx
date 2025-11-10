@@ -3,39 +3,42 @@
 import { useState } from "react";
 
 import Button from "@/components/common/button/Button";
-import { type ButtonStatus } from "@/types/ui";
-
-interface FilterCategory {
-  label: string;
-  status: ButtonStatus;
-}
-
-const filters: FilterCategory[] = [
-  { label: "병원", status: "primary" },
-  { label: "호텔", status: "default" },
-  { label: "펫샵", status: "danger" },
-  { label: "신고", status: "report" },
-  { label: "비활성화", status: "disable" },
-];
+import { useCategories } from "@/shared/hooks/useCategories";
+import type { FilterCategory } from "@/types/mapTypes";
 
 export default function MapButtonGroup() {
-  const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [activeCategoryCode, setActiveCategoryCode] = useState<string | null>(null);
+  const { data, isLoading, isError } = useCategories();
 
-  const handleClick = (label: string) => {
-    setActiveCategory((prev) => (prev === label ? null : label));
+  const categories: FilterCategory[] = data?.data ?? [];
+
+  const handleCategoryClick = (code: string) => {
+    setActiveCategoryCode((previousCode) => (previousCode === code ? null : code));
   };
 
+  if (isLoading) {
+    return <p className="text-sm text-gray-500">카테고리를 불러오는 중입니다.</p>;
+  }
+
+  if (isError) {
+    return <p className="text-sm text-red-500">카테고리를 불러오지 못했습니다.</p>;
+  }
+
+  if (categories.length === 0) {
+    return <p className="text-sm text-gray-500">표시할 카테고리가 없습니다.</p>;
+  }
+
   return (
-    <div className="mb-4 flex flex-wrap gap-2">
-      {filters.map(({ label, status }) => (
+    <div className="mb-4 flex gap-2 overflow-x-auto overflow-y-hidden pb-1">
+      {categories.map((category) => (
         <Button
-          key={label}
-          status={status}
-          className="rounded-[4px]"
-          isActive={activeCategory === label}
-          onClick={() => handleClick(label)}
+          key={category.id}
+          status="primary"
+          className="flex-none rounded-[4px]"
+          isActive={activeCategoryCode === category.code}
+          onClick={() => handleCategoryClick(category.code)}
         >
-          {label}
+          <span>{category.name}</span>
         </Button>
       ))}
     </div>

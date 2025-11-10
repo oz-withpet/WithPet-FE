@@ -75,6 +75,11 @@ export type NeighborhoodResponse = {
   data: Neighborhood[];
 };
 
+export type CategoryResponse = {
+  success: boolean;
+  data: FilterCategory[];
+};
+
 export type StoreFilters = {
   province?: string;
   district?: string;
