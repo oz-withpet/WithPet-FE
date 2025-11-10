@@ -1,5 +1,8 @@
 // components/LoginForm.tsx
+import Button from "@/components/common/button/Button";
 import Link from "next/link";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 export default function LoginForm() {
   return (
@@ -13,31 +16,19 @@ export default function LoginForm() {
 
         {/* 폼 (기능 없음, 스타일만) */}
         <form className="w-full space-y-5">
-          <label className="block">
-            <span className="text-black">이메일</span>
-            <input
-              type="email"
-              placeholder="이메일을 입력해주세요."
-              className="w-full rounded-[12px] border border-line-light bg-white px-5 py-3 text-sm outline-none transition focus:border-line-strong focus:ring-2 focus:ring-orange-200"
-            />
-          </label>
+          <div>
+            <Label>이메일</Label>
+            <Input type="email" placeholder="이메일을 입력해주세요"/>         
+          </div>
 
-          <label className="block">
-            <span className="text-black">비밀번호</span>
-            <input
-              type="password"
-              placeholder="비밀번호를 입력해주세요."
-              className="w-full rounded-[12px] border border-line-light bg-white px-4 py-3 text-sm outline-none transition focus:border-line-strong focus:ring-2 focus:ring-orange-200"
-            />
-          </label>
+          <div>
+            <Label>비밀번호</Label>
+            <Input type="password" placeholder="비밀번호를 입력해주세요"/>         
+          </div>
+
 
           <div className="pt-1 text-center">
-            <button
-              type="button"
-              className="inline-block rounded-full border border-line-light px-8 py-2 text-sm font-semibold text-gray-900 transition hover:bg-[#ff9806]"
-            >
-              로그인
-            </button>
+        <Button className=" border-line-light transition hover:bg-[#ff9806]">로그인</Button>
           </div>
         </form>
 
