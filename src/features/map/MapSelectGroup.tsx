@@ -1,3 +1,4 @@
+"use client";
 import { useMemo, useState } from "react";
 
 import Select from "@/components/common/select/Select";
@@ -24,14 +25,17 @@ export default function MapSelectGroup() {
   );
 
   const districtOptions = useMemo(
-    () => (province ? districtResponse?.data.map((item) => ({ label: item.name, value: item.id })) ?? [] : []),
+    () =>
+      province
+        ? (districtResponse?.data.map((item) => ({ label: item.name, value: item.id })) ?? [])
+        : [],
     [districtResponse, province],
   );
 
   const neighborhoodOptions = useMemo(
     () =>
       province && district
-        ? neighborhoodResponse?.data.map((item) => ({ label: item.name, value: item.id })) ?? []
+        ? (neighborhoodResponse?.data.map((item) => ({ label: item.name, value: item.id })) ?? [])
         : [],
     [neighborhoodResponse, province, district],
   );

@@ -1,5 +1,3 @@
-"use client";
-
 import MapAside from "./MapAside";
 import MapContainer from "./MapContainer";
 

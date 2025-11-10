@@ -29,7 +29,7 @@ export default function MapButtonGroup() {
   }
 
   return (
-    <div className="mb-4 flex gap-2 overflow-x-auto overflow-y-hidden pb-1">
+    <div className="flex gap-2 overflow-x-auto overflow-y-hidden pb-1">
       {categories.map((category) => (
         <Button
           key={category.id}
