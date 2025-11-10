@@ -1,8 +1,8 @@
 {
   // 💡 포맷 및 린트 자동 실행
   "editor.codeActionsOnSave": {
-    "source.fixAll": true,
-    "source.fixAll.eslint": true
+    "source.fixAll": "explicit",
+    "source.fixAll.eslint": "explicit"
   },
 
   // 💡 ESLint가 VSCode에서 경고/에러 표시하도록 활성화
