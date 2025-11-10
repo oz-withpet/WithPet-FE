@@ -12,7 +12,7 @@ body {
 }
 
 .container-header {
-  @apply max-w-wrapper mx-auto px-4;
+  @apply mx-auto max-w-wrapper px-4;
 }
 
 .flex-center {
@@ -27,11 +27,8 @@ body {
   @apply flex flex-col justify-between;
 }
 
-
-
 @layer base {
   :root {
-
     --background: 0 0% 100%;
 
     --foreground: 0 0% 3.9%;
@@ -80,10 +77,9 @@ body {
 
     --chart-5: 27 87% 67%;
 
-    --radius: 0.5rem
+    --radius: 0.5rem;
   }
   .dark {
-
     --background: 0 0% 3.9%;
 
     --foreground: 0 0% 98%;
@@ -130,11 +126,9 @@ body {
 
     --chart-4: 280 65% 60%;
 
-    --chart-5: 340 75% 55%
+    --chart-5: 340 75% 55%;
   }
 }
-
-
 
 @layer base {
   * {
@@ -143,4 +137,24 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* 공통 스크롤바 스타일 (모든 스크롤 영역에 적용) */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #fed7aa transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #fed7aa;
+  border-radius: 9999px;
 }
