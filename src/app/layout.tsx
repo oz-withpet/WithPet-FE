@@ -7,6 +7,7 @@ import CommonMainNav from "@/components/common/nav/CommonMainNav";
 import CommonSubNav from "@/components/common/nav/CommonSubNav";
 import Header from "@/components/layout/Header";
 import MSWProvider from "@/providers/MSWProvider";
+import QueryProvider from "@/providers/QueryProvider";
 import ReduxProvider from "@/shared/store/ReduxProvider";
 
 export default function RootLayout({
@@ -19,17 +20,19 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className="bg-background text-gray-100">
-        <ConfirmProvider>
-          <ReduxProvider>
-            <MSWProvider>
-              <Header />
-              {pathname.includes("community") && <CommonMainNav page="community" />}
-              {pathname.includes("mypage") && <CommonSubNav />}
-              {pathname.includes("mypage/posts") && <CommonMainNav page="mypage" />}
-              <main className="m-auto w-full max-w-layout">{children}</main>
-            </MSWProvider>
-          </ReduxProvider>
-        </ConfirmProvider>
+        <QueryProvider>
+          <ConfirmProvider>
+            <ReduxProvider>
+              <MSWProvider>
+                <Header />
+                {pathname.includes("community") && <CommonMainNav page="community" />}
+                {pathname.includes("mypage") && <CommonSubNav />}
+                {pathname.includes("mypage/posts") && <CommonMainNav page="mypage" />}
+                <main className="m-auto w-full max-w-layout">{children}</main>
+              </MSWProvider>
+            </ReduxProvider>
+          </ConfirmProvider>
+        </QueryProvider>
       </body>
     </html>
   );
