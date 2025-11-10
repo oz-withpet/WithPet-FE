@@ -99,7 +99,7 @@ export default function PasswordChangeForm() {
           </div>
           <button
             type="submit" // ← submit 이어야 내장 검증이 트리거됨
-            className="mt-5 rounded-lg bg-orange-500 px-4 py-2 font-semibold text-white hover:bg-orange-600"
+            className="mt-5 rounded-lg bg-orange-300 px-4 py-2 font-semibold text-white hover:bg-orange-300"
           >
             비밀번호 변경
           </button>
