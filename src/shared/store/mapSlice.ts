@@ -1,12 +1,12 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
-interface MapLocationSelection {
+export interface MapLocationSelection {
   province: string;
   district: string;
   neighborhood: string;
 }
 
-interface StoreMarker {
+export interface StoreMarker {
   id: number;
   name: string;
   latitude: number;
@@ -38,7 +38,7 @@ const initialState: MapState = {
 };
 
 /**
- * 지도 화면에서 필요한 공통 상태를 관리하는 슬라이스입니다.
+ * 지도 화면에서 필요한 공통 상태를 관리하는 슬라이스
  */
 const mapSlice = createSlice({
   name: "map",
@@ -59,5 +59,6 @@ const mapSlice = createSlice({
   },
 });
 
-export const { setCenter, setSelectedCategory, setSelectedLocation, setStoreMarkers } = mapSlice.actions;
+export const { setCenter, setSelectedCategory, setSelectedLocation, setStoreMarkers } =
+  mapSlice.actions;
 export default mapSlice.reducer;
