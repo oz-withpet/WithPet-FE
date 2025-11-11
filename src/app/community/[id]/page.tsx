@@ -1,9 +1,8 @@
-// 상세페이지, 자유롭게 수정하세요!!!
+"use client";
+
+import { usePathname } from "next/navigation";
 
 export default function PostDetailPage() {
-  return (
-    <>
-      <></>
-    </>
-  );
+  const pathname = usePathname();
+  return <div className="text-8xl font-bold text-gray-900">{pathname}</div>;
 }
