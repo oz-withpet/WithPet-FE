@@ -1,7 +1,7 @@
 import { searchIconSVG } from "@/shared/assets/icons/svgIcon";
 import { Category } from "@/types/category";
 
-import PostItem from "../category/PostItem";
+import PostItem from "../../../components/common/cards/PostItem";
 
 export default function CommunityShell({ category }: { category: Category }) {
   return (
