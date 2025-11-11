@@ -28,6 +28,10 @@ interface MapState {
   };
   storeMarkers: StoreMarker[];
   storeDetails: StoreDetailInfo[];
+  userLocation: {
+    latitude: number;
+    longitude: number;
+  } | null;
 }
 
 const initialState: MapState = {
@@ -43,6 +47,7 @@ const initialState: MapState = {
   },
   storeMarkers: [],
   storeDetails: [],
+  userLocation: null,
 };
 
 /**
@@ -67,6 +72,9 @@ const mapSlice = createSlice({
     setStoreDetails(state, action: PayloadAction<StoreDetailInfo[]>) {
       state.storeDetails = action.payload;
     },
+    setUserLocation(state, action: PayloadAction<{ latitude: number; longitude: number }>) {
+      state.userLocation = action.payload;
+    },
   },
 });
 
@@ -76,5 +84,6 @@ export const {
   setSelectedLocation,
   setStoreMarkers,
   setStoreDetails,
+  setUserLocation,
 } = mapSlice.actions;
 export default mapSlice.reducer;

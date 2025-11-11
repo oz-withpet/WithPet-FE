@@ -1,13 +1,14 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import { Map, MapMarker, CustomOverlayMap } from "react-kakao-maps-sdk";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import Button from "@/components/common/button/Button";
 import useKakaoLoader from "@/shared/hooks/useKakaoLoader";
-import type { RootState } from "@/shared/store";
+import type { AppDispatch, RootState } from "@/shared/store";
+import { setCenter } from "@/shared/store/mapSlice";
 import type { StoreDetailInfo, StoreMarker } from "@/shared/store/mapSlice";
 
 /**
@@ -19,6 +20,8 @@ import type { StoreDetailInfo, StoreMarker } from "@/shared/store/mapSlice";
 export default function MapContainer() {
   useKakaoLoader();
 
+  const dispatch = useDispatch<AppDispatch>();
+  const mapRef = useRef<kakao.maps.Map | null>(null);
   const center = useSelector((state: RootState) => state.map.center);
   const storeMarkers = useSelector((state: RootState) => state.map.storeMarkers);
   const storeDetails = useSelector((state: RootState) => state.map.storeDetails);
@@ -72,12 +75,30 @@ export default function MapContainer() {
     ? (details.find((store) => store.id === activeStoreId) ?? null)
     : null;
 
+  useEffect(() => {
+    if (mapRef.current) {
+      mapRef.current.setCenter(new kakao.maps.LatLng(center.latitude, center.longitude));
+    }
+  }, [center.latitude, center.longitude]);
+
+  const handleCenterChanged = (mapInstance: kakao.maps.Map) => {
+    const latLng = mapInstance.getCenter();
+    dispatch(
+      setCenter({
+        latitude: latLng.getLat(),
+        longitude: latLng.getLng(),
+      }),
+    );
+  };
+
   return (
     <div className="relative flex h-full w-full flex-1 items-center justify-center bg-thumbnail-200">
       <Map
+        ref={mapRef}
         center={{ lat: center.latitude, lng: center.longitude }}
         level={3}
         style={{ width: "100%", height: "100%" }}
+        onCenterChanged={handleCenterChanged}
       >
         {markers.map((marker) => (
           <MapMarker
