@@ -1,3 +1,7 @@
+import Button from "@/components/common/button/Button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+
 export default function SignupForm() {
   return (
     <section className="mx-auto w-full max-w-wrapper rounded-[28px] bg-background-100">
@@ -8,120 +12,137 @@ export default function SignupForm() {
           <span className="text-sm text-gray-900">회원가입</span>
         </div>
 
-        {/* 안내 문구 */}
-        <div className="mb-[15px] w-full text-[13px] text-gray-100">
-          <p className="font-semibold text-gray-900">반려동물 유무</p>
-          <p className="text-[12px] text-gray-300">· 선택 안할 시 ‘없음’으로 저장됩니다.</p>
-        </div>
+        {/* 폼 (스타일 전용) */}
+        <form className="w-full space-y-[12px]">
+          {/* 안내 문구 */}
+          <div className="mb-[15px] w-full text-[13px] text-gray-100">
+            <p className="text-[17px] font-semibold text-gray-900">반려동물 유무</p>
+            <p className="text-[12px] text-gray-300">· 선택 안할 시 ‘없음’으로 저장됩니다.</p>
+          </div>
 
-        {/* 반려동물 유무 */}
-        <div className="mb-[15px] flex w-full items-center gap-[12px]">
-          <button
-            type="button"
-            className="rounded-full border border-line-strong px-[16px] py-[8px] text-sm text-gray-900"
-          >
-            강아지
-          </button>
-          <button
-            type="button"
-            className="rounded-full border border-line-strong px-[16px] py-[8px] text-sm text-gray-900"
-          >
-            고양이
-          </button>
-        </div>
+          {/* 반려동물 유무 (선택) — 버튼형 체크박스 (id + htmlFor) */}
+          <div className="flex items-center gap-[12px]">
+            {/* 강아지 */}
+            <div>
+              <input 
+              id="pet-dog" 
+              name="pet_dog" 
+              type="checkbox" 
+              className="peer sr-only" />
+              <Label
+                htmlFor="pet-dog"
+                className="cursor-pointer rounded-full border border-line-strong px-[16px] py-[8px] text-[14px] text-gray-900
+                          peer-checked:bg-orange-300 peer-checked:border-line-strong peer-checked:text-gray-50
+                          hover:bg-orange-300 hover:text-gray-50
+                          peer-focus-visible:outline-none peer-focus-visible:ring-2 peer-focus-visible:ring-orange-200"
+              >
+                강아지
+              </Label>
+            </div>
+            {/* 고양이 */}
+            <div>
+              <input 
+              id="pet-cat" 
+              name="pet_cat" 
+              type="checkbox" 
+              className="peer sr-only" />
+              <Label
+                htmlFor="pet-cat"
+                className="cursor-pointer rounded-full border border-line-strong px-[16px] py-[8px] text-[14px] text-gray-900
+                          peer-checked:bg-orange-300 peer-checked:border-line-strong peer-checked:text-gray-50
+                          hover:bg-orange-300 hover:text-gray-50
+                          peer-focus-visible:outline-none peer-focus-visible:ring-2 peer-focus-visible:ring-orange-200"
+              >
+                고양이
+              </Label>
+            </div>
+          </div>
 
-        {/* 성별 */}
-        <div className="mb-[8px] flex w-full items-center gap-[12px]">
-          <span className="text-sm text-gray-900">
-            성별 <span className="text-warning">* 필수</span>
-          </span>
-        </div>
-        <div className="mb-[20px] flex w-full items-center gap-[12px]">
-          <button
-            type="button"
-            className="rounded-full border border-line-strong px-[16px] py-[8px] text-sm text-gray-900"
-          >
-            남자
-          </button>
-          <button
-            type="button"
-            className="rounded-full border border-line-strong px-[16px] py-[8px] text-sm text-gray-900"
-          >
-            여자
-          </button>
-        </div>
+          {/* 성별 (필수) — 버튼형 라디오 (id + htmlFor) */}
+          <div className="mt-[12px]">
+            <p className="mb-[8px] text-[17px] font-semibold text-gray-900">
+              성별 <span className="text-warning">* 필수</span>
+            </p>
 
-        {/* 입력 폼 (기능 없음) */}
-        <form className="w-full space-y-[16px]">
+            <div className="flex items-center gap-[12px]">
+              <div>
+                <input
+                  id="male"
+                  type="radio"
+                  name="gender"
+                  value="남자"
+                  required
+                  className="peer sr-only"
+                />
+                <Label
+                  htmlFor="male"
+                  className="cursor-pointer rounded-full border border-line-strong px-[16px] py-[8px] text-[14px] text-gray-900
+                            peer-checked:bg-orange-300 peer-checked:border-line-strong
+                            hover:bg-orange-300 hover:text-gray-50
+                            peer-focus-visible:outline-none peer-focus-visible:ring-2 peer-focus-visible:ring-orange-200">
+                              남자
+                </Label>
+              </div>
+              <div>
+                <input 
+                id="female" 
+                type="radio" 
+                name="gender" 
+                value="여자" 
+                className="peer sr-only" 
+                required/>
+                <Label
+                  htmlFor="female"
+                  className="cursor-pointer rounded-full border border-line-strong px-[16px] py-[8px] text-[14px] text-gray-900
+                            peer-checked:bg-orange-300 peer-checked:border-line-strong
+                            hover:bg-orange-300 hover:text-gray-50
+                            peer-focus-visible:outline-none peer-focus-visible:ring-2 peer-focus-visible:ring-orange-200">
+                              여자
+                </Label>
+              </div>
+            </div>
+          </div>
+
           {/* 이름 */}
-          <input
-            type="text"
-            placeholder="[필수] 성명을 입력해주세요."
-            className="w-full rounded-[12px] border border-line-light bg-white px-[16px] py-[12px] text-sm text-gray-900 outline-none transition focus:border-line-strong focus:ring-2 focus:ring-orange-200"
-          />
+          <div>
+            <Input placeholder="[필수] 성명을 입력해 주세요" />
+          </div>
 
           {/* 닉네임 + 중복검사 */}
           <div className="grid grid-cols-[1fr_auto] items-center gap-[12px]">
-            <input
-              type="text"
-              placeholder="[필수] 닉네임을 작성해주세요."
-              className="rounded-[12px] border border-line-light bg-white px-[16px] py-[12px] text-sm text-gray-900 outline-none transition focus:border-line-strong focus:ring-2 focus:ring-orange-200"
-            />
-            <button
-              type="button"
-              className="rounded-full border border-line-strong px-[16px] py-[8px] text-sm text-gray-900"
-            >
-              중복 검사
-            </button>
+            <Input placeholder="[필수] 닉네임을 입력해 주세요" />
+            <Button className="rounded-full border-line-strong px-[12px] text-[12px] transition hover:bg-orange-300">
+              중복검사
+            </Button>
           </div>
 
           {/* 이메일 + 인증하기 */}
-          <div className="grid grid-cols-[1fr_auto] items-center gap-3">
-            <input
-              type="email"
-              placeholder="[필수] 이메일을 입력해주세요."
-              className="rounded-[12px] border border-line-light bg-white px-[16px] py-[12px] text-sm text-gray-900 outline-none transition focus:border-line-strong focus:ring-2 focus:ring-orange-200"
-            />
-            <button
-              type="button"
-              className="rounded-full border border-line-strong px-[16px] py-[8px] text-sm text-gray-900"
-            >
+          <div className="grid grid-cols-[1fr_auto] items-center gap-[12px]">
+            <Input type="email" placeholder="[필수] 이메일을 입력해 주세요" />
+            <Button className="rounded-full border-line-strong px-[12px] text-[12px] transition hover:bg-orange-300">
               인증하기
-            </button>
+            </Button>
           </div>
 
           {/* 인증번호 */}
-          <input
-            type="text"
-            placeholder="인증번호 입력"
-            className="w-full rounded-[12px] border border-line-light bg-white px-[16px] py-[12px] text-sm text-gray-900 outline-none transition focus:border-line-strong focus:ring-2 focus:ring-orange-200"
-          />
+          <div>
+            <Input placeholder="인증번호 입력" />
+          </div>
 
           {/* 비밀번호 */}
           <div className="space-y-[4px]">
-            <input
-              type="password"
-              placeholder="[필수] 비밀번호를 입력해주세요."
-              className="w-full rounded-[12px] border border-line-light bg-white px-[16px] py-[12px] text-sm text-gray-900 outline-none transition focus:border-line-strong focus:ring-2 focus:ring-orange-200"
-            />
-            <p className="text-[12px] text-gray-300">
-              · 비밀번호는 8자 이상/대소문자 혼합이어야 합니다.
-            </p>
+            <Input type="password" placeholder="[필수] 비밀번호를 입력해 주세요" />
+            <p className="text-[12px] text-gray-300">· 비밀번호는 8자 이상/대소문자 혼합이어야 합니다.</p>
           </div>
 
           {/* 비밀번호 확인 */}
           <div className="space-y-[4px]">
-            <input
-              type="password"
-              placeholder="[필수] 비밀번호를 입력해주세요."
-              className="w-full rounded-[12px] border border-line-light bg-white px-[16px] py-[12px] text-sm text-gray-900 outline-none transition focus:border-line-strong focus:ring-2 focus:ring-orange-200"
-            />
+            <Input type="password" placeholder="[필수] 비밀번호를 확인해 주세요" />
             <p className="text-[12px] text-gray-300">· 위 비밀번호와 동일하게 작성해주세요.</p>
           </div>
 
           {/* 개인정보 동의 */}
           <section className="mt-[24px] w-full rounded-[16px] border border-line-light bg-white p-[20px]">
-            {/* 상단: 전체 동의 */}
             <div className="mb-[12px] flex items-center justify-between">
               <label className="flex items-center gap-[8px] text-[14px] font-semibold text-gray-900">
                 <input type="checkbox" className="h-[16px] w-[16px] accent-orange-300" />
@@ -130,12 +151,9 @@ export default function SignupForm() {
               <span className="text-[12px] text-gray-400">선택 포함</span>
             </div>
 
-            {/* 구분선 */}
             <div className="mb-[12px] h-[1px] w-full bg-gray-300" />
 
-            {/* 항목 리스트 */}
             <ul className="flex flex-col gap-[12px]">
-              {/* (필수) 이용약관 동의 */}
               <li className="flex items-start justify-between gap-[12px]">
                 <label className="flex flex-1 items-start gap-[8px] text-[14px] text-gray-900">
                   <input type="checkbox" className="mt-[3px] h-[16px] w-[16px] accent-orange-300" />
@@ -143,15 +161,11 @@ export default function SignupForm() {
                     이용약관 동의 <span className="text-warning">*</span>
                   </span>
                 </label>
-                <button
-                  type="button"
-                  className="shrink-0 rounded-full border border-line-strong px-[12px] py-[6px] text-[12px] text-gray-900"
-                >
+                <Button className="shrink-0 rounded-full border border-line-strong px-[12px] py-[6px] text-[12px] text-gray-900 transition hover:bg-orange-300">
                   자세히
-                </button>
+                </Button>
               </li>
 
-              {/* (필수) 개인정보 수집 및 이용 동의 */}
               <li className="flex items-start justify-between gap-[12px]">
                 <label className="flex flex-1 items-start gap-[8px] text-[14px] text-gray-900">
                   <input type="checkbox" className="mt-[3px] h-[16px] w-[16px] accent-orange-300" />
@@ -159,38 +173,26 @@ export default function SignupForm() {
                     개인정보 수집 및 이용 동의 <span className="text-warning">*</span>
                   </span>
                 </label>
-                <button
-                  type="button"
-                  className="shrink-0 rounded-full border border-line-strong px-[12px] py-[6px] text-[12px] text-gray-900"
-                >
+                <Button className="shrink-0 rounded-full border border-line-strong px-[12px] py-[6px] text-[12px] text-gray-900 transition hover:bg-orange-300">
                   자세히
-                </button>
+                </Button>
               </li>
 
-              {/* (선택) 마케팅 정보 수신 동의 */}
               <li className="flex items-start justify-between gap-[12px]">
                 <label className="flex flex-1 items-start gap-[8px] text-[14px] text-gray-900">
                   <input type="checkbox" className="mt-[3px] h-[16px] w-[16px] accent-orange-300" />
                   <span className="leading-[22px]">마케팅 정보 수신 동의 (선택)</span>
                 </label>
-                <button
-                  type="button"
-                  className="shrink-0 rounded-full border border-line-strong px-[12px] py-[6px] text-[12px] text-gray-900"
-                >
+                <Button className="shrink-0 rounded-full border border-line-strong px-[12px] py-[6px] text-[12px] text-gray-900 transition hover:bg-orange-300">
                   자세히
-                </button>
+                </Button>
               </li>
             </ul>
           </section>
 
           {/* 제출 버튼 */}
           <div className="pt-[8px] text-center">
-            <button
-              type="button"
-              className="inline-block rounded-full border border-line-strong px-[32px] py-[8px] text-sm font-semibold text-gray-900 transition hover:bg-orange-300 active:scale-[0.99]"
-            >
-              회원가입
-            </button>
+            <Button className="inline-block rounded-full border border-line-strong px-[32px] py-[8px] text-sm font-semibold text-gray-900 transition hover:bg-orange-300 active:scale-[0.99]">회원가입</Button>
           </div>
         </form>
       </div>
