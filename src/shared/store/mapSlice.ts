@@ -13,14 +13,21 @@ export interface StoreMarker {
   longitude: number;
 }
 
+export interface StoreDetailInfo extends StoreMarker {
+  category: string;
+  phone?: string;
+  address?: string;
+}
+
 interface MapState {
   selectedCategory: string | null;
   selectedLocation: MapLocationSelection;
   center: {
-    lat: number;
-    lng: number;
+    latitude: number;
+    longitude: number;
   };
   storeMarkers: StoreMarker[];
+  storeDetails: StoreDetailInfo[];
 }
 
 const initialState: MapState = {
@@ -31,10 +38,11 @@ const initialState: MapState = {
     neighborhood: "",
   },
   center: {
-    lat: 37.55319,
-    lng: 126.9726,
+    latitude: 37.55319,
+    longitude: 126.9726,
   },
   storeMarkers: [],
+  storeDetails: [],
 };
 
 /**
@@ -56,9 +64,17 @@ const mapSlice = createSlice({
     setStoreMarkers(state, action: PayloadAction<StoreMarker[]>) {
       state.storeMarkers = action.payload;
     },
+    setStoreDetails(state, action: PayloadAction<StoreDetailInfo[]>) {
+      state.storeDetails = action.payload;
+    },
   },
 });
 
-export const { setCenter, setSelectedCategory, setSelectedLocation, setStoreMarkers } =
-  mapSlice.actions;
+export const {
+  setCenter,
+  setSelectedCategory,
+  setSelectedLocation,
+  setStoreMarkers,
+  setStoreDetails,
+} = mapSlice.actions;
 export default mapSlice.reducer;

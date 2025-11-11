@@ -1,14 +1,15 @@
 "use client";
 
 import { useMemo } from "react";
+
 import { useSelector } from "react-redux";
 
 import { cn } from "@/lib/utils";
 import type { RootState } from "@/shared/store";
 import type { StoreFilters } from "@/types/mapTypes";
 
-import { useStoreQuery } from "../api/useStoreQuery";
 import MapStoreCard from "./MapStoreCard";
+import { useStoreQuery } from "../api/useStoreQuery";
 
 interface MapStoreListProps {
   className?: string;
@@ -27,16 +28,21 @@ export default function MapStoreList({ className }: MapStoreListProps) {
   const selectedCategory = useSelector((state: RootState) => state.map.selectedCategory);
   const center = useSelector((state: RootState) => state.map.center);
 
+  /**
+   * 훅 사용을 위한 요청 조건 객체
+   *
+   * React Query 캐시 키로 쓰이기 때문에, 동일한 지역/카테고리/좌표 조합이면 서버를 다시 안 치고 캐싱된 데이터를 곧바로 씀
+   */
   const filters = useMemo<StoreFilters>(
     () => ({
       province: province || undefined,
       district: district || undefined,
       neighborhood: neighborhood || undefined,
       categoryCodes: selectedCategory ? [selectedCategory] : undefined,
-      latitude: center.lat,
-      longitude: center.lng,
+      latitude: center.latitude,
+      longitude: center.longitude,
     }),
-    [province, district, neighborhood, selectedCategory, center.lat, center.lng],
+    [province, district, neighborhood, selectedCategory, center.latitude, center.longitude],
   );
 
   const { data, isLoading, isError } = useStoreQuery(filters);
