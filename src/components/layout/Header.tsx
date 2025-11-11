@@ -31,11 +31,21 @@ export default function Header() {
           </Link>
         </div>
         <div className="flex items-center justify-center">
-          <Link href="/login" className="mx-2">
+          {/* <Link href="/login" className="mx-2">
             <Button className="rounded-md border-[1px] p-2">로그인</Button>
           </Link>
           <Link href="/signup" className="mx-2">
             <Button className="rounded-md border-[1px] p-2">회원가입</Button>
+          </Link> */}
+          <Link href="/write" className="mx-2">
+            <Button className="rounded-2xl border-2 border-orange-300 px-4 hover:border-orange-300 hover:bg-orange-300 hover:font-semibold hover:text-white">
+              글쓰기
+            </Button>
+          </Link>
+          <Link href="/mypage/profile" className="mx-2">
+            <Button className="rounded-2xl border-2 border-orange-300 px-4 hover:border-orange-300 hover:bg-orange-300 hover:font-semibold hover:text-white">
+              {"유저 닉네임"}
+            </Button>
           </Link>
         </div>
       </nav>
