@@ -10,6 +10,31 @@ import type {
 } from "@/types/mapTypes";
 
 /**
+ * 지도 도메인 전용 API 모듈
+ *
+ * - 사용 흐름은 `shared/api/client.ts → features/map/api/mapApi.ts → 도메인 훅(useLocations/useStoreQuery 등) → 컴포넌트`
+ * - client.ts 에서는 base URL, 공통 헤더만 정의하고 여기서는 실제 엔드포인트만 선언
+ * - 다른 도메인에서도 `features/{domain}/api/{domain}Api.ts` 식으로 두면, 호출 구조가 한눈에 들어옴
+ *
+ * 예시)
+ * ```ts
+ * // 1) 공용 apiClient 가져오기
+ * import { apiClient } from "@/shared/api/client";
+ *
+ * // 2) 도메인 API 파일에서 함수 작성
+ * export const getFoo = () => apiClient("/api/foo");
+ *
+ * // 3) 해당 도메인 훅에서 호출
+ * export function useFoo() {
+ *   return useQuery({ queryKey: ["foo"], queryFn: getFoo });
+ * }
+ *
+ * // 4) 컴포넌트에서 훅 사용
+ * const { data } = useFoo();
+ * ```
+ */
+
+/**
  * LocationParams 객체를 URL 쿼리스트링으로 변환합니다.
  *
  * 예:
