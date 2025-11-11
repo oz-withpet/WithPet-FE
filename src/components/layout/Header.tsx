@@ -1,12 +1,12 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import Button from "../common/button/Button";
-
 export default function Header() {
   const pathname = usePathname();
   const isMapActive = /^\/map(\/|$)/.test(pathname);
   const isCutActive = /^\/community(\/|$)/.test(pathname);
+  const isDetailActive = /^\/write(\/|$)/.test(pathname);
+  const isMypageActive = /^\/mypage(\/|$)/.test(pathname);
 
   return (
     <header className="flex h-[60px] w-full items-center justify-center border-b border-b-gray-200 bg-white">
@@ -37,15 +37,19 @@ export default function Header() {
           <Link href="/signup" className="mx-2">
             <Button className="rounded-md border-[1px] p-2">회원가입</Button>
           </Link> */}
-          <Link href="/write" className="mx-2">
-            <Button className="rounded-2xl border-2 border-orange-300 px-4 hover:border-orange-300 hover:bg-orange-300 hover:font-semibold hover:text-white">
-              글쓰기
-            </Button>
+          <Link
+            href="/write"
+            aria-current={isDetailActive ? "page" : undefined}
+            className="mx-2 rounded-2xl border-2 border-orange-300 px-4 py-1 text-gray-900 hover:border-orange-300 hover:bg-orange-300 hover:font-semibold hover:text-white aria-[current=page]:bg-orange-300 aria-[current=page]:font-semibold aria-[current=page]:text-white"
+          >
+            글쓰기
           </Link>
-          <Link href="/mypage/profile" className="mx-2">
-            <Button className="rounded-2xl border-2 border-orange-300 px-4 hover:border-orange-300 hover:bg-orange-300 hover:font-semibold hover:text-white">
-              {"유저 닉네임"}
-            </Button>
+          <Link
+            href="/mypage/profile"
+            aria-current={isMypageActive ? "page" : undefined}
+            className="mx-2 rounded-2xl border-2 border-orange-300 px-4 py-1 text-gray-900 hover:border-orange-300 hover:bg-orange-300 hover:font-semibold hover:text-white aria-[current=page]:bg-orange-300 aria-[current=page]:font-semibold aria-[current=page]:text-white"
+          >
+            {"유저 닉네임"}
           </Link>
         </div>
       </nav>
