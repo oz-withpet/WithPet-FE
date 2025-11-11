@@ -92,7 +92,7 @@ export default function MapContainer() {
             position={{ lat: selectedStore.latitude, lng: selectedStore.longitude }}
             yAnchor={1}
           >
-            <div className="rounded-xl border border-orange-200 bg-white p-3 text-sm shadow-md">
+            <div className="rounded-xl border-2 border-orange-200 bg-white p-3 text-sm shadow-md">
               <div className="mb-1 font-semibold text-gray-900">{selectedStore.name}</div>
               <p className="text-xs text-gray-600">{selectedStore.category}</p>
               {selectedStore.phone && (
@@ -102,7 +102,11 @@ export default function MapContainer() {
                 <p className="text-xs text-gray-500">{selectedStore.address}</p>
               )}
               <div className="mt-2">
-                <Button status="primary" className="px-3 py-1 text-xs" onClick={() => setActiveStoreId(null)}>
+                <Button
+                  status="primary"
+                  className="w-full rounded-[4px] px-3 py-1 text-xs"
+                  onClick={() => setActiveStoreId(null)}
+                >
                   닫기
                 </Button>
               </div>
