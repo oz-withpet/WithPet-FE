@@ -1,10 +1,4 @@
-import type {
-  District,
-  FilterCategory,
-  Neighborhood,
-  Province,
-  Store,
-} from "@/types/mapTypes";
+import type { District, FilterCategory, Neighborhood, Province, Store } from "@/types/mapTypes";
 
 export const provinces: Province[] = [
   { id: "11", name: "서울특별시", code: "SEOUL" },
@@ -53,8 +47,8 @@ export const storeFixtures: Store[] = [
     tags: ["24시간", "주차가능", "예약필수"],
     distance: 0.8,
     thumbnail_url: "https://cdn.withpet.com/stores/1001/thumb.jpg",
-    latitude: 37.4979,
-    longitude: 127.0276,
+    latitude: 37.5532,
+    longitude: 126.9727,
   },
   {
     id: 2001,
@@ -74,8 +68,8 @@ export const storeFixtures: Store[] = [
     tags: ["포토존", "예약가능"],
     distance: 2.4,
     thumbnail_url: "https://cdn.withpet.com/stores/2001/thumb.jpg",
-    latitude: 37.5502,
-    longitude: 126.9121,
+    latitude: 37.5532,
+    longitude: 126.9724,
   },
   {
     id: 3001,
@@ -95,7 +89,7 @@ export const storeFixtures: Store[] = [
     tags: ["스파", "프리미엄"],
     distance: 1.1,
     thumbnail_url: "https://cdn.withpet.com/stores/3001/thumb.jpg",
-    latitude: 37.5112,
-    longitude: 127.0217,
+    latitude: 37.5532,
+    longitude: 126.9722,
   },
 ];
