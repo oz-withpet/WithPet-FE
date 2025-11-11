@@ -1,4 +1,4 @@
-type SVGProps = { size: string; color: string };
+type SVGProps = { size: string; color?: string };
 
 export function searchIconSVG({ size, color }: SVGProps) {
   return (
@@ -25,6 +25,68 @@ export function searchIconSVG({ size, color }: SVGProps) {
           <rect width="24" height="24" fill="white" />
         </clipPath>
       </defs>
+    </svg>
+  );
+}
+
+export function LikeSVG({ size, color }: SVGProps) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M10.925 4.76602L10.45 7.17435C10.35 7.66602 10.4833 8.17435 10.8 8.55768C11.1166 8.94102 11.5833 9.16602 12.0833 9.16602H16.6666V10.066L14.525 14.9993H7.78329C7.63329 14.9993 7.49996 14.866 7.49996 14.716V8.18268L10.925 4.76602ZM11.6666 1.66602L6.32496 7.00768C6.00829 7.32435 5.83329 7.74935 5.83329 8.19102V14.716C5.83329 15.791 6.70829 16.666 7.78329 16.666H14.5333C15.125 16.666 15.6666 16.3577 15.9666 15.8577L18.1916 10.7327C18.2833 10.5243 18.3333 10.2993 18.3333 10.066V9.16602C18.3333 8.24935 17.5833 7.49935 16.6666 7.49935H12.0833L12.85 3.62435C12.8916 3.44102 12.8666 3.24102 12.7833 3.07435C12.5916 2.69935 12.35 2.35768 12.05 2.05768L11.6666 1.66602ZM3.33329 7.49935H1.66663V16.666H3.33329C3.79163 16.666 4.16663 16.291 4.16663 15.8327V8.33268C4.16663 7.87435 3.79163 7.49935 3.33329 7.49935Z"
+        fill={color}
+      />
+    </svg>
+  );
+}
+
+export function UserSVG({ size }: SVGProps) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g clip-path="url(#clip0_572_938)">
+        <g clip-path="url(#clip1_572_938)">
+          <path
+            d="M8 0C3.584 0 0 3.584 0 8C0 12.416 3.584 16 8 16C12.416 16 16 12.416 16 8C16 3.584 12.416 0 8 0ZM8 2.4C9.328 2.4 10.4 3.472 10.4 4.8C10.4 6.128 9.328 7.2 8 7.2C6.672 7.2 5.6 6.128 5.6 4.8C5.6 3.472 6.672 2.4 8 2.4ZM8 13.76C6 13.76 4.232 12.736 3.2 11.184C3.224 9.592 6.4 8.72 8 8.72C9.592 8.72 12.776 9.592 12.8 11.184C11.768 12.736 10 13.76 8 13.76Z"
+            fill="#CFCECE"
+          />
+        </g>
+      </g>
+      <defs>
+        <clipPath id="clip0_572_938">
+          <rect width="16" height="16" fill="white" />
+        </clipPath>
+        <clipPath id="clip1_572_938">
+          <rect width="16" height="16" fill="white" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+}
+export function HeartSVG({ size, color }: SVGProps) {
+  return (
+    <svg
+      width={size}
+      height={Math.round(Number(size) * 0.9)}
+      viewBox="0 0 20 18"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M9.75046 18L9.32858 17.7188C7.32327 16.3795 4.78593 14.8659 2.90671 12.6412C0.926239 10.2975 -0.0239179 7.89047 0.000457142 5.28187C0.0299884 2.36906 2.36577 0 5.20733 0C7.46249 0 8.96202 1.3125 9.75046 2.25984C10.5389 1.3125 12.0384 0 14.2936 0C17.1351 0 19.4709 2.36906 19.5005 5.28047C19.5267 7.89047 18.5766 10.2961 16.5942 12.6398C14.715 14.8659 12.1776 16.3795 10.1723 17.7188L9.75046 18Z"
+        fill={color}
+      />
     </svg>
   );
 }
