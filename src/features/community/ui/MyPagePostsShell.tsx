@@ -64,7 +64,15 @@ export default function MyPagePostsShell({ category }: { category: Category }) {
         {Array(4)
           .fill("")
           .map((el) => (
-            <PostItem key={el} title={category} />
+            <PostItem
+              key={el}
+              category={category}
+              title="제목"
+              content=""
+              user="작성자"
+              comment={0}
+              ago={0}
+            />
           ))}
       </div>
     </div>

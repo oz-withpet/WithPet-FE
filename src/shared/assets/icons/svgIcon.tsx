@@ -1,4 +1,4 @@
-type SVGProps = { size: string; color: string };
+type SVGProps = { size: string; color?: string };
 
 export function searchIconSVG({ size, color }: SVGProps) {
   return (
@@ -46,7 +46,7 @@ export function LikeSVG({ size, color }: SVGProps) {
   );
 }
 
-export function UserSVG({ size, color }: SVGProps) {
+export function UserSVG({ size }: SVGProps) {
   return (
     <svg
       width={size}
@@ -59,7 +59,7 @@ export function UserSVG({ size, color }: SVGProps) {
         <g clip-path="url(#clip1_572_938)">
           <path
             d="M8 0C3.584 0 0 3.584 0 8C0 12.416 3.584 16 8 16C12.416 16 16 12.416 16 8C16 3.584 12.416 0 8 0ZM8 2.4C9.328 2.4 10.4 3.472 10.4 4.8C10.4 6.128 9.328 7.2 8 7.2C6.672 7.2 5.6 6.128 5.6 4.8C5.6 3.472 6.672 2.4 8 2.4ZM8 13.76C6 13.76 4.232 12.736 3.2 11.184C3.224 9.592 6.4 8.72 8 8.72C9.592 8.72 12.776 9.592 12.8 11.184C11.768 12.736 10 13.76 8 13.76Z"
-            fill={color}
+            fill="#CFCECE"
           />
         </g>
       </g>
