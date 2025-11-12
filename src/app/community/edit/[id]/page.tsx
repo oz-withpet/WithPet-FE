@@ -1,7 +1,5 @@
+import PostForm from "@/features/community/post/PostForm";
+
 export default function EditPage() {
-  return (
-    <>
-      <>수정 페이지</>
-    </>
-  );
+  return <PostForm />;
 }
