@@ -35,9 +35,9 @@ export default function CommentForm() {
             </div>
             <div className="py-3">{el.comment}</div>
             <div className="flex w-main justify-end">
-              <button className="rounded-2xl border border-orange-300 px-3 py-1 text-xs hover:cursor-pointer hover:bg-orange-300 hover:font-semibold hover:text-white">
+              <div className="rounded-2xl border border-orange-300 px-3 py-1 text-xs hover:cursor-pointer hover:bg-orange-300 hover:font-semibold hover:text-white">
                 수정하기
-              </button>
+              </div>
               <button className="ml-2 rounded-2xl border border-red-600 px-3 py-1 text-xs hover:cursor-pointer hover:bg-red-600 hover:font-semibold hover:text-white">
                 삭제하기
               </button>
