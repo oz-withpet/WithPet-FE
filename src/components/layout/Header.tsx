@@ -1,12 +1,14 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import Button from "../common/button/Button";
+// import Button from "../common/button/Button";
 
 export default function Header() {
   const pathname = usePathname();
   const isMapActive = /^\/map(\/|$)/.test(pathname);
   const isCutActive = /^\/community(\/|$)/.test(pathname);
+  const isWriteActive = /^\/community\/write(\/|$)/.test(pathname);
+  const isMypageActive = /^\/mypage(\/|$)/.test(pathname);
 
   return (
     <header className="flex h-[60px] w-full items-center justify-center border-b border-b-gray-200 bg-white">
@@ -31,12 +33,28 @@ export default function Header() {
           </Link>
         </div>
         <div className="flex items-center justify-center">
-          <Link href="/login" className="mx-2">
-            <Button className="rounded-md border-[1px] p-2">로그인</Button>
+          {/* 로그인 경우 */}
+          <Link
+            href="/community/write"
+            aria-current={isWriteActive ? "page" : undefined}
+            className="mx-2 rounded-2xl border-2 border-orange-300 px-4 py-1 text-gray-900 hover:border-orange-300 hover:bg-orange-300 hover:font-semibold hover:text-white aria-[current=page]:bg-orange-300 aria-[current=page]:font-semibold aria-[current=page]:text-white"
+          >
+            글쓰기
           </Link>
-          <Link href="/signup" className="mx-2">
-            <Button className="rounded-md border-[1px] p-2">회원가입</Button>
+          <Link
+            href="/mypage/profile"
+            aria-current={isMypageActive ? "page" : undefined}
+            className="mx-2 rounded-2xl border-2 border-orange-300 px-4 py-1 text-gray-900 hover:border-orange-300 hover:bg-orange-300 hover:font-semibold hover:text-white aria-[current=page]:bg-orange-300 aria-[current=page]:font-semibold aria-[current=page]:text-white"
+          >
+            {"유저 닉네임"}
           </Link>
+          {/* 비로그인일 경우 */}
+          {/* <Link href="/login" className="mx-2">
+                <Button className="rounded-md border-[1px] p-2">로그인</Button>
+              </Link>
+              <Link href="/signup" className="mx-2">
+                <Button className="rounded-md border-[1px] p-2">회원가입</Button>
+              </Link> */}
         </div>
       </nav>
     </header>

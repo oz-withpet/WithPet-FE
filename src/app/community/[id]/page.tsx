@@ -1,9 +1,7 @@
-// 상세페이지, 자유롭게 수정하세요!!!
+"use client";
+
+import PostDetailShell from "@/features/community/detail/PostDetailShell";
 
 export default function PostDetailPage() {
-  return (
-    <>
-      <></>
-    </>
-  );
+  return <PostDetailShell />;
 }

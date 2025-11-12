@@ -1,7 +1,7 @@
 import { searchIconSVG } from "@/shared/assets/icons/svgIcon";
 import { Category } from "@/types/category";
 
-import PostItem from "../../../components/common/cards/PostItem";
+import PostItem from "../../components/common/cards/PostItem";
 
 export default function MyPagePostsShell({ category }: { category: Category }) {
   return (
