@@ -1,9 +1,5 @@
-import LoginForm from "@/features/login/loginform";
+import LoginForm from "@/features/login/ui/LoginForm";
 
 export default function LoginPage() {
-  return (
-    <main className="">
-      <LoginForm />
-    </main>
-  );
+  return <LoginForm />;
 }
