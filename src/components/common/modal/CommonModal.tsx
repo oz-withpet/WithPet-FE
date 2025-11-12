@@ -1,7 +1,3 @@
-"use client";
-
-import * as React from "react";
-
 type Variant = "default" | "success" | "error";
 
 export type ConfirmModalProps = {
