@@ -1,25 +1,27 @@
 "use client";
 
+import { store } from "@/shared/store";
+
+// 기본 URL
+// 환경변수에 들어온 주소를 우선 사용하고 없으면 운영 서버 주소를 기본값으로 둔다
 const BACKEND_BASE_URL =
   process.env.NEXT_PUBLIC_BACKEND_API_URL?.replace(/\/$/, "") ?? "https://oz-withpet.kro.kr";
 
-/**
- * 인증 여부, 요청 본문 타입 등을 제어할 수 있는 fetch 옵션
- *
- * - 인증 필요 여부 (기본값: private)
- * - 요청 본문 타입 (기본값: json)
- */
-interface BackendClientOptions extends RequestInit {
+// 옵션정의
+// 인증 여부나 바디 타입 정보까지 RequestInit에 얹어서 재사용 API마다 간단히 설정 가능
+export interface BackendClientOptions extends RequestInit {
   auth?: "public" | "private";
   bodyType?: "json" | "form";
 }
 
+export interface BackendError extends Error {
+  status: number;
+  body?: unknown;
+}
+
 /**
- * 백엔드 API용 fetch 클라이언트
- *
- * - 기본: JSON 요청 + 인증 포함(`credentials: include`)
- * - FormData 전송이나 비인증 요청은 옵션으로 제어 가능
- * - 에러 발생 시 콘솔에 상태 코드 출력
+ * @@백엔드클라이언트
+ * 경로만 넘기면 헤더, 인증, 오류 파싱까지 한 번에 처리되는 fetch 래퍼
  */
 export async function backendClient<T>(
   path: string,
@@ -27,19 +29,18 @@ export async function backendClient<T>(
 ): Promise<T> {
   const url = `${BACKEND_BASE_URL}${path.startsWith("/") ? path : `/${path}`}`;
 
-  // 기본 헤더 세팅
   const reqHeaders: Record<string, string> = {
     ...(bodyType === "json" ? { "Content-Type": "application/json" } : {}),
     ...(headers as Record<string, string>),
   };
 
-  // 인증이 필요한 요청이면 토큰 추가
   if (auth === "private") {
-    const token = localStorage.getItem("accessToken");
+    // 인증헤더
+    // Redux에 유지 중인 액세스 토큰을 바로 읽어서 Authorization 헤더에 붙임 (httpOnly 쿠키는 브라우저가 알아서 포함)
+    const token = store.getState().auth.tokens?.accessToken;
     if (token) reqHeaders["Authorization"] = `Bearer ${token}`;
   }
 
-  // fetch 요청 실행
   const response = await fetch(url, {
     credentials: auth === "private" ? "include" : "omit",
     headers: reqHeaders,
@@ -47,23 +48,37 @@ export async function backendClient<T>(
     ...rest,
   });
 
-  // 응답 상태 코드 체크
+  // 바디파싱
+  // 서버가 JSON을 내려주지 않아도 디버깅할 수 있게 문자열도 그대로 반환
+  const parseBody = async () => {
+    const contentType = response.headers.get("content-type") ?? "";
+    if (contentType.includes("application/json")) {
+      return response.json();
+    }
+    const rawText = await response.text();
+    try {
+      return JSON.parse(rawText);
+    } catch {
+      return rawText;
+    }
+  };
+
   if (!response.ok) {
-    console.error("Backend API Error:", response.status, response.statusText);
-    throw new Error(`Backend API Error: ${response.status}`);
+    const err = new Error(`Backend API Error: ${response.status}`) as BackendError;
+    err.status = response.status;
+    try {
+      err.body = await parseBody();
+    } catch {
+      err.body = null;
+    }
+    throw err;
   }
 
-  // 204(No Content) 처리
+  // 바디 없는경우
+  // 204면 바디가 없으니 undefined를 그대로 돌려서 호출부에서 추가 파싱을 피함
   if (response.status === 204) {
     return undefined as T;
   }
 
-  // JSON 파싱 (content-type 안전 확인)
-  const contentType = response.headers.get("content-type");
-  if (contentType && contentType.includes("application/json")) {
-    return (await response.json()) as T;
-  }
-
-  // JSON 이외 응답(text 등)
-  return (await response.text()) as unknown as T;
+  return (await parseBody()) as T;
 }

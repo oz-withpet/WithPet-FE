@@ -19,7 +19,7 @@ export default function RootLayout({
 
   return (
     <html lang="ko">
-      <body className="bg-background text-gray-100">
+      <body className="flex min-h-screen flex-col bg-background text-gray-100">
         <QueryProvider>
           <ConfirmProvider>
             <ReduxProvider>
@@ -28,7 +28,7 @@ export default function RootLayout({
                 {pathname.includes("community/category") && <CommonMainNav page="community" />}
                 {pathname.includes("mypage") && <CommonSubNav />}
                 {pathname.includes("mypage/posts") && <CommonMainNav page="mypage" />}
-                <main className="m-auto w-full max-w-layout">{children}</main>
+                <main className="mx-auto w-full max-w-layout flex-1">{children}</main>
               </MSWProvider>
             </ReduxProvider>
           </ConfirmProvider>
