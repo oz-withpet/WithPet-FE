@@ -1,8 +1,7 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import PostDetailShell from "@/features/community/detail/PostDetailShell";
 
 export default function PostDetailPage() {
-  const pathname = usePathname();
-  return <div className="text-8xl font-bold text-gray-900">{pathname}</div>;
+  return <PostDetailShell />;
 }
