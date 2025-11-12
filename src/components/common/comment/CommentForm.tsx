@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import { DUMMY_COMMENTS } from "@/mocks/data/mapData";
+import { DUMMY_COMMENTS } from "@/mocks/data/comments";
 
 export default function CommentForm() {
   return (

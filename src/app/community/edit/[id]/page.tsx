@@ -1,5 +1,5 @@
-import PostForm from "@/features/community/post/PostForm";
+import EditPostForm from "@/features/community/post-edit/EditPostForm";
 
 export default function EditPage() {
-  return <PostForm />;
+  return <EditPostForm />;
 }

@@ -6,7 +6,7 @@ import { useParams } from "next/navigation";
 
 import CommentForm from "@/components/common/comment/CommentForm";
 import { getCategoryLabelSafe } from "@/components/common/modal/category";
-import { DUMMY_POST_DETAILS } from "@/mocks/data/mapData";
+import { DUMMY_POST_DETAILS } from "@/mocks/data/postDetails";
 import { LikeSVG } from "@/shared/assets/icons/svgIcon";
 
 export default function PostDetailPage() {

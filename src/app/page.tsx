@@ -1,5 +1,5 @@
 import MainCard from "@/components/common/cards/MainCard";
-import { DUMMY_MAIN_POSTS } from "@/mocks/data/mapData";
+import { DUMMY_MAIN_POSTS } from "@/mocks/data/post";
 
 export default function Home() {
   return (

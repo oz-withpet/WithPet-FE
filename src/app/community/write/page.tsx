@@ -1,5 +1,5 @@
-import PostForm from "@/features/community/post/PostForm";
+import CreatePostForm from "@/features/community/post-create/CreatePostForm";
 
 export default function WritePage() {
-  return <PostForm />;
+  return <CreatePostForm />;
 }
