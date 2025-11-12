@@ -5,7 +5,19 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { SignupFormValues } from "@/types/singup";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
+import {
+  DialogHeader,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+} from "@/components/ui/dialog";
+
 export default function SignupForm() {
+  // 모달 상태
+  const [modalOpen, setModalOpen] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -34,10 +46,6 @@ export default function SignupForm() {
     /*제출*/
   }
   const onSubmit = (values: SignupFormValues) => {
-    if (values.password !== values.passwordConfirm) {
-      // 교차검증은 rules에도 있지만, 리마인드용으로 안전하게 한 번 더 체크해도 OK
-      return alert("비밀번호가 일치하지 않습니다.");
-    }
     const pets: Array<"dog" | "cat"> = [];
     if (values.petDog) pets.push("dog");
     if (values.petCat) pets.push("cat");
@@ -55,7 +63,7 @@ export default function SignupForm() {
     };
 
     console.log("payload", payload);
-    alert("유효성 통과! (콘솔 확인)");
+    setModalOpen(true); // 회원가입 버튼 클릭 시 환영 모달도 오픈
   };
   // “전체 동의” 토글
   const agreeTerms = watch("agreeTerms");
@@ -346,6 +354,29 @@ export default function SignupForm() {
             </Button>
           </div>
         </form>
+        <Dialog open={modalOpen} onOpenChange={setModalOpen}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>🎉 회원가입 완료</DialogTitle>
+              <DialogDescription>
+                {watch("userName")}님의 가입이 성공적으로 처리되었습니다!
+              </DialogDescription>
+            </DialogHeader>
+
+            <div className="mt-4 text-gray-900">
+              <p>로그인 페이지로 이동하시겠습니까?</p>
+            </div>
+
+            <div className="mt-4 flex justify-end">
+              <button
+                onClick={() => setModalOpen(false)}
+                className="rounded bg-green-500 p-2 text-white"
+              >
+                확인
+              </button>
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
     </section>
   );
