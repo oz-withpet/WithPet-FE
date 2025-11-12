@@ -1,11 +1,10 @@
 "use client";
 
-import Button from "@/components/common/button/Button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { SignupFormValues } from "@/types/singup";
-import { useForm } from "react-hook-form";
 import { useState } from "react";
+
+import { useForm } from "react-hook-form";
+
+import Button from "@/components/common/button/Button";
 import {
   DialogHeader,
   Dialog,
@@ -13,6 +12,9 @@ import {
   DialogDescription,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { SignupFormValues } from "@/types/singup";
 
 export default function SignupForm() {
   // 모달 상태
@@ -62,7 +64,6 @@ export default function SignupForm() {
       agreed: { terms: values.agreeTerms, privacy: values.agreePrivacy },
     };
 
-    console.log("payload", payload);
     setModalOpen(true); // 회원가입 버튼 클릭 시 환영 모달도 오픈
   };
   // “전체 동의” 토글
