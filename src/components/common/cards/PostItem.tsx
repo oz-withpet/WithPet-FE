@@ -3,6 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { toRelativeKorean } from "@/lib/relativeTime";
+
 import { getCategoryLabelSafe } from "../modal/category";
 
 type PostItemProps = {
@@ -60,7 +62,7 @@ export default function PostItem(pr: PostItemProps) {
           <div className="ml-1">{pr.user.name}</div>
         </div>
         <div className="mx-3 p-2">댓글: {pr.commentNum}</div>
-        <div className="p-2">{pr.createdAt}일 전</div>
+        <div className="p-2">{toRelativeKorean(pr.createdAt)}</div>
       </div>
     </Link>
   );
