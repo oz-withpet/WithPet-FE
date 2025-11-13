@@ -1,13 +1,13 @@
 // 플러그인 import
-import tsParser from "@typescript-eslint/parser";
 import tsPlugin from "@typescript-eslint/eslint-plugin";
-import importPlugin from "eslint-plugin-import";
-import unusedImportsPlugin from "eslint-plugin-unused-imports";
-import reactHooksPlugin from "eslint-plugin-react-hooks";
-import tailwindPlugin from "eslint-plugin-tailwindcss";
+import tsParser from "@typescript-eslint/parser";
 import { defineConfig, globalIgnores } from "eslint/config";
 import nextVitals from "eslint-config-next/core-web-vitals";
 import nextTs from "eslint-config-next/typescript";
+import importPlugin from "eslint-plugin-import";
+import reactHooksPlugin from "eslint-plugin-react-hooks";
+import tailwindPlugin from "eslint-plugin-tailwindcss";
+import unusedImportsPlugin from "eslint-plugin-unused-imports";
 
 export default defineConfig([
   ...nextVitals,
