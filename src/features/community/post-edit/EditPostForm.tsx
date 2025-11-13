@@ -1,46 +1,41 @@
 "use client";
 
-import { notFound, useRouter, useParams } from "next/navigation";
+import { useMemo } from "react";
 
+import { useParams } from "next/navigation";
+
+import { toInitialValues } from "@/lib/toInitialValues";
 import { DUMMY_POST_DETAILS } from "@/mocks/data/postDetails";
-import { PostFormValues } from "@/types/community";
+import type { PostFormValues } from "@/types/community";
 
 import PostForm from "../post/PostForm";
 
-// 임시방편
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function toFormValues(detail: any): PostFormValues {
-  return {
-    title: detail.title ?? "",
-    comment: detail.comment ?? "",
-    category: detail.category ?? "free",
-    images: detail.image ? [detail.image] : [],
+export default function Page() {
+  const params = useParams<{ id: string }>();
+  const id = Number(params.id);
+
+  const initialValues = useMemo(() => {
+    const detail = DUMMY_POST_DETAILS.find((p) => p.id === id);
+    return toInitialValues(detail ?? {});
+  }, [id]);
+
+  const onSubmit = async (values: PostFormValues) => {
+    const fd = new FormData();
+    fd.append("title", values.title);
+    fd.append("content", values.content);
+    fd.append("category", values.category);
+    values.keepImages?.forEach((u) => fd.append("keepImages[]", u));
+    values.images?.forEach((f) => fd.append("newImages", f));
+
+    await fetch(`/api/posts/${id}`, { method: "PUT", body: fd });
   };
-}
 
-export default function EditPostForm() {
-  const router = useRouter();
-  const params = useParams();
-  // const { id } = param; // 실제 api 사용시
-  const detail = DUMMY_POST_DETAILS.find((p) => String(p.id) === params.id);
-  if (!detail) return notFound();
-
-  const initial = toFormValues(detail);
+  const onDelete = async () => {
+    await fetch(`/api/posts/${id}`, { method: "DELETE" });
+    // 라우팅 등 후처리
+  };
 
   return (
-    <PostForm
-      mode="edit"
-      postId={String(params.id)}
-      initialValues={initial}
-      onSubmit={async () => {
-        // await updatePost(id, v);
-        router.replace(`/community/${String(params.id)}`);
-      }}
-      onDelete={async () => {
-        // await deletePost(id);
-        router.replace(`/community`);
-      }}
-      submitLabel="수정하기"
-    />
+    <PostForm mode="edit" initialValues={initialValues} onSubmit={onSubmit} onDelete={onDelete} />
   );
 }

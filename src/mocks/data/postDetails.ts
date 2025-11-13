@@ -19,7 +19,7 @@ export const DUMMY_POST_DETAILS: PostDetailMock[] = [
     title: "첫 산책 코스 추천해주세요",
     content:
       "강아지랑 한강 산책 가려는데 코스 추천 부탁드려요! 초보라 코스 거리/난이도도 함께 알려주시면 감사해요.",
-    user: { name: "puppylover", thumbnail: "https://placedog.net/100/100?id=1" },
+    user: { name: "퍼피러버", thumbnail: "https://placedog.net/100/100?id=1" },
     createdAt: "2025-11-12T10:12:00+09:00",
     likeCount: 12,
     liked: true,
@@ -36,7 +36,7 @@ export const DUMMY_POST_DETAILS: PostDetailMock[] = [
     title: "고양이 모래 종류 무엇이 좋을까요?",
     content:
       "먼지 적고 냄새 잘 잡는 모래 찾고 있어요. 콩비드/벤토나이트/두부모래 중에 추천 부탁합니다.",
-    user: { name: "catmom", thumbnail: "https://cataas.com/cat?width=100&height=100&ts=2" },
+    user: { name: "캣맘", thumbnail: "https://cataas.com/cat?width=100&height=100&ts=2" },
     createdAt: "2025-11-12T08:45:00+09:00",
     likeCount: 5,
     liked: false,
