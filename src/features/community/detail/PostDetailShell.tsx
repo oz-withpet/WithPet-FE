@@ -32,17 +32,22 @@ export default function PostDetailPage() {
         </div>
       </div>
 
-      <div className="w-full py-6 text-base">{data?.comment}</div>
+      <div className="w-full py-6 text-base">{data?.content}</div>
 
       <div className="">
         {data?.image ? (
-          <Image
-            src={data?.image}
-            width={300}
-            height={300}
-            alt={data.title ?? "image"}
-            className="w-[300px] object-contain"
-          />
+          <>
+            {data.image.map((el) => (
+              <Image
+                key={el}
+                src={el}
+                width={300}
+                height={300}
+                alt={data.title ?? "image"}
+                className="mb-3 w-[300px] object-contain"
+              />
+            ))}
+          </>
         ) : (
           <div className="h-[300px] w-[300px] rounded bg-gray-100" aria-label="no image" />
         )}

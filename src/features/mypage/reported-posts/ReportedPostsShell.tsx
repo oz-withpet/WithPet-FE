@@ -8,13 +8,16 @@ export default function ReportedPostsShell() {
           .fill("")
           .map((el, i) => (
             <PostItem
-              category="자유게시판"
-              title="제목"
-              content="블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라"
-              user="작성자"
-              comment={0}
-              ago={0}
               key={i}
+              category="FREE"
+              title="신고된 게시글 제목"
+              content="신고된 게시글 내용"
+              user={{ thumbnail: "/images/sample/profile1.png", name: "작성자" }}
+              id={i}
+              image={["/images/sample/post1.png"]}
+              liked={false}
+              commentNum={0}
+              createdAt="2023-06-01T12:00:00Z"
             />
           ))}
       </div>

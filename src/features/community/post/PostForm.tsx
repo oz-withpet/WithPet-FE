@@ -9,20 +9,29 @@ import { PostFormProps, PostFormValues } from "@/types/community";
 export default function PostForm(props: PostFormProps) {
   const isEdit = props.mode === "edit";
 
-  const [values, setValues] = useState<PostFormValues>({
+  // 텍스트/카테고리
+  const [values, setValues] = useState<Omit<PostFormValues, "keepImages" | "images">>({
     title: props.initialValues?.title ?? "",
-    comment: props.initialValues?.comment ?? "",
+    content: props.initialValues?.content ?? "",
     category: props.initialValues?.category ?? "free",
-    images: props.initialValues?.images ?? [],
   });
+
+  // 이미지: 기존(URL/ID) + 신규(File[])
+  const [keepImages, setKeepImages] = useState<string[]>(props.initialValues?.images ?? []);
+  const [newImages, setNewImages] = useState<File[]>([]);
 
   const submitText = props.submitLabel ?? (isEdit ? "수정하기" : "작성하기");
 
-  const onChange = (patch: Partial<PostFormValues>) => setValues((prev) => ({ ...prev, ...patch }));
+  const onChange = (patch: Partial<typeof values>) => setValues((prev) => ({ ...prev, ...patch }));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await props.onSubmit(values);
+    const submitValues: PostFormValues = {
+      ...values,
+      keepImages,
+      images: newImages,
+    };
+    await props.onSubmit(submitValues);
   };
 
   return (
@@ -46,17 +55,17 @@ export default function PostForm(props: PostFormProps) {
           />
         </div>
       </div>
-      {/* comment */}
+      {/* content */}
       <div className="my-4">
-        <label htmlFor="comment" className="flex items-center text-lg">
+        <label htmlFor="content" className="flex items-center text-lg">
           내용
           <span className="ml-1 text-red-500">*</span>
         </label>
         <textarea
           name="comment"
           required
-          value={values.comment}
-          onChange={(e) => onChange({ comment: e.target.value })}
+          value={values.content}
+          onChange={(e) => onChange({ content: e.target.value })}
           className="h-[300px] w-main rounded-lg border p-2"
           placeholder="5자 이상 내용을 입력해주세요."
         />
@@ -67,26 +76,34 @@ export default function PostForm(props: PostFormProps) {
           <div className="">첨부파일</div>
           <div className="ml-2 text-xs text-gray-300">* 첫 이미지가 썸네일으로 들어갑니다.</div>
         </label>
-        <ImagePicker />
+        <ImagePicker
+          initialUrls={keepImages} // 기존 이미지 보여주기
+          onInitialRemove={(url) => setKeepImages((arr) => arr.filter((u) => u !== url))}
+          onChange={(files) => setNewImages(files)} // 새 파일(File[]) 받기
+          maxFiles={Math.max(0, 5 - keepImages.length)} // 총 5장 제한 유지
+          accept="image/*"
+        />
       </div>
       <div className="flex w-main justify-center">
-        <button className="rounded-3xl border-2 border-orange-300 bg-white px-16 py-2 hover:cursor-pointer hover:bg-orange-300 hover:font-semibold hover:text-white">
-          {submitText}
-        </button>
-        {props.onCancel && (
-          <button type="button" onClick={props.onCancel} className="rounded border px-4 py-2">
-            취소
+        <div>
+          <button className="rounded-3xl border-2 border-orange-300 bg-white px-16 py-2 hover:cursor-pointer hover:bg-orange-300 hover:font-semibold hover:text-white">
+            {submitText}
           </button>
-        )}
-        {isEdit && props.onDelete && (
-          <button
-            type="button"
-            onClick={props.onDelete}
-            className="ml-auto rounded border px-4 py-2 text-red-600"
-          >
-            삭제
-          </button>
-        )}
+          {props.onCancel && (
+            <button type="button" onClick={props.onCancel} className="rounded border px-4 py-2">
+              취소
+            </button>
+          )}
+          {isEdit && props.onDelete && (
+            <button
+              type="button"
+              onClick={props.onDelete}
+              className="ml-3 cursor-pointer rounded-3xl border-2 border-orange-300 bg-white px-16 py-2 text-red-600 hover:border-red-600 hover:bg-red-600 hover:font-semibold hover:text-white"
+            >
+              삭제
+            </button>
+          )}
+        </div>
       </div>
     </form>
   );

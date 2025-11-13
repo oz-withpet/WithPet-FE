@@ -1,11 +1,8 @@
 import { searchIconSVG } from "@/shared/assets/icons/svgIcon";
-import { Category } from "@/types/category";
 
-import PostItem from "../../components/common/cards/PostItem";
-
-export default function MyPagePostsShell({ category }: { category: Category }) {
+export default function CommunitySearch() {
   return (
-    <div className="mx-auto flex w-main flex-col items-center">
+    <div>
       <div className="flex w-full items-center justify-center p-6">
         <div className="flex w-main items-center justify-center">
           <select
@@ -58,25 +55,6 @@ export default function MyPagePostsShell({ category }: { category: Category }) {
             조회순
           </label>
         </div>
-      </div>
-
-      <div className="flex w-main flex-col items-center">
-        {Array(4)
-          .fill("")
-          .map((el) => (
-            <PostItem
-              key={el}
-              category={category}
-              title="제목"
-              content=""
-              user={{ thumbnail: "/images/sample/profile1.png", name: "작성자" }}
-              id={1}
-              image={["/images/sample/post1.png"]}
-              liked={false}
-              commentNum={0}
-              createdAt="2023-06-01T12:00:00Z"
-            />
-          ))}
       </div>
     </div>
   );

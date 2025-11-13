@@ -2,13 +2,17 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 
 type ImagePickerProps = {
-  name?: string; // form 전송용 name (기본: images)
+  name?: string; // form 전송용 name (정보용)
   multiple?: boolean;
-  maxFiles?: number;
+  maxFiles?: number; // 이번에 선택 가능한 파일 수 (부모가 keepImages 고려해서 내려줌)
   maxSizeMB?: number;
-  accept?: string; // "image/*"
-  onChange?: (files: File[]) => void;
+  accept?: string; // 예: "image/*"
+  onChange?: (files: File[]) => void; // 새로 선택된 파일(File[]) 콜백
   className?: string;
+
+  // 🔽 추가: 기존(서버) 이미지 표시/삭제
+  initialUrls?: string[];
+  onInitialRemove?: (url: string) => void;
 };
 
 export default function ImagePicker({
@@ -19,6 +23,8 @@ export default function ImagePicker({
   accept = "image/*",
   onChange,
   className,
+  initialUrls = [],
+  onInitialRemove,
 }: ImagePickerProps) {
   const [files, setFiles] = useState<File[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -34,7 +40,7 @@ export default function ImagePicker({
   const handleFiles = (incoming: FileList | null) => {
     if (!incoming) return;
     const next = [...files];
-    const limit = maxFiles - next.length;
+    const limit = Math.max(0, maxFiles - next.length);
     for (const f of Array.from(incoming).slice(0, limit)) {
       if (!f.type.startsWith("image/")) continue;
       if (f.size > maxSizeMB * 1024 * 1024) continue;
@@ -50,6 +56,7 @@ export default function ImagePicker({
   };
 
   const removeAt = (idx: number) => {
+    URL.revokeObjectURL(previews[idx]); // 메모리 누수 방지
     const next = files.filter((_, i) => i !== idx);
     setFiles(next);
     onChange?.(next);
@@ -57,6 +64,28 @@ export default function ImagePicker({
 
   return (
     <div className={className}>
+      {/* 기존(서버) 이미지 미리보기 */}
+      {initialUrls.length > 0 && (
+        <ul className="mb-3 grid grid-cols-3 gap-2">
+          {initialUrls.map((url) => (
+            <li key={url} className="relative">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={url} alt="" className="h-24 w-full rounded object-cover" />
+              {onInitialRemove && (
+                <button
+                  type="button"
+                  onClick={() => onInitialRemove(url)}
+                  className="absolute right-1 top-1 rounded bg-black/60 px-2 py-0.5 text-xs text-white"
+                >
+                  삭제
+                </button>
+              )}
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {/* 숨겨진 파일 입력 */}
       <input
         ref={inputRef}
         type="file"
@@ -66,6 +95,7 @@ export default function ImagePicker({
         hidden
         onChange={(e) => handleFiles(e.currentTarget.files)}
       />
+
       {/* 드롭존 */}
       <div
         onClick={pick}
@@ -79,12 +109,11 @@ export default function ImagePicker({
         </span>
       </div>
 
-      {/* 미리보기 */}
+      {/* 새로 고른 파일 미리보기 */}
       {files.length > 0 && (
         <ul className="mt-3 grid grid-cols-3 gap-2">
           {previews.map((src, i) => (
             <li key={src} className="relative">
-              {/* 미리보기는 <img>로, 업로드는 FormData로 file 자체가 전송됨 */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={src} alt="" className="h-24 w-full rounded object-cover" />
               <button
