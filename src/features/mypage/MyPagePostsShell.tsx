@@ -71,7 +71,7 @@ export default function MyPagePostsShell({ category }: { category: Category }) {
               content=""
               user={{ thumbnail: "/images/sample/profile1.png", name: "작성자" }}
               id={1}
-              image={["/images/sample/post1.png"]}
+              images={["/images/sample/post1.png"]}
               liked={false}
               commentNum={0}
               createdAt="2023-06-01T12:00:00Z"

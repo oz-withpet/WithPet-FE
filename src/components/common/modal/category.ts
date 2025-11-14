@@ -1,4 +1,3 @@
-// src/entities/community/model/category.ts
 export const CATEGORY_LABELS = {
   free: "자유게시판",
   qna: "질문게시판",

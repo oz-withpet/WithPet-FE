@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import Button from "@/components/common/button/Button";
-import { useConfirm } from "@/components/common/modal/Modal";
+import { useConfirm } from "@/providers/ConfirmProvider";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { isLoginErrorResponse, isLoginSuccessResponse } from "@/types/login";

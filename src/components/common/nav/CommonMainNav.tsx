@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -14,7 +16,7 @@ const CATEGORY_LABELS = {
 
 const PAGE_CONFIG = {
   community: { base: "community", segment: "category" },
-  mypage: { base: "mypage", segment: "posts" },
+  mypage: { base: "mypage", segment: "myPosts" },
 };
 
 function buildHref(page: PageName, slug: Category) {

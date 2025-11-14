@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 
-import { useConfirm } from "@/components/common/modal/Modal";
+import { useConfirm } from "@/providers/ConfirmProvider";
 
 export default function MypageProfileForm() {
   const confirm = useConfirm();
