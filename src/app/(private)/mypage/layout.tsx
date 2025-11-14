@@ -20,7 +20,7 @@ export default function MyPageLayout({
   return (
     <>
       <CommonSubNav />
-      {children}
+      <div className="flex items-center justify-center">{children}</div>
     </>
   );
 }
