@@ -14,9 +14,24 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  checkNicknameAvailability,
+  sendEmailCode,
+  verifyEmailCode,
+} from "@/features/signup/api/signupApi";
 import { SignupFormValues } from "@/types/singup";
 
 export default function SignupForm() {
+  // 닉네임 / 이메일 인증 관련 상태
+  const [isCheckingNickname, setIsCheckingNickname] = useState(false);
+  const [isNicknameOk, setIsNicknameOk] = useState(false);
+
+  const [isSendingCode, setIsSendingCode] = useState(false);
+  const [isVerifyingCode, setIsVerifyingCode] = useState(false);
+
+  const [requestId, setRequestId] = useState<string | null>(null);
+  const [verificationToken, setVerificationToken] = useState<string | null>(null);
+
   // 모달 상태
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -27,6 +42,8 @@ export default function SignupForm() {
     getValues,
     watch,
     setValue,
+    setError,
+    clearErrors,
   } = useForm<SignupFormValues>({
     mode: "onBlur",
     defaultValues: {
@@ -44,9 +61,105 @@ export default function SignupForm() {
       agreeMarketing: false,
     },
   });
-  {
-    /*제출*/
-  }
+
+  const handleCheckNickname = async () => {
+    setIsNicknameOk(false);
+    clearErrors("nickname");
+
+    const nickname = getValues("nickname");
+    if (!nickname) {
+      setError("nickname", {
+        type: "manual",
+        message: "닉네임을 입력하세요.",
+      });
+      return;
+    }
+
+    setIsCheckingNickname(true);
+    try {
+      const data = await checkNicknameAvailability(nickname); // <-- 여기만 호출
+      if (data.available) {
+        setIsNicknameOk(true);
+        clearErrors("nickname");
+      } else {
+        setIsNicknameOk(false);
+        setError("nickname", {
+          type: "manual",
+          message: "이미 사용 중인 닉네임입니다.",
+        });
+      }
+    } catch (error) {
+      setError("nickname", {
+        type: "server",
+      });
+    } finally {
+      setIsCheckingNickname(false);
+    }
+  };
+
+  // ✅ 이메일 인증코드 전송 (signupApi 사용)
+  const handleSendEmailCode = async () => {
+    setRequestId(null);
+    setVerificationToken(null);
+    clearErrors("email");
+    clearErrors("verificationCode");
+
+    const email = getValues("email");
+    if (!email) {
+      setError("email", {
+        type: "manual",
+        message: "이메일을 입력하세요.",
+      });
+      return;
+    }
+
+    setIsSendingCode(true);
+    try {
+      const data = await sendEmailCode(email); // <-- API 모듈 호출
+      setRequestId(data.requestId);
+    } catch (error) {
+      setError("email", {
+        type: "server",
+      });
+    } finally {
+      setIsSendingCode(false);
+    }
+  };
+
+  // ✅ 인증코드 검증 (signupApi 사용)
+  const handleVerifyCode = async () => {
+    clearErrors("verificationCode");
+
+    if (!requestId) {
+      setError("verificationCode", {
+        type: "manual",
+        message: "먼저 이메일 인증코드를 전송하세요.",
+      });
+      return;
+    }
+
+    const code = getValues("verificationCode");
+    if (!code) {
+      setError("verificationCode", {
+        type: "manual",
+        message: "인증코드를 입력하세요.",
+      });
+      return;
+    }
+
+    setIsVerifyingCode(true);
+    try {
+      const data = await verifyEmailCode({ requestId, code }); // <-- API 모듈 호출
+      setVerificationToken(data.verificationToken);
+    } catch (error) {
+      setError("verificationCode", {
+        type: "server",
+      });
+    } finally {
+      setIsVerifyingCode(false);
+    }
+  };
+  // 제출
   const onSubmit = (values: SignupFormValues) => {
     const pets: Array<"dog" | "cat"> = [];
     if (values.petDog) pets.push("dog");
@@ -62,10 +175,13 @@ export default function SignupForm() {
       password: "*".repeat(values.password.length),
       marketingOptIn: values.agreeMarketing,
       agreed: { terms: values.agreeTerms, privacy: values.agreePrivacy },
+      emailVerificationToken: verificationToken,
     };
 
-    setModalOpen(true); // 회원가입 버튼 클릭 시 환영 모달도 오픈
+    console.log("[SIGNUP PAYLOAD]", payload);
+    setModalOpen(true);
   };
+
   // “전체 동의” 토글
   const agreeTerms = watch("agreeTerms");
   const agreePrivacy = watch("agreePrivacy");
@@ -86,7 +202,6 @@ export default function SignupForm() {
           <span className="text-sm text-gray-900">회원가입</span>
         </div>
 
-        {/* 폼 (스타일 전용) */}
         <form onSubmit={handleSubmit(onSubmit)} className="w-full space-y-[12px]">
           {/* 안내 문구 */}
           <div className="mb-[15px] w-full text-[13px] text-gray-100">
@@ -94,7 +209,7 @@ export default function SignupForm() {
             <p className="text-[12px] text-gray-300">· 선택 안할 시 ‘없음’으로 저장됩니다.</p>
           </div>
 
-          {/* 반려동물 유무 (선택) — 버튼형 체크박스 (id + htmlFor) */}
+          {/* 반려동물 유무 (선택) */}
           <div className="flex items-center gap-[12px]">
             {/* 강아지 */}
             <div>
@@ -128,7 +243,7 @@ export default function SignupForm() {
             </div>
           </div>
 
-          {/* 성별 (필수) — 버튼형 라디오 (id + htmlFor) */}
+          {/* 성별 */}
           <div className="mt-[12px]">
             <p className="mb-[8px] text-[17px] font-semibold text-gray-900">
               성별 <span className="text-warning">* 필수</span>
@@ -156,8 +271,8 @@ export default function SignupForm() {
                   id="female"
                   type="radio"
                   value="female"
-                  className="peer sr-only"
                   required
+                  className="peer sr-only"
                   {...register("gender", { required: "성별을 선택하세요." })}
                 />
                 <Label
@@ -173,6 +288,7 @@ export default function SignupForm() {
           {/* 이름 */}
           <div>
             <Input
+              className="text-gray-900"
               placeholder="[필수] 성명을 입력해 주세요"
               {...register("userName", {
                 required: "성명을 입력하세요.",
@@ -188,6 +304,7 @@ export default function SignupForm() {
           <div className="grid grid-cols-[1fr_auto] items-center gap-[12px]">
             <div>
               <Input
+                className="text-gray-900"
                 placeholder="[필수] 닉네임을 입력해 주세요"
                 {...register("nickname", {
                   required: "닉네임을 입력하세요.",
@@ -198,9 +315,18 @@ export default function SignupForm() {
               {errors.nickname && (
                 <p className="mt-1 text-[12px] text-red-500">{errors.nickname.message}</p>
               )}
+
+              {isNicknameOk && !errors.nickname && (
+                <p className="text-xs text-green-600">닉네임 사용 가능 ✅</p>
+              )}
             </div>
-            <Button className="rounded-full border-line-strong px-[12px] text-[12px] transition hover:bg-orange-300">
-              중복검사
+            <Button
+              type="button"
+              onClick={handleCheckNickname}
+              disabled={isCheckingNickname}
+              className="rounded-full border-line-strong px-[12px] text-[12px] transition hover:bg-orange-300"
+            >
+              {isCheckingNickname ? "검사중..." : "중복검사"}
             </Button>
           </div>
 
@@ -208,6 +334,7 @@ export default function SignupForm() {
           <div className="grid grid-cols-[1fr_auto] items-center gap-[12px]">
             <div>
               <Input
+                className="text-gray-900"
                 type="email"
                 placeholder="[필수] 이메일을 입력해 주세요"
                 {...register("email", {
@@ -222,27 +349,49 @@ export default function SignupForm() {
                 <p className="mt-1 text-[12px] text-red-500">{errors.email.message}</p>
               )}
             </div>
-            <Button className="rounded-full border-line-strong px-[12px] text-[12px] transition hover:bg-orange-300">
-              인증하기
+            <Button
+              type="button"
+              onClick={handleSendEmailCode}
+              disabled={isSendingCode}
+              className="rounded-full border-line-strong px-[12px] text-[12px] transition hover:bg-orange-300"
+            >
+              {isSendingCode ? "전송중..." : "이메일 인증하기"}
             </Button>
           </div>
 
-          {/* 인증번호 */}
-          <div>
-            <Input
-              placeholder="인증번호 입력"
-              {...register("verificationCode", {
-                validate: (v) => !v || /^\d{6}$/.test(v) || "6자리 숫자",
-              })}
-            />
-            {errors.verificationCode && (
-              <p className="mt-1 text-[12px] text-red-500">{errors.verificationCode.message}</p>
-            )}
-          </div>
+          {/* 인증코드 입력 + 인증확인 (requestId 있을 때만) */}
+          {requestId && (
+            <div className="flex flex-col gap-1">
+              <div className="flex gap-2">
+                <Input
+                  className="flex-1 text-gray-900"
+                  placeholder="메일로 받은 인증코드"
+                  {...register("verificationCode", {
+                    validate: (v) => !v || /^\d{6}$/.test(v) || "6자리 숫자",
+                  })}
+                />
+                <Button
+                  type="button"
+                  className="rounded-full border-line-strong px-[12px] text-[12px] transition hover:bg-orange-300"
+                  onClick={handleVerifyCode}
+                  disabled={isVerifyingCode}
+                >
+                  {isVerifyingCode ? "확인중..." : "인증확인"}
+                </Button>
+              </div>
+              {errors.verificationCode && (
+                <p className="mt-1 text-[12px] text-red-500">이메일 인증 실패</p>
+              )}
+              {verificationToken && !errors.verificationCode && (
+                <p className="text-xs text-green-600">이메일 인증 완료 ✅</p>
+              )}
+            </div>
+          )}
 
           {/* 비밀번호 */}
           <div className="space-y-[4px]">
             <Input
+              className="text-gray-900"
               type="password"
               placeholder="[필수] 비밀번호를 입력해 주세요"
               {...register("password", {
@@ -264,6 +413,7 @@ export default function SignupForm() {
           {/* 비밀번호 확인 */}
           <div className="space-y-[4px]">
             <Input
+              className="text-gray-900"
               type="password"
               placeholder="[필수] 비밀번호를 확인해 주세요"
               {...register("passwordConfirm", {
@@ -306,7 +456,10 @@ export default function SignupForm() {
                     이용약관 동의 <span className="text-warning">*</span>
                   </span>
                 </label>
-                <Button className="shrink-0 rounded-full border border-line-strong px-[12px] py-[6px] text-[12px] text-gray-900 transition hover:bg-orange-300">
+                <Button
+                  type="button"
+                  className="shrink-0 rounded-full border border-line-strong px-[12px] py-[6px] text-[12px] text-gray-900 transition hover:bg-orange-300"
+                >
                   자세히
                 </Button>
               </li>
@@ -324,7 +477,10 @@ export default function SignupForm() {
                     개인정보 수집 및 이용 동의 <span className="text-warning">*</span>
                   </span>
                 </label>
-                <Button className="shrink-0 rounded-full border border-line-strong px-[12px] py-[6px] text-[12px] text-gray-900 transition hover:bg-orange-300">
+                <Button
+                  type="button"
+                  className="shrink-0 rounded-full border border-line-strong px-[12px] py-[6px] text-[12px] text-gray-900 transition hover:bg-orange-300"
+                >
                   자세히
                 </Button>
               </li>
@@ -338,7 +494,10 @@ export default function SignupForm() {
                   />
                   <span className="leading-[22px]">마케팅 정보 수신 동의 (선택)</span>
                 </label>
-                <Button className="shrink-0 rounded-full border border-line-strong px-[12px] py-[6px] text-[12px] text-gray-900 transition hover:bg-orange-300">
+                <Button
+                  type="button"
+                  className="shrink-0 rounded-full border border-line-strong px-[12px] py-[6px] text-[12px] text-gray-900 transition hover:bg-orange-300"
+                >
                   자세히
                 </Button>
               </li>
@@ -348,6 +507,7 @@ export default function SignupForm() {
           {/* 제출 버튼 */}
           <div className="pt-[8px] text-center">
             <Button
+              disabled={!isNicknameOk || !verificationToken}
               type="submit"
               className="inline-block rounded-full border border-line-strong px-[32px] py-[8px] text-sm font-semibold text-gray-900 transition hover:bg-orange-300 active:scale-[0.99]"
             >
@@ -355,6 +515,7 @@ export default function SignupForm() {
             </Button>
           </div>
         </form>
+
         <Dialog open={modalOpen} onOpenChange={setModalOpen}>
           <DialogContent>
             <DialogHeader>
@@ -365,15 +526,16 @@ export default function SignupForm() {
             </DialogHeader>
 
             <div className="mt-4 text-gray-900">
-              <p>로그인 페이지로 이동하시겠습니까?</p>
+              <p>메인 페이지로 이동하시겠습니까?</p>
             </div>
 
             <div className="mt-4 flex justify-end">
               <button
+                type="button"
                 onClick={() => setModalOpen(false)}
                 className="rounded bg-green-500 p-2 text-white"
               >
-                확인
+                이동
               </button>
             </div>
           </DialogContent>
