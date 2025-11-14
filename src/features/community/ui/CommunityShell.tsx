@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 import PostItem from "@/components/common/cards/PostItem";
 import EmptyState from "@/components/common/empty/EmptyState";
