@@ -14,7 +14,7 @@ export default function ReportedPostsShell() {
               content="신고된 게시글 내용"
               user={{ thumbnail: "/images/sample/profile1.png", name: "작성자" }}
               id={i}
-              image={["/images/sample/post1.png"]}
+              images={["/images/sample/post1.png"]}
               liked={false}
               commentNum={0}
               createdAt="2023-06-01T12:00:00Z"
