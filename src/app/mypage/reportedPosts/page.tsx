@@ -1,4 +1,4 @@
-import ReportedPostsShell from "@/features/mypage/reported-posts/ReportedPostsShell";
+import ReportedPostsShell from "@/features/mypage/reportedPosts/ReportedPostsShell";
 
 export default function ReportedPostsPage() {
   return (

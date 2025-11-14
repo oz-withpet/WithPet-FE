@@ -27,7 +27,7 @@ export default function RootLayout({
                 <Header />
                 {pathname.includes("community/category") && <CommonMainNav page="community" />}
                 {pathname.includes("mypage") && <CommonSubNav />}
-                {pathname.includes("mypage/posts") && <CommonMainNav page="mypage" />}
+                {pathname.includes("mypage/myPosts") && <CommonMainNav page="mypage" />}
                 <main className="mx-auto w-full max-w-layout flex-1">{children}</main>
               </MSWProvider>
             </ReduxProvider>

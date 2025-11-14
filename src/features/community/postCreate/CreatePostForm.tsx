@@ -2,7 +2,7 @@
 
 import { PostFormValues } from "@/types/community";
 
-import PostForm from "../post/PostForm";
+import PostForm from "../postList/PostForm";
 
 export default function CreatePostForm() {
   const onSubmit = async (values: PostFormValues) => {

@@ -1,4 +1,4 @@
-import SavePlaceShell from "@/features/mypage/saved-places/SavePlaceShell";
+import SavePlaceShell from "@/features/mypage/savedPlaces/SavePlaceShell";
 
 export default function SavedPlacesPage() {
   return (

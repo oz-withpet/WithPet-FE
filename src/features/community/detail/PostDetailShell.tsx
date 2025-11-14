@@ -21,7 +21,7 @@ export default function PostDetailPage() {
         <div className="text-lg">{data?.title}</div>
         <div className="flex items-center">
           <Link
-            href={`/community/edit/${params.id}`}
+            href={`/community/${params.id}/edit`}
             className="rounded-full border-2 border-orange-300 bg-white px-5 py-1 text-sm hover:cursor-pointer hover:bg-orange-300 hover:font-semibold hover:text-white"
           >
             수정

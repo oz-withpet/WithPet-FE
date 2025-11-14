@@ -1,4 +1,4 @@
-import PasswordChangeForm from "@/features/mypage/profile/password/ui/PasswordChangeForm";
+import PasswordChangeForm from "@/features/mypage/profile/passwordChange/ui/PasswordChangeForm";
 
 export default function PasswordChangePage() {
   return (

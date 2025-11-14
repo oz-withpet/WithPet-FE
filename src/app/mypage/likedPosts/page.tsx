@@ -1,4 +1,4 @@
-import LikePostsShell from "@/features/mypage/liked-posts/LikePostsShell";
+import LikePostsShell from "@/features/mypage/likedPosts/LikePostsShell";
 
 export default function LikedPostsPage() {
   return (

@@ -14,7 +14,7 @@ const CATEGORY_LABELS = {
 
 const PAGE_CONFIG = {
   community: { base: "community", segment: "category" },
-  mypage: { base: "mypage", segment: "posts" },
+  mypage: { base: "mypage", segment: "myPosts" },
 };
 
 function buildHref(page: PageName, slug: Category) {

@@ -1,4 +1,4 @@
-import ProfileEditForm from "@/features/mypage/profile/edit/ui/ProfileEditForm";
+import ProfileEditForm from "@/features/mypage/profile/profileEdit/ui/ProfileEditForm";
 
 export default function ProfileEdit() {
   return (
