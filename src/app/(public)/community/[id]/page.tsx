@@ -4,31 +4,24 @@ import { DUMMY_POST_DETAILS } from "@/mocks/data/postDetails";
 import type { Metadata } from "next";
 
 // 1) metadata
-type Props = { params: { id: string } };
+type Params = { id: string };
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const id = Number(params.id);
-  const post = DUMMY_POST_DETAILS.find((p) => p.id === id);
+export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
+  const { id } = await params;
+  const postId = Number(id);
+  const post = DUMMY_POST_DETAILS.find((p) => p.id === postId);
 
   if (!post) return { title: "게시글을 찾을 수 없습니다" };
 
   const snippet = post.content.slice(0, 50);
 
-  const labelByCategory: Record<string, string> = {
-    free: "자유게시판",
-    qna: "질문게시판",
-    info: "정보공유",
-  };
-
-  const categoryLabel = labelByCategory[post.category] ?? "커뮤니티";
-
   return {
-    title: `${post.title}`,
-    description: `${categoryLabel} · ${snippet}`,
+    title: post.title,
+    description: snippet,
     openGraph: {
       title: post.title,
       description: snippet,
-      images: post.images?.length ? post.images : undefined,
+      images: post.images,
     },
   };
 }
