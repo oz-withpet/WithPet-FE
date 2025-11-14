@@ -2,6 +2,6 @@
 
 import PostDetailShell from "@/features/community/detail/PostDetailShell";
 
-export default function PostDetailPage() {
+export default function CommunityPostDetailPage() {
   return <PostDetailShell />;
 }

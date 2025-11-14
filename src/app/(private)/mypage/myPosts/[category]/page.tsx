@@ -10,7 +10,7 @@ export async function generateStaticParams() {
   return CATEGORIES.map((c) => ({ category: c }));
 }
 
-export default async function MyPagePostsCategoryPage({
+export default async function MyPagePostsByCategoryPage({
   params,
 }: {
   params: Promise<{ category: Param }>;
