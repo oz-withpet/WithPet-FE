@@ -6,23 +6,27 @@ import CommunityShell from "@/features/community/ui/CommunityShell";
 import { type Category } from "@/types/category";
 
 const CATEGORIES = ["all", "free", "qna", "info"] as const;
-type Param = (typeof CATEGORIES)[number];
+type CategoryParam = (typeof CATEGORIES)[number];
 
 export async function generateStaticParams() {
   return CATEGORIES.map((c) => ({ category: c }));
 }
 
-const CATEGORY_LABELS: Record<string, string> = {
-  all: "전체 글",
+const CATEGORY_LABELS: Record<CategoryParam, string> = {
+  all: "전체",
   free: "자유게시판",
   qna: "질문게시판",
   info: "정보공유",
 };
 
-type Props = { params: { category: string } };
+type Params = {
+  category: keyof typeof CATEGORY_LABELS; // "all" | "free" | "qna" | "info"
+};
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const label = CATEGORY_LABELS[params.category] ?? "커뮤니티";
+export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
+  const { category } = await params;
+
+  const label = CATEGORY_LABELS[category] ?? "커뮤니티";
 
   return {
     title: label,
@@ -33,7 +37,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function CommunityCategoryPage({
   params,
 }: {
-  params: Promise<{ category: Param }>;
+  params: Promise<{ category: Params["category"] }>;
 }) {
   const { category } = await params;
   if (!CATEGORIES.includes(category)) return notFound();
