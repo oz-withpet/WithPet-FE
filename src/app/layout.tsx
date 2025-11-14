@@ -1,7 +1,7 @@
 import "./globals.css";
 
-import ConfirmProvider from "@/components/common/modal/Modal";
 import Header from "@/components/layout/Header";
+import ConfirmProvider from "@/providers/ConfirmProvider";
 import MSWProvider from "@/providers/MSWProvider";
 import QueryProvider from "@/providers/QueryProvider";
 import ReduxProvider from "@/shared/store/ReduxProvider";
