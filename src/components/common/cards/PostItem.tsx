@@ -47,6 +47,7 @@ export default function PostItem(pr: PostItemProps) {
           alt={pr.title}
           width={124}
           height={124}
+          loading="eager"
           className="h-[124px] w-[124px] rounded-xl bg-thumbnail-200 text-gray-400"
         />
       </div>
@@ -57,6 +58,7 @@ export default function PostItem(pr: PostItemProps) {
             alt={pr.title}
             width={16}
             height={16}
+            loading="eager"
             className="rounded-full"
           />
           <div className="ml-1">{pr.user.name}</div>

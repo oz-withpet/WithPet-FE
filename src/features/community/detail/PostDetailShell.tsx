@@ -43,6 +43,7 @@ export default function PostDetailPage() {
                 src={el}
                 width={300}
                 height={300}
+                loading="eager"
                 alt={data.title ?? "image"}
                 className="mb-3 w-[300px] object-contain"
               />
@@ -65,6 +66,7 @@ export default function PostDetailPage() {
             src={data?.user.thumbnail}
             width={40}
             height={40}
+            loading="eager"
             alt={data.title ?? "image"}
             className="mr-2 rounded-full"
           />
