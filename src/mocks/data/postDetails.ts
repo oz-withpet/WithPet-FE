@@ -9,7 +9,7 @@ export type PostDetailMock = {
   likeCount: number; // 총 좋아요 수
   liked: boolean; // 내가 좋아요 눌렀는지
   commentNum: number; // 댓글 수
-  image: string[]; // ≤ 5 images
+  images: string[]; // ≤ 5 images
 };
 
 export const DUMMY_POST_DETAILS: PostDetailMock[] = [
@@ -24,7 +24,7 @@ export const DUMMY_POST_DETAILS: PostDetailMock[] = [
     likeCount: 12,
     liked: true,
     commentNum: 4,
-    image: [
+    images: [
       "https://placedog.net/800/600?id=101",
       "https://placedog.net/600/400?id=101",
       "https://placedog.net/400/300?id=101",
@@ -41,7 +41,7 @@ export const DUMMY_POST_DETAILS: PostDetailMock[] = [
     likeCount: 5,
     liked: false,
     commentNum: 7,
-    image: [
+    images: [
       "https://cataas.com/cat?width=800&height=600&ts=102",
       "https://cataas.com/cat?width=600&height=400&ts=102",
     ],
@@ -57,7 +57,7 @@ export const DUMMY_POST_DETAILS: PostDetailMock[] = [
     likeCount: 18,
     liked: false,
     commentNum: 2,
-    image: ["https://placedog.net/800/600?id=103", "https://placedog.net/600/400?id=103"],
+    images: ["https://placedog.net/800/600?id=103", "https://placedog.net/600/400?id=103"],
   },
   {
     id: 4,
@@ -69,7 +69,7 @@ export const DUMMY_POST_DETAILS: PostDetailMock[] = [
     likeCount: 22,
     liked: true,
     commentNum: 12,
-    image: [
+    images: [
       "https://cataas.com/cat?width=800&height=600&ts=104",
       "https://cataas.com/cat?width=600&height=400&ts=104",
       "https://cataas.com/cat?width=400&height=300&ts=104",
@@ -86,7 +86,7 @@ export const DUMMY_POST_DETAILS: PostDetailMock[] = [
     likeCount: 6,
     liked: false,
     commentNum: 5,
-    image: ["https://placedog.net/800/600?id=105", "https://placedog.net/600/400?id=105"],
+    images: ["https://placedog.net/800/600?id=105", "https://placedog.net/600/400?id=105"],
   },
   {
     id: 6,
@@ -99,7 +99,7 @@ export const DUMMY_POST_DETAILS: PostDetailMock[] = [
     likeCount: 31,
     liked: true,
     commentNum: 9,
-    image: [
+    images: [
       "https://placedog.net/800/600?id=106",
       "https://placedog.net/600/400?id=106",
       "https://placedog.net/400/300?id=106",
@@ -116,7 +116,7 @@ export const DUMMY_POST_DETAILS: PostDetailMock[] = [
     likeCount: 3,
     liked: false,
     commentNum: 3,
-    image: [
+    images: [
       "https://cataas.com/cat?width=800&height=600&ts=107",
       "https://cataas.com/cat?width=600&height=400&ts=107",
     ],
@@ -132,7 +132,7 @@ export const DUMMY_POST_DETAILS: PostDetailMock[] = [
     likeCount: 9,
     liked: false,
     commentNum: 6,
-    image: ["https://placedog.net/800/600?id=108", "https://placedog.net/600/400?id=108"],
+    images: ["https://placedog.net/800/600?id=108", "https://placedog.net/600/400?id=108"],
   },
   {
     id: 9,
@@ -145,7 +145,7 @@ export const DUMMY_POST_DETAILS: PostDetailMock[] = [
     likeCount: 27,
     liked: true,
     commentNum: 1,
-    image: ["https://placedog.net/800/600?id=109", "https://placedog.net/600/400?id=109"],
+    images: ["https://placedog.net/800/600?id=109", "https://placedog.net/600/400?id=109"],
   },
   {
     id: 10,
@@ -157,7 +157,7 @@ export const DUMMY_POST_DETAILS: PostDetailMock[] = [
     likeCount: 15,
     liked: false,
     commentNum: 10,
-    image: [
+    images: [
       "https://cataas.com/cat?width=800&height=600&ts=110",
       "https://cataas.com/cat?width=600&height=400&ts=110",
     ],
@@ -172,7 +172,7 @@ export const DUMMY_POST_DETAILS: PostDetailMock[] = [
     likeCount: 20,
     liked: true,
     commentNum: 8,
-    image: ["https://placedog.net/800/600?id=111", "https://placedog.net/600/400?id=111"],
+    images: ["https://placedog.net/800/600?id=111", "https://placedog.net/600/400?id=111"],
   },
   {
     id: 12,
@@ -184,7 +184,7 @@ export const DUMMY_POST_DETAILS: PostDetailMock[] = [
     likeCount: 8,
     liked: false,
     commentNum: 0,
-    image: [
+    images: [
       "https://cataas.com/cat?width=800&height=600&ts=112",
       "https://cataas.com/cat?width=600&height=400&ts=112",
     ],
@@ -199,7 +199,7 @@ export const DUMMY_POST_DETAILS: PostDetailMock[] = [
     likeCount: 33,
     liked: true,
     commentNum: 11,
-    image: [
+    images: [
       "https://placedog.net/800/600?id=113",
       "https://placedog.net/600/400?id=113",
       "https://placedog.net/400/300?id=113",
@@ -215,7 +215,7 @@ export const DUMMY_POST_DETAILS: PostDetailMock[] = [
     likeCount: 11,
     liked: false,
     commentNum: 5,
-    image: [
+    images: [
       "https://cataas.com/cat?width=800&height=600&ts=114",
       "https://cataas.com/cat?width=600&height=400&ts=114",
     ],
@@ -230,7 +230,7 @@ export const DUMMY_POST_DETAILS: PostDetailMock[] = [
     likeCount: 24,
     liked: false,
     commentNum: 13,
-    image: ["https://placedog.net/800/600?id=115", "https://placedog.net/600/400?id=115"],
+    images: ["https://placedog.net/800/600?id=115", "https://placedog.net/600/400?id=115"],
   },
   {
     id: 16,
@@ -242,7 +242,7 @@ export const DUMMY_POST_DETAILS: PostDetailMock[] = [
     likeCount: 19,
     liked: true,
     commentNum: 4,
-    image: [
+    images: [
       "https://cataas.com/cat?width=800&height=600&ts=116",
       "https://cataas.com/cat?width=600&height=400&ts=116",
     ],
@@ -258,7 +258,7 @@ export const DUMMY_POST_DETAILS: PostDetailMock[] = [
     likeCount: 7,
     liked: false,
     commentNum: 2,
-    image: ["https://placedog.net/800/600?id=117", "https://placedog.net/600/400?id=117"],
+    images: ["https://placedog.net/800/600?id=117", "https://placedog.net/600/400?id=117"],
   },
   {
     id: 18,
@@ -270,7 +270,7 @@ export const DUMMY_POST_DETAILS: PostDetailMock[] = [
     likeCount: 29,
     liked: true,
     commentNum: 7,
-    image: [
+    images: [
       "https://placedog.net/800/600?id=118",
       "https://placedog.net/600/400?id=118",
       "https://placedog.net/400/300?id=118",
@@ -286,7 +286,7 @@ export const DUMMY_POST_DETAILS: PostDetailMock[] = [
     likeCount: 4,
     liked: false,
     commentNum: 1,
-    image: [
+    images: [
       "https://cataas.com/cat?width=800&height=600&ts=119",
       "https://cataas.com/cat?width=600&height=400&ts=119",
     ],
@@ -301,7 +301,7 @@ export const DUMMY_POST_DETAILS: PostDetailMock[] = [
     likeCount: 17,
     liked: true,
     commentNum: 9,
-    image: ["https://placedog.net/800/600?id=120", "https://placedog.net/600/400?id=120"],
+    images: ["https://placedog.net/800/600?id=120", "https://placedog.net/600/400?id=120"],
   },
   {
     id: 21,
@@ -313,7 +313,7 @@ export const DUMMY_POST_DETAILS: PostDetailMock[] = [
     likeCount: 10,
     liked: false,
     commentNum: 0,
-    image: ["https://placedog.net/800/600?id=121", "https://placedog.net/600/400?id=121"],
+    images: ["https://placedog.net/800/600?id=121", "https://placedog.net/600/400?id=121"],
   },
   {
     id: 22,
@@ -325,7 +325,7 @@ export const DUMMY_POST_DETAILS: PostDetailMock[] = [
     likeCount: 28,
     liked: false,
     commentNum: 14,
-    image: [
+    images: [
       "https://cataas.com/cat?width=800&height=600&ts=122",
       "https://cataas.com/cat?width=600&height=400&ts=122",
       "https://cataas.com/cat?width=400&height=300&ts=122",
@@ -341,7 +341,7 @@ export const DUMMY_POST_DETAILS: PostDetailMock[] = [
     likeCount: 13,
     liked: true,
     commentNum: 3,
-    image: ["https://placedog.net/800/600?id=123", "https://placedog.net/600/400?id=123"],
+    images: ["https://placedog.net/800/600?id=123", "https://placedog.net/600/400?id=123"],
   },
   {
     id: 24,
@@ -356,7 +356,7 @@ export const DUMMY_POST_DETAILS: PostDetailMock[] = [
     likeCount: 9,
     liked: false,
     commentNum: 6,
-    image: [
+    images: [
       "https://cataas.com/cat?width=800&height=600&ts=124",
       "https://cataas.com/cat?width=600&height=400&ts=124",
     ],
@@ -371,7 +371,7 @@ export const DUMMY_POST_DETAILS: PostDetailMock[] = [
     likeCount: 8,
     liked: false,
     commentNum: 4,
-    image: ["https://placedog.net/800/600?id=125", "https://placedog.net/600/400?id=125"],
+    images: ["https://placedog.net/800/600?id=125", "https://placedog.net/600/400?id=125"],
   },
   {
     id: 26,
@@ -383,7 +383,7 @@ export const DUMMY_POST_DETAILS: PostDetailMock[] = [
     likeCount: 16,
     liked: true,
     commentNum: 2,
-    image: [
+    images: [
       "https://cataas.com/cat?width=800&height=600&ts=126",
       "https://cataas.com/cat?width=600&height=400&ts=126",
     ],
@@ -398,7 +398,7 @@ export const DUMMY_POST_DETAILS: PostDetailMock[] = [
     likeCount: 21,
     liked: false,
     commentNum: 5,
-    image: ["https://placedog.net/800/600?id=127", "https://placedog.net/600/400?id=127"],
+    images: ["https://placedog.net/800/600?id=127", "https://placedog.net/600/400?id=127"],
   },
   {
     id: 28,
@@ -410,7 +410,7 @@ export const DUMMY_POST_DETAILS: PostDetailMock[] = [
     likeCount: 26,
     liked: true,
     commentNum: 7,
-    image: [
+    images: [
       "https://cataas.com/cat?width=800&height=600&ts=128",
       "https://cataas.com/cat?width=600&height=400&ts=128",
       "https://cataas.com/cat?width=400&height=300&ts=128",
@@ -426,7 +426,7 @@ export const DUMMY_POST_DETAILS: PostDetailMock[] = [
     likeCount: 6,
     liked: false,
     commentNum: 1,
-    image: ["https://placedog.net/800/600?id=129", "https://placedog.net/600/400?id=129"],
+    images: ["https://placedog.net/800/600?id=129", "https://placedog.net/600/400?id=129"],
   },
   {
     id: 30,
@@ -438,7 +438,7 @@ export const DUMMY_POST_DETAILS: PostDetailMock[] = [
     likeCount: 35,
     liked: true,
     commentNum: 16,
-    image: [
+    images: [
       "https://cataas.com/cat?width=800&height=600&ts=130",
       "https://cataas.com/cat?width=600&height=400&ts=130",
     ],

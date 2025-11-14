@@ -35,9 +35,9 @@ export default function PostDetailPage() {
       <div className="w-full py-6 text-base">{data?.content}</div>
 
       <div className="">
-        {data?.image ? (
+        {data?.images ? (
           <>
-            {data.image.map((el) => (
+            {data.images.map((el) => (
               <Image
                 key={el}
                 src={el}

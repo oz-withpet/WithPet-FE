@@ -12,7 +12,7 @@ type PostItemProps = {
   category: string;
   title: string;
   content: string;
-  image: string[];
+  images: string[];
   user: {
     thumbnail: string;
     name: string;
@@ -43,7 +43,7 @@ export default function PostItem(pr: PostItemProps) {
           </div>
         </div>
         <Image
-          src={pr.image[0]}
+          src={pr.images[0]}
           alt={pr.title}
           width={124}
           height={124}
