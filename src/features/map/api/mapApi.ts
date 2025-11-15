@@ -1,4 +1,4 @@
-import { backendClient } from "@/shared/api/backendClient";
+import { backendClient } from "@/shared/api/clientFeacher";
 import { apiClient } from "@/shared/api/client";
 import type {
   CategoryResponse,
