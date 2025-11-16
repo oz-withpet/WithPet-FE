@@ -1,5 +1,5 @@
 import "./globals.css";
-import { cookies, headers } from "next/headers";
+import { cookies } from "next/headers";
 
 import Header from "@/components/layout/Header";
 import ConfirmProvider from "@/providers/ConfirmProvider";
@@ -33,11 +33,8 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const headerList = await headers();
   const cookieStore = await cookies();
-  const refreshedAccess = headerList.get("x-withpet-access-token");
-  const cookieAccess = cookieStore.get("access_token")?.value ?? null;
-  const accessToken = refreshedAccess ?? cookieAccess ?? null;
+  const accessToken = cookieStore.get("access_token")?.value ?? null;
 
   return (
     <html lang="ko">
