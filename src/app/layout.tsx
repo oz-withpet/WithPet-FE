@@ -1,9 +1,11 @@
 import "./globals.css";
+import { cookies, headers } from "next/headers";
 
 import Header from "@/components/layout/Header";
 import ConfirmProvider from "@/providers/ConfirmProvider";
 import MSWProvider from "@/providers/MSWProvider";
 import QueryProvider from "@/providers/QueryProvider";
+import TokenHydrator from "@/providers/TokenHydrator";
 import ReduxProvider from "@/shared/store/ReduxProvider";
 
 import type { Metadata } from "next";
@@ -26,17 +28,24 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const headerList = await headers();
+  const cookieStore = await cookies();
+  const refreshedAccess = headerList.get("x-withpet-access-token");
+  const cookieAccess = cookieStore.get("access_token")?.value ?? null;
+  const accessToken = refreshedAccess ?? cookieAccess ?? null;
+
   return (
     <html lang="ko">
       <body className="flex min-h-screen flex-col bg-background text-gray-100">
         <QueryProvider>
           <ConfirmProvider>
             <ReduxProvider>
+              <TokenHydrator accessToken={accessToken} />
               <MSWProvider>
                 <Header />
                 <main className="mx-auto w-full max-w-layout flex-1">{children}</main>
