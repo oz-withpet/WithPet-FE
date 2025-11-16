@@ -1,4 +1,4 @@
-import { backendClient, type BackendError } from "@/shared/api/backendClient";
+import { backendClient, type BackendError } from "@/shared/api/clientFeacher";
 import type { LoginErrorResponse, LoginRequestPayload, LoginSuccessResponse } from "@/types/login";
 
 export interface LoginResult {

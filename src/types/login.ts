@@ -5,8 +5,6 @@ export type LoginRequestPayload = {
 
 export type LoginSuccessResponse = {
   access: string;
-  refresh: string;
-  message?: string;
 };
 
 export type LoginErrorResponse = {
@@ -15,7 +13,7 @@ export type LoginErrorResponse = {
 };
 
 export const isLoginSuccessResponse = (body: unknown): body is LoginSuccessResponse =>
-  Boolean(body && typeof body === "object" && "access" in body && "refresh" in body);
+  Boolean(body && typeof body === "object" && "access" in body);
 
 export const isLoginErrorResponse = (body: unknown): body is LoginErrorResponse =>
   Boolean(body && typeof body === "object" && ("detail" in body || "message" in body));

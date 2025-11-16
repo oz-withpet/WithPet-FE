@@ -20,7 +20,7 @@ export interface BackendError extends Error {
 }
 
 /**
- * @@백엔드클라이언트
+ * @@ 클라이언트용 fetch 래퍼
  * 경로만 넘기면 헤더, 인증, 오류 파싱까지 한 번에 처리되는 fetch 래퍼
  */
 export async function backendClient<T>(

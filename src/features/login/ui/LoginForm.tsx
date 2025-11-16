@@ -6,9 +6,9 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import Button from "@/components/common/button/Button";
-import { useConfirm } from "@/providers/ConfirmProvider";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useConfirm } from "@/providers/ConfirmProvider";
 import { isLoginErrorResponse, isLoginSuccessResponse } from "@/types/login";
 
 import { useLogin } from "../hooks/useLogin";
@@ -40,19 +40,17 @@ export default function LoginForm() {
     try {
       const result = await login({ email, password });
 
-      if (result.status >= 200 && result.status < 300) {
-        if (isLoginSuccessResponse(result.body) && result.body.message) {
-          const accepted = await confirm({
-            title: "환영합니다",
-            description: result.body.message,
-            confirmText: "확인",
-            cancelText: "닫기",
-          });
-          // 로그인 하면 홈으로 이동
-          // todo: 모달 버튼 클릭시 이동하게 변경
-          if (accepted) {
-            router.push("/");
-          }
+      if (result.status >= 200 && result.status < 300 && isLoginSuccessResponse(result.body)) {
+        const accepted = await confirm({
+          title: "환영합니다",
+          description: "로그인에 성공했어요!",
+          confirmText: "확인",
+          cancelText: "닫기",
+        });
+        // 로그인 하면 홈으로 이동
+        // todo: 모달 버튼 클릭시 이동하게 변경
+        if (accepted) {
+          router.push("/");
         }
         return;
       }
