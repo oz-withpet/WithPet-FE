@@ -1,3 +1,5 @@
+"use client";
+
 import { Category } from "@/types/category";
 
 import { usePostsQuery } from "../api/usePostsQuery";

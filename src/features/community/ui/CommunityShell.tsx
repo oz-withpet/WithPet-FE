@@ -1,7 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-
 import PostItem from "@/components/common/cards/PostItem";
 import EmptyState from "@/components/common/empty/EmptyState";
 import type { Category } from "@/types/category";
@@ -14,25 +12,26 @@ type CommunityShellProps = {
 };
 
 export default function CommunityShell({ category, posts }: CommunityShellProps) {
-  const router = useRouter();
+  const filtered = category === "all" ? posts : posts?.filter((post) => post.category === category);
 
-  if (posts.length === 0) {
+  if (posts?.length === 0) {
     return (
       <div className="mx-auto w-main">
         <EmptyState
           title="아직 게시글이 없어요."
           description="첫 번째 글을 작성해보세요!"
           actionLabel="글 작성하기"
-          onAction={() => router.push("/community/write")}
+          routerPush="/community/write"
         />
       </div>
     );
   }
 
   return (
+    // “받은 데이터로 화면을 어떻게 그릴지” 책임 → UI 담당
     <div className="mx-auto w-main">
       <ul className="flex flex-col gap-3">
-        {posts.map((post) => (
+        {filtered?.map((post) => (
           <li key={post.id}>
             <PostItem {...post} />
           </li>

@@ -3,11 +3,11 @@ import { notFound } from "next/navigation";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import { Metadata } from "next";
 
-import { getPostsServer } from "@/features/community/api/getPosts";
+import { getPostsServer } from "@/features/community/api/getPostsServer";
 import { GetPostsParams } from "@/features/community/api/type";
 import { postKeys } from "@/features/community/api/usePostsQuery";
-import CommunityShell from "@/features/community/ui/CommunityShell";
-import { ServerFetcherError } from "@/shared/api/serverFetcher";
+import CommunityCategoryPageClient from "@/features/community/list/CommunityCategoryPageClient";
+import { type ServerFetcherError } from "@/shared/api/serverFetcher";
 import { type Category } from "@/types/category";
 
 const CATEGORIES = ["all", "free", "qna", "info"] as const;
@@ -72,8 +72,9 @@ export default async function CommunityCategoryPage({
   const dehydratedState = dehydrate(queryClient);
 
   return (
+    // “이 페이지에서 어떤 데이터를 어떻게 가져올지” 책임 → 데이터/로딩/에러 담당
     <HydrationBoundary state={dehydratedState}>
-      <CommunityShell category={category as Category} />
+      <CommunityCategoryPageClient category={category as Category} />
     </HydrationBoundary>
   );
 }

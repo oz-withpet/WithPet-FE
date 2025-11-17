@@ -2,7 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-import { getPostsClient } from "./getPosts";
+import { getPostsClient } from "./getPostsClient";
 import { GetPostsParams, GetPostsResponse } from "./type";
 
 export const postKeys = {

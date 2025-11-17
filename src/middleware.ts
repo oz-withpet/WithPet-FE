@@ -9,11 +9,10 @@ const LOGIN_PATH = "/login";
 const PUBLIC_PATHS = [
   "/login",
   "/signup",
-  "community/category/all",
+  "/community/category/all",
   "/community/category/free",
   "/community/category/qna",
   "/community/category/info",
-  "/community/post/",
 ];
 
 const isPublicPath = (pathname: string) => {
