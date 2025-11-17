@@ -2,11 +2,12 @@ import { serverFetcher, type ServerFetcherOptions } from "@/shared/api/serverFet
 
 import type { GetPostDetailParams, GetPostDetailResponse } from "./type";
 
-type Fetcher = <T>(path: string, options?: ServerFetcherOptions) => Promise<T>;
+type ServerFetcherFn = <T>(path: string, options?: ServerFetcherOptions) => Promise<T>;
 
-export async function getPostDetail(
+// 서버에서 상세 정보를 직접 가져올 때 사용
+export async function getPostDetailServer(
   { id, comments_limit, comments_after }: GetPostDetailParams,
-  fetcher: Fetcher = serverFetcher,
+  fetcher: ServerFetcherFn = serverFetcher,
 ): Promise<GetPostDetailResponse> {
   return fetcher<GetPostDetailResponse>(`/posts/${id}`, {
     auth: "public",
