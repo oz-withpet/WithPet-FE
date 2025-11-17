@@ -1,5 +1,7 @@
 import { notFound } from "next/navigation";
 
+import { QueryClient } from "@tanstack/react-query";
+
 import { getPostDetail } from "@/features/community/api/getPostDetail";
 import PostDetailShell from "@/features/community/detail/PostDetailShell";
 import type { ServerFetcherError } from "@/shared/api/serverFetcher";
@@ -42,8 +44,18 @@ export default async function CommunityPostDetailPage({ params }: { params: Prom
     return notFound();
   }
 
+  const queryClient = new QueryClient();
+
   let post;
   try {
+    await queryClient.prefetchQuery({
+      queryKey: ["posts", "detail", id],
+      queryFn: () =>
+        getPostDetail({
+          id,
+          comments_limit: 20,
+        }),
+    });
     const result = await getPostDetail({
       id,
       comments_limit: 0,
