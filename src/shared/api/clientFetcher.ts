@@ -12,6 +12,7 @@ const BACKEND_BASE_URL =
 export interface ClientFetcherOptions extends RequestInit {
   auth?: "public" | "private";
   bodyType?: "json" | "form";
+  query?: Record<string, string | number | boolean | undefined>;
 }
 
 export interface ClientFetcherError extends Error {
@@ -25,7 +26,7 @@ export interface ClientFetcherError extends Error {
  */
 export async function clientFetcher<T>(
   path: string,
-  { auth = "private", bodyType = "json", body, headers, ...rest }: ClientFetcherOptions = {},
+  { auth = "private", bodyType = "json", body, headers, query, ...rest }: ClientFetcherOptions = {},
 ): Promise<T> {
   const url = `${BACKEND_BASE_URL}${path.startsWith("/") ? path : `/${path}`}`;
 

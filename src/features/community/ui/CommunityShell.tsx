@@ -4,18 +4,17 @@ import { useRouter } from "next/navigation";
 
 import PostItem from "@/components/common/cards/PostItem";
 import EmptyState from "@/components/common/empty/EmptyState";
-import { DUMMY_POST_DETAILS } from "@/mocks/data/postDetails";
 import type { Category } from "@/types/category";
 
-function selectPostsByCategory(category: Category) {
-  return category === "all"
-    ? DUMMY_POST_DETAILS
-    : DUMMY_POST_DETAILS.filter((p) => p.category === category);
-}
+import { PostSummary } from "../api/type";
 
-export default function CommunityShell({ category }: { category: Category }) {
+type CommunityShellProps = {
+  category: Category;
+  posts: PostSummary[];
+};
+
+export default function CommunityShell({ category, posts }: CommunityShellProps) {
   const router = useRouter();
-  const posts = selectPostsByCategory(category);
 
   if (posts.length === 0) {
     return (

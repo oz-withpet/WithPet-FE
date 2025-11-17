@@ -1,3 +1,35 @@
+export type PostSummary = {
+  id: string;
+  category: "free" | "qna" | "info";
+  title: string;
+  image_url: string;
+  author: {
+    user_id: string;
+    nickname: string;
+  };
+  content: string;
+  images: string[];
+  user: {
+    thumbnail: string;
+    name: string;
+  };
+  liked: boolean;
+  commentNum: number;
+  createdAt: string;
+};
+
+export type GetPostsResponse = {
+  posts: PostSummary[];
+  has_next: boolean;
+  next_after: string;
+};
+
+export type GetPostsParams = {
+  view?: "main" | "community"; // "main"
+  after?: string; // 커서
+  limit?: number; // 12
+};
+
 export type GetPostDetailParams = {
   id: string;
   include?: "comments";
@@ -25,27 +57,4 @@ export type PostDetailSummary = {
 
 export type GetPostDetailResponse = {
   post: PostDetailSummary;
-};
-
-export type CommunityPostSummary = {
-  id: string;
-  // category: "free" | "qna" | "info";
-  title: string;
-  image_url: string;
-  author: {
-    user_id: string;
-    nickname: string;
-  };
-};
-
-export type GetPostsResponse = {
-  posts: CommunityPostSummary[];
-  has_next: boolean;
-  next_after: string;
-};
-
-export type GetPostsParams = {
-  view?: "main" | "community"; // "main"
-  after?: string; // 커서
-  limit?: number; // 12
 };

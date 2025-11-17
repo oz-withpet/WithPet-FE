@@ -8,9 +8,9 @@ export interface ServerFetcherError extends Error {
 }
 
 export interface ServerFetcherOptions extends RequestInit {
-  query?: Record<string, string | number | boolean | undefined>;
   auth?: "public" | "private";
   bodyType?: "json" | "raw";
+  query?: Record<string, string | number | boolean | undefined>;
 }
 
 const BASE_URL =

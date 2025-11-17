@@ -8,7 +8,7 @@ import { toInitialValues } from "@/lib/toInitialValues";
 import { DUMMY_POST_DETAILS } from "@/mocks/data/postDetails";
 import type { PostFormValues } from "@/types/community";
 
-import PostForm from "../postList/PostForm";
+import PostForm from "../list/PostForm";
 
 export default function Page() {
   const params = useParams<{ id: string }>();

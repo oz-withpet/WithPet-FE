@@ -3,26 +3,12 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { PostSummary } from "@/features/community/api/type";
 import { toRelativeKorean } from "@/lib/relativeTime";
 
 import { getCategoryLabelSafe } from "../modal/category";
 
-type PostItemProps = {
-  id: number;
-  category: string;
-  title: string;
-  content: string;
-  images: string[];
-  user: {
-    thumbnail: string;
-    name: string;
-  };
-  liked: boolean;
-  commentNum: number;
-  createdAt: string;
-};
-
-export default function PostItem(pr: PostItemProps) {
+export default function PostItem(pr: PostSummary) {
   return (
     <Link
       href={`/community/${pr.id}`}

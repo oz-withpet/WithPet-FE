@@ -1,8 +1,13 @@
 import { notFound } from "next/navigation";
 
+import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import { Metadata } from "next";
 
+import { getPostsServer } from "@/features/community/api/getPosts";
+import { GetPostsParams } from "@/features/community/api/type";
+import { postKeys } from "@/features/community/api/usePostsQuery";
 import CommunityShell from "@/features/community/ui/CommunityShell";
+import { ServerFetcherError } from "@/shared/api/serverFetcher";
 import { type Category } from "@/types/category";
 
 const CATEGORIES = ["all", "free", "qna", "info"] as const;
@@ -40,6 +45,35 @@ export default async function CommunityCategoryPage({
   params: Promise<{ category: Params["category"] }>;
 }) {
   const { category } = await params;
+
   if (!CATEGORIES.includes(category)) return notFound();
-  return <CommunityShell category={category as Category} />;
+
+  const listParams: GetPostsParams = {
+    view: "main",
+    limit: 12,
+  };
+
+  const queryClient = new QueryClient();
+
+  try {
+    await queryClient.prefetchQuery({
+      queryKey: postKeys.list(listParams),
+      queryFn: () => getPostsServer(listParams),
+    });
+  } catch (error) {
+    const err = error as ServerFetcherError;
+
+    if (err.status === 404) {
+      return notFound();
+    }
+    throw error;
+  }
+
+  const dehydratedState = dehydrate(queryClient);
+
+  return (
+    <HydrationBoundary state={dehydratedState}>
+      <CommunityShell category={category as Category} />
+    </HydrationBoundary>
+  );
 }
