@@ -1,4 +1,4 @@
-import { backendClient, type BackendError } from "@/shared/api/clientFeacher";
+import { clientFetcher, type ClientFetcherError } from "@/shared/api/clientFetcher";
 import type { LoginErrorResponse, LoginRequestPayload, LoginSuccessResponse } from "@/types/login";
 
 export interface LoginResult {
@@ -12,7 +12,7 @@ export interface LoginResult {
  */
 export const loginRequest = async (payload: LoginRequestPayload): Promise<LoginResult> => {
   try {
-    const data = await backendClient<LoginSuccessResponse>("/auth/login/", {
+    const data = await clientFetcher<LoginSuccessResponse>("/auth/login/", {
       method: "POST",
       bodyType: "json",
       auth: "public",
@@ -21,7 +21,7 @@ export const loginRequest = async (payload: LoginRequestPayload): Promise<LoginR
 
     return { status: 200, body: data };
   } catch (error) {
-    const backendError = error as BackendError;
+    const backendError = error as ClientFetcherError;
     return {
       status: backendError.status ?? 500,
       body: (backendError.body as LoginErrorResponse) ?? null,

@@ -1,5 +1,5 @@
-import { backendClient } from "@/shared/api/clientFeacher";
 import { apiClient } from "@/shared/api/client";
+import { clientFetcher } from "@/shared/api/clientFetcher";
 import type {
   CategoryResponse,
   DistrictResponse,
@@ -66,7 +66,7 @@ const buildQuery = (params?: LocationParams) => {
  * 도/광역시 목록을 조회합니다.
  */
 export const getProvinces = () =>
-  backendClient<ProvinceResponse>("/map/locations", { auth: "public" });
+  clientFetcher<ProvinceResponse>("/map/locations", { auth: "public" });
 
 /**
  * 특정 도에 속한 시/군/구 목록을 조회합니다.
@@ -74,7 +74,7 @@ export const getProvinces = () =>
  * @param params.province - 도/광역시 ID
  */
 export const getDistricts = (params?: Pick<LocationParams, "province">) =>
-  backendClient<DistrictResponse>(`/map/locations${buildQuery(params)}`);
+  clientFetcher<DistrictResponse>(`/map/locations${buildQuery(params)}`);
 
 /**
  * 시/군/구와 도 정보를 기반으로 읍/면/동 목록을 조회합니다.
@@ -82,7 +82,7 @@ export const getDistricts = (params?: Pick<LocationParams, "province">) =>
  * @param params - province와 district를 포함한 객체
  */
 export const getNeighborhoods = (params?: LocationParams) =>
-  backendClient<NeighborhoodResponse>(`/map/locations${buildQuery(params)}`);
+  clientFetcher<NeighborhoodResponse>(`/map/locations${buildQuery(params)}`);
 
 /**
  * 지도에서 사용 가능한 카테고리 목록을 조회합니다.
