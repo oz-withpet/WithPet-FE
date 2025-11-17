@@ -1,4 +1,4 @@
-"use server";
+import "server-only";
 
 import { cookies } from "next/headers";
 
@@ -110,7 +110,7 @@ export async function serverFetcher<T>(
 }
 
 export function get<T>(path: string, options: Omit<ServerFetcherOptions, "method">) {
-  return serverFetcher<T>(path, { ...options, method: "GET" });
+  return serverFetcher<T>(path, { ...(options ?? {}), method: "GET" });
 }
 
 export function post<T>(
