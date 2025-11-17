@@ -28,6 +28,7 @@ export type GetPostsParams = {
   view?: "main" | "community"; // "main"
   after?: string; // 커서
   limit?: number; // 12
+  category?: "all" | "free" | "qna" | "info";
 };
 
 export type GetPostDetailParams = {

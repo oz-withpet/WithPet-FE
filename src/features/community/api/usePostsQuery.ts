@@ -3,12 +3,8 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { getPostsClient } from "./getPostsClient";
+import { postKeys } from "./queryKeys";
 import { GetPostsParams, GetPostsResponse } from "./type";
-
-export const postKeys = {
-  all: ["posts"],
-  list: (params: GetPostsParams) => [...postKeys.all, "list", params],
-};
 
 export function usePostsQuery(params: GetPostsParams) {
   return useQuery<GetPostsResponse>({

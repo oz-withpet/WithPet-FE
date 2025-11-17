@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 
-import CommunityShell from "@/features/community/ui/CommunityShell";
+import CommunityCategoryPageClient from "@/features/community/list/CommunityCategoryPageClient";
 import { type Category } from "@/types/category";
 
 const CATEGORIES = ["all", "free", "qna", "info"] as const;
@@ -17,5 +17,5 @@ export default async function MyPagePostsByCategoryPage({
 }) {
   const { category } = await params;
   if (!CATEGORIES.includes(category)) return notFound();
-  return <CommunityShell category={category as Category} />;
+  return <CommunityCategoryPageClient category={category as Category} />;
 }

@@ -6,16 +6,15 @@ export default function ReportedPostsShell() {
       <div className="border-1 flex h-[650px] flex-col items-center text-gray-900">
         {Array(4)
           .fill("")
-          .map((el, i) => (
+          .map((el) => (
             <PostItem
-              key={i}
-              category="FREE"
+              key={el.id}
+              id={"1"}
+              category="free"
               title="신고된 게시글 제목"
               content="신고된 게시글 내용"
-              user={{ thumbnail: "/images/sample/profile1.png", name: "작성자" }}
-              id={i}
-              images={["/images/sample/post1.png"]}
-              liked={false}
+              author={{ nickname: "닉네임", user_id: "작성자" }}
+              image_url={"/images/sample/post1.png"}
               commentNum={0}
               createdAt="2023-06-01T12:00:00Z"
             />

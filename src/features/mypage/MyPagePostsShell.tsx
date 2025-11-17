@@ -65,14 +65,13 @@ export default function MyPagePostsShell({ category }: { category: Category }) {
           .fill("")
           .map((el) => (
             <PostItem
-              key={el}
-              category={category}
+              key={el.id}
+              category="free"
               title="제목"
               content=""
-              user={{ thumbnail: "/images/sample/profile1.png", name: "작성자" }}
-              id={1}
-              images={["/images/sample/post1.png"]}
-              liked={false}
+              author={{ nickname: "닉네임", user_id: "작성자" }}
+              id={"1"}
+              image_url={"/images/sample/post1.png"}
               commentNum={0}
               createdAt="2023-06-01T12:00:00Z"
             />

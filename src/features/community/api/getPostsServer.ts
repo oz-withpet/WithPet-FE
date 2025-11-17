@@ -3,7 +3,7 @@ import { serverFetcher, ServerFetcherOptions } from "@/shared/api/serverFetcher"
 import { GetPostsParams, GetPostsResponse } from "./type";
 
 function buildServerPostsRequestOptions(params: GetPostsParams): ServerFetcherOptions {
-  const { view = "main", after, limit } = params;
+  const { view = "main", after, limit, category } = params;
 
   return {
     method: "GET",
@@ -12,6 +12,7 @@ function buildServerPostsRequestOptions(params: GetPostsParams): ServerFetcherOp
       view,
       after,
       limit,
+      category,
     },
   };
 }
@@ -19,5 +20,5 @@ function buildServerPostsRequestOptions(params: GetPostsParams): ServerFetcherOp
 export async function getPostsServer(params: GetPostsParams): Promise<GetPostsResponse> {
   const options = buildServerPostsRequestOptions(params);
 
-  return serverFetcher<GetPostsResponse>("/community/posts", options);
+  return serverFetcher<GetPostsResponse>("/posts", options);
 }

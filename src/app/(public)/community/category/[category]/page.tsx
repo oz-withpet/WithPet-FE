@@ -4,8 +4,8 @@ import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query
 import { Metadata } from "next";
 
 import { getPostsServer } from "@/features/community/api/getPostsServer";
+import { postKeys } from "@/features/community/api/queryKeys";
 import { GetPostsParams } from "@/features/community/api/type";
-import { postKeys } from "@/features/community/api/usePostsQuery";
 import CommunityCategoryPageClient from "@/features/community/list/CommunityCategoryPageClient";
 import { type ServerFetcherError } from "@/shared/api/serverFetcher";
 import { type Category } from "@/types/category";
@@ -51,6 +51,7 @@ export default async function CommunityCategoryPage({
   const listParams: GetPostsParams = {
     view: "main",
     limit: 12,
+    category,
   };
 
   const queryClient = new QueryClient();
