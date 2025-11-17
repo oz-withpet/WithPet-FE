@@ -1,8 +1,9 @@
 import { notFound } from "next/navigation";
 
-import { QueryClient } from "@tanstack/react-query";
+import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 
 import { getPostDetail } from "@/features/community/api/getPostDetail";
+import { postKeys } from "@/features/community/api/queryKeys";
 import PostDetailShell from "@/features/community/detail/PostDetailShell";
 import type { ServerFetcherError } from "@/shared/api/serverFetcher";
 
@@ -49,11 +50,11 @@ export default async function CommunityPostDetailPage({ params }: { params: Prom
   let post;
   try {
     await queryClient.prefetchQuery({
-      queryKey: ["posts", "detail", id],
+      queryKey: postKeys.detail(id),
       queryFn: () =>
         getPostDetail({
           id,
-          comments_limit: 20,
+          comments_limit: 0,
         }),
     });
     const result = await getPostDetail({
@@ -69,5 +70,12 @@ export default async function CommunityPostDetailPage({ params }: { params: Prom
     }
     throw error;
   }
-  return <PostDetailShell {...post} />;
+
+  const dehydratedState = dehydrate(queryClient);
+
+  return (
+    <HydrationBoundary state={dehydratedState}>
+      <PostDetailShell {...post} />
+    </HydrationBoundary>
+  );
 }
