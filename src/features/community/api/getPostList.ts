@@ -1,5 +1,4 @@
-// src/features/community/api/getPosts.ts
-import { get } from "@/shared/api/serverClient";
+// import { get } from "@/shared/api/serverClient";
 
 export type PostSummary = {
   // Swagger 응답 보고 맞춰서 수정하면 됨
@@ -27,15 +26,13 @@ export type GetPostsParams = {
 
 export async function getPosts(params: GetPostsParams = {}) {
   // view: 'main' -> 무한스크롤, view:'community' -> 페이지네이션
-  const { view = "main", after, limit } = params;
-
-  const data = await get<GetPostsResponse>("/posts", {
-    query: {
-      view,
-      after,
-      limit,
-    },
-  });
-
-  return data;
+  // const { view = "main", after, limit } = params;
+  // const data = await get<GetPostsResponse>("/posts", {
+  //   query: {
+  //     view,
+  //     after,
+  //     limit,
+  //   },
+  // });
+  // return data;
 }

@@ -2,7 +2,8 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-import { getPostDetail, GetPostDetailResponse } from "../api/getPostDetail";
+import { getPostDetail } from "../api/getPostDetail";
+import { GetPostDetailResponse } from "../api/type";
 
 export function usePostDetailQuery(id: string) {
   return useQuery<GetPostDetailResponse>({
