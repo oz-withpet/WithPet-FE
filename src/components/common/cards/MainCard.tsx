@@ -14,6 +14,7 @@ export default function MainCard({ id, thumbnail, writer, comment }: MainCardPro
         alt={thumbnail}
         width={470}
         height={300}
+        loading="eager"
         className="h-[300px] w-big rounded-2xl bg-orange-200 object-cover transition hover:scale-105 hover:cursor-pointer"
       />
       <div className="flex flex-col">
