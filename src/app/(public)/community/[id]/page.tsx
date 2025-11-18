@@ -43,9 +43,9 @@ export default async function CommunityPostDetailPage({ params }: { params: Prom
   const { id } = await params;
 
   // id가 숫자가 아닌 경우 notFound()리턴
-  // if (!/^\d+$/.test(id)) {
-  //   return notFound();
-  // }
+  if (!/^\d+$/.test(id)) {
+    return notFound();
+  }
 
   const queryClient = new QueryClient();
 
