@@ -9,12 +9,13 @@ const BACKEND_BASE_URL =
 
 // 옵션정의
 // 인증 여부나 바디 타입 정보까지 RequestInit에 얹어서 재사용 API마다 간단히 설정 가능
-export interface BackendClientOptions extends RequestInit {
+export interface ClientFetcherOptions extends RequestInit {
   auth?: "public" | "private";
   bodyType?: "json" | "form";
+  query?: Record<string, string | number | boolean | undefined>;
 }
 
-export interface BackendError extends Error {
+export interface ClientFetcherError extends Error {
   status: number;
   body?: unknown;
 }
@@ -23,9 +24,9 @@ export interface BackendError extends Error {
  * @@ 클라이언트용 fetch 래퍼
  * 경로만 넘기면 헤더, 인증, 오류 파싱까지 한 번에 처리되는 fetch 래퍼
  */
-export async function backendClient<T>(
+export async function clientFetcher<T>(
   path: string,
-  { auth = "private", bodyType = "json", body, headers, ...rest }: BackendClientOptions = {},
+  { auth = "private", bodyType = "json", body, headers, query, ...rest }: ClientFetcherOptions = {},
 ): Promise<T> {
   const url = `${BACKEND_BASE_URL}${path.startsWith("/") ? path : `/${path}`}`;
 
@@ -64,7 +65,7 @@ export async function backendClient<T>(
   };
 
   if (!response.ok) {
-    const err = new Error(`Backend API Error: ${response.status}`) as BackendError;
+    const err = new Error(`Backend API Error: ${response.status}`) as ClientFetcherError;
     err.status = response.status;
     try {
       err.body = await parseBody();

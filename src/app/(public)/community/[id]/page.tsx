@@ -2,9 +2,9 @@ import { notFound } from "next/navigation";
 
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 
-import { getPostDetail } from "@/features/community/api/getPostDetail";
+import { getPostDetailServer } from "@/features/community/api/getPostDetailServer";
 import { postKeys } from "@/features/community/api/queryKeys";
-import PostDetailShell from "@/features/community/detail/PostDetailShell";
+import PostDetailPageClient from "@/features/community/detail/PostDetailPageClient";
 import type { ServerFetcherError } from "@/shared/api/serverFetcher";
 
 import type { Metadata } from "next";
@@ -17,10 +17,11 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   if (!/^\d+$/.test(id)) {
     return { title: "게시글을 찾을 수 없습니다" };
   }
+
   try {
-    const { post } = await getPostDetail({
+    const { post } = await getPostDetailServer({
       id,
-      comments_limit: 0,
+      comments_limit: 20,
     });
     const snippet = post.content.slice(0, 50);
 
@@ -41,28 +42,23 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
 export default async function CommunityPostDetailPage({ params }: { params: Promise<Params> }) {
   const { id } = await params;
 
-  if (!/^\d+$/.test(id)) {
-    return notFound();
-  }
+  // id가 숫자가 아닌 경우 notFound()리턴
+  // if (!/^\d+$/.test(id)) {
+  //   return notFound();
+  // }
 
   const queryClient = new QueryClient();
 
-  let post;
   try {
+    // 서버에 미리 가지고 있기 = prefetch
     await queryClient.prefetchQuery({
       queryKey: postKeys.detail(id),
       queryFn: () =>
-        getPostDetail({
+        getPostDetailServer({
           id,
-          comments_limit: 0,
+          comments_limit: 20,
         }),
     });
-    const result = await getPostDetail({
-      id,
-      comments_limit: 0,
-      // comments_after: 'cmt_cursor_20251021_030600',
-    });
-    post = result.post;
   } catch (error) {
     const err = error as ServerFetcherError;
     if (err.status === 404) {
@@ -71,11 +67,12 @@ export default async function CommunityPostDetailPage({ params }: { params: Prom
     throw error;
   }
 
+  // 완성된 상태(dehydratedState) 만들어서 클라이언트에 보냄
   const dehydratedState = dehydrate(queryClient);
 
   return (
     <HydrationBoundary state={dehydratedState}>
-      <PostDetailShell {...post} />
+      <PostDetailPageClient id={id} />
     </HydrationBoundary>
   );
 }
