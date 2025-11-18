@@ -10,13 +10,13 @@ export default function ReportedPostsShell() {
             <PostItem
               key={el.id}
               id={"1"}
-              category="free"
+              category="자유게시판"
               title="신고된 게시글 제목"
-              content="신고된 게시글 내용"
+              content_snippet="신고된 게시글 내용"
               author={{ nickname: "닉네임", user_id: "작성자" }}
               image_url={"/images/sample/post1.png"}
-              commentNum={0}
-              createdAt="2023-06-01T12:00:00Z"
+              comment_count={0}
+              created_at="2023-06-01T12:00:00Z"
             />
           ))}
       </div>

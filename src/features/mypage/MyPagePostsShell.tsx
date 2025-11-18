@@ -66,14 +66,14 @@ export default function MyPagePostsShell({ category }: { category: Category }) {
           .map((el) => (
             <PostItem
               key={el.id}
-              category="free"
+              category="자유게시판"
               title="제목"
-              content=""
+              content_snippet=""
               author={{ nickname: "닉네임", user_id: "작성자" }}
               id={"1"}
               image_url={"/images/sample/post1.png"}
-              commentNum={0}
-              createdAt="2023-06-01T12:00:00Z"
+              comment_count={0}
+              created_at="2023-06-01T12:00:00Z"
             />
           ))}
       </div>
