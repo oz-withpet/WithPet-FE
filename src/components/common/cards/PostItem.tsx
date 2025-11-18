@@ -21,7 +21,7 @@ export default function PostItem(
           <div className="mt-3">
             <div className="mb-2 text-lg font-bold text-black">{pr?.title}</div>
             <div className="line-clamp-2 h-[42px] w-[838px] text-sm text-gray-400">
-              {pr.content_snippet}
+              {pr.content}
             </div>
           </div>
         </div>
