@@ -1,5 +1,5 @@
 // src/features/mypage/api/mypageApi.ts
-import { backendClient } from "@/shared/api/clientFeacher";
+import { clientFetcher } from "@/shared/api/clientFetcher";
 import type {
   MyProfileResponse,
   MyProfileUpdateRequest,
@@ -34,7 +34,7 @@ export const getMyProfile = async () => {
 };
 // 2) 내 프로필 수정 PATCH /mypage/profile
 export const updateMyProfile = (payload: MyProfileUpdateRequest) => {
-  return backendClient<ApiSuccessWrapper>("/mypage/profile", {
+  return clientFetcher<ApiSuccessWrapper>("/mypage/profile", {
     method: "PATCH",
     auth: "private",
     body: JSON.stringify(payload),
@@ -43,7 +43,7 @@ export const updateMyProfile = (payload: MyProfileUpdateRequest) => {
 
 // 3) 비밀번호 변경 POST /mypage/password
 export const changePassword = (payload: PasswordChangeRequest) => {
-  return backendClient<ApiSuccessWrapper>("/mypage/password", {
+  return clientFetcher<ApiSuccessWrapper>("/mypage/password", {
     method: "POST",
     auth: "private",
     body: JSON.stringify(payload),
@@ -52,7 +52,7 @@ export const changePassword = (payload: PasswordChangeRequest) => {
 
 // 4) 회원 탈퇴 POST /mypage/withdraw
 export const withdraw = (password?: string) => {
-  return backendClient<ApiSuccessWrapper>("/mypage/withdraw", {
+  return clientFetcher<ApiSuccessWrapper>("/mypage/withdraw", {
     method: "POST",
     auth: "private",
     body: password ? JSON.stringify({ password }) : undefined,
@@ -65,7 +65,7 @@ export const getMyPosts = (params: { page?: number; page_size?: number } = {}) =
   if (params.page) search.set("page", String(params.page));
   if (params.page_size) search.set("page_size", String(params.page_size));
 
-  return backendClient<MyPostsListResponse>(
+  return clientFetcher<MyPostsListResponse>(
     `/mypage/posts${search.toString() ? `?${search.toString()}` : ""}`,
     {
       method: "GET",
@@ -80,7 +80,7 @@ export const getMyLikedPosts = (params: { page?: number; page_size?: number } = 
   if (params.page) search.set("page", String(params.page));
   if (params.page_size) search.set("page_size", String(params.page_size));
 
-  return backendClient<MyLikedPostsListResponse>(
+  return clientFetcher<MyLikedPostsListResponse>(
     `/mypage/likes/posts${search.toString() ? `?${search.toString()}` : ""}`,
     {
       method: "GET",
@@ -95,7 +95,7 @@ export const getMyReports = (params: { page?: number; page_size?: number } = {})
   if (params.page) search.set("page", String(params.page));
   if (params.page_size) search.set("page_size", String(params.page_size));
 
-  return backendClient<MyReportsListResponse>(
+  return clientFetcher<MyReportsListResponse>(
     `/mypage/reports${search.toString() ? `?${search.toString()}` : ""}`,
     {
       method: "GET",
@@ -110,7 +110,7 @@ export const getMyLikedStores = (params: { page?: number; page_size?: number } =
   if (params.page) search.set("page", String(params.page));
   if (params.page_size) search.set("page_size", String(params.page_size));
 
-  return backendClient<MyLikedStoreListResponse>(
+  return clientFetcher<MyLikedStoreListResponse>(
     `/mypage/favorites/places${search.toString() ? `?${search.toString()}` : ""}`,
     {
       method: "GET",
