@@ -3,8 +3,10 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+import { useQuery } from "@tanstack/react-query";
 import { useDispatch, useSelector } from "react-redux";
 
+import { getMyProfile } from "@/features/mypage/api/mypageApi";
 import type { RootState } from "@/shared/store";
 import { clearTokens } from "@/shared/store/authSlice";
 
@@ -23,6 +25,15 @@ export default function Header() {
   const handleLogout = () => {
     dispatch(clearTokens());
   };
+
+  // 로그인 상태에만 userName 프로필 가져오기
+  const { data: profileRes } = useQuery({
+    queryKey: ["mypage", "profile", "header"],
+    queryFn: getMyProfile,
+    enabled: isLoggedIn,
+  });
+  const profile = profileRes?.data;
+  const displayName = profile?.username ?? profile?.nickname ?? tokens?.userEmail ?? "내 정보";
 
   return (
     <header className="flex h-[60px] w-full items-center justify-center border-b border-b-gray-200 bg-white">
@@ -57,7 +68,6 @@ export default function Header() {
                 type="button"
                 status="primary"
                 className="mx-2 rounded-md border-[1px] px-4 py-2 text-sm"
-                onClick={handleLogout}
               >
                 글쓰기
               </Button>
@@ -71,9 +81,8 @@ export default function Header() {
                 type="button"
                 status="primary"
                 className="mx-2 rounded-md border-[1px] px-4 py-2 text-sm"
-                onClick={handleLogout}
               >
-                {tokens?.userEmail ?? "내 정보"}
+                {displayName}
               </Button>
             </Link>
             <Button
