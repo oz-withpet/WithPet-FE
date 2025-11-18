@@ -6,7 +6,7 @@ const ACCESS_COOKIE = "access_token";
 const REFRESH_COOKIE = "refresh_token";
 const REFRESH_ENDPOINT = "/auth/token/refresh";
 const LOGIN_PATH = "/login";
-const PUBLIC_PATHS = ["/login", "/signup"];
+const PUBLIC_PATHS = ["/login", "/signup", "/map"];
 
 const isPublicPath = (pathname: string) => {
   if (pathname === "/") return true;

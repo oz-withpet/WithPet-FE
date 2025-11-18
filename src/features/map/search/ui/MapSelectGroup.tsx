@@ -7,6 +7,11 @@ import { useDispatch } from "react-redux";
 import Select from "@/components/common/select/Select";
 import type { AppDispatch } from "@/shared/store";
 import { setSelectedLocation } from "@/shared/store/mapSlice";
+import type {
+  DistrictResponse,
+  NeighborhoodResponse,
+  ProvinceResponse,
+} from "@/types/mapTypes";
 
 import { useLocations } from "../api/useLocations";
 
@@ -32,25 +37,39 @@ export default function MapSelectGroup() {
     { enabled: Boolean(province && district) },
   );
 
+  const provinces = provinceResponse as ProvinceResponse | undefined;
+  const districts = districtResponse as DistrictResponse | undefined;
+  const neighborhoods = neighborhoodResponse as NeighborhoodResponse | undefined;
+
   const provinceOptions = useMemo(
-    () => provinceResponse?.data.map((item) => ({ label: item.name, value: item.id })) ?? [],
-    [provinceResponse],
+    () =>
+      provinces?.map((item) => ({
+        label: item.province_name,
+        value: String(item.province_code),
+      })) ?? [],
+    [provinces],
   );
 
   const districtOptions = useMemo(
     () =>
       province
-        ? (districtResponse?.data.map((item) => ({ label: item.name, value: item.id })) ?? [])
+        ? districts?.map((item) => ({
+            label: item.district_name,
+            value: String(item.district_code),
+          })) ?? []
         : [],
-    [districtResponse, province],
+    [districts, province],
   );
 
   const neighborhoodOptions = useMemo(
     () =>
       province && district
-        ? (neighborhoodResponse?.data.map((item) => ({ label: item.name, value: item.id })) ?? [])
+        ? neighborhoods?.map((item) => ({
+            label: item.neighborhood_name,
+            value: String(item.neighborhood_code),
+          })) ?? []
         : [],
-    [neighborhoodResponse, province, district],
+    [neighborhoods, province, district],
   );
 
   const handleProvinceChange = (value: string) => {
