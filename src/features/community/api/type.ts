@@ -1,10 +1,12 @@
+import { Categories, CategoryLabel } from "@/types/category";
+
 export type PostSummary = {
   id: string;
   author: {
     user_id: string;
     nickname: string;
   };
-  category: "자유게시판" | "질문게시판" | "정보공유";
+  category: Categories;
   comment_count: number;
   content_snippet: string;
   title: string;
@@ -26,7 +28,7 @@ export type GetPostsParams = {
   view?: "main" | "community"; // "main"
   after?: string; // 커서
   limit?: number; // 12
-  category?: "전체" | "자유게시판" | "질문게시판" | "정보공유";
+  category?: CategoryLabel;
 };
 
 export type GetPostDetailParams = {
@@ -40,7 +42,7 @@ export type PostDetailSummary = {
   id: string;
   title: string;
   content: string;
-  category: "자유게시판" | "질문게시판" | "정보공유";
+  category: Categories;
   image_url: string;
   images: string[];
   author: {

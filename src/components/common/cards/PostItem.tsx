@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 
 import { PostSummary } from "@/features/community/api/type";
@@ -26,9 +25,9 @@ export default function PostItem(
             </div>
           </div>
         </div>
-        {pr?.image_url === null ? (
-          <div className="h-[124px] w-[124px] rounded-xl bg-thumbnail-200 text-gray-400" />
-        ) : (
+        {/* {pr?.image_url ? ( */}
+        <div className="h-[124px] w-[124px] rounded-xl bg-thumbnail-200 text-gray-400" />
+        {/* ) : (
           <Image
             src={pr?.image_url}
             alt={pr?.title}
@@ -37,7 +36,7 @@ export default function PostItem(
             loading="eager"
             className="h-[124px] w-[124px] rounded-xl bg-thumbnail-200 text-gray-400"
           />
-        )}
+        )} */}
       </div>
       <div className="flex items-center text-xs text-gray-400">
         <div className="flex items-center p-2">

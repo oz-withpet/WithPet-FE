@@ -8,30 +8,22 @@ import { postKeys } from "@/features/community/api/queryKeys";
 import { GetPostsParams } from "@/features/community/api/type";
 import CommunityCategoryPageClient from "@/features/community/list/CommunityCategoryPageClient";
 import { type ServerFetcherError } from "@/shared/api/serverFetcher";
-import { type Category } from "@/types/category";
+import { CATEGORY_LABEL_BY_SLUG } from "@/types/category";
 
 const CATEGORIES = ["all", "free", "qna", "info"] as const;
-type CategoryParam = (typeof CATEGORIES)[number];
 
 export async function generateStaticParams() {
   return CATEGORIES.map((c) => ({ category: c }));
 }
 
-const CATEGORY_LABELS: Record<CategoryParam, string> = {
-  all: "전체",
-  free: "자유게시판",
-  qna: "질문게시판",
-  info: "정보공유",
-};
-
 type Params = {
-  category: keyof typeof CATEGORY_LABELS; // "all" | "free" | "qna" | "info"
+  category: keyof typeof CATEGORY_LABEL_BY_SLUG; // "all" | "free" | "qna" | "info"
 };
 
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
   const { category } = await params;
 
-  const label = CATEGORY_LABELS[category] ?? "커뮤니티";
+  const label = CATEGORY_LABEL_BY_SLUG[category] ?? "커뮤니티";
 
   return {
     title: label,
@@ -51,7 +43,6 @@ export default async function CommunityCategoryPage({
   const listParams: GetPostsParams = {
     view: "main",
     limit: 12,
-    category,
   };
 
   const queryClient = new QueryClient();
@@ -75,7 +66,7 @@ export default async function CommunityCategoryPage({
   return (
     // “이 페이지에서 어떤 데이터를 어떻게 가져올지” 책임 → 데이터/로딩/에러 담당
     <HydrationBoundary state={dehydratedState}>
-      <CommunityCategoryPageClient category={category as Category} />
+      <CommunityCategoryPageClient category={category} />
     </HydrationBoundary>
   );
 }

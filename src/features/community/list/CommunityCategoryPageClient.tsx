@@ -1,16 +1,16 @@
 "use client";
 
-import { Category } from "@/types/category";
+import { CategorySlug } from "@/types/category";
 
 import CommunityShell from "./CommunityShell";
 import { usePostsQuery } from "../api/usePostsQuery";
 
 type Props = {
-  category: Category;
+  category: CategorySlug;
 };
 
 export default function CommunityCategoryPageClient({ category }: Props) {
-  const { data, isLoading, isError } = usePostsQuery({ view: "main", limit: 12, category });
+  const { data, isLoading, isError } = usePostsQuery({ view: "main", limit: 12 });
 
   if (isLoading) {
     return <div className="mx-auto w-main py-8">게시글을 불러오는 중입니다...</div>;

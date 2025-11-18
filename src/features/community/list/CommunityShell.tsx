@@ -2,17 +2,20 @@
 
 import PostItem from "@/components/common/cards/PostItem";
 import EmptyState from "@/components/common/empty/EmptyState";
-import type { Category } from "@/types/category";
+import { CATEGORY_LABEL_BY_SLUG, CategorySlug } from "@/types/category";
 
 import { PostSummary } from "../api/type";
 
 type CommunityShellProps = {
-  category: Category;
+  category: CategorySlug;
   posts: PostSummary[];
 };
 
 export default function CommunityShell({ category, posts }: CommunityShellProps) {
-  const filtered = category === "all" ? posts : posts?.filter((post) => post.category === category);
+  const filtered =
+    category === "all"
+      ? posts
+      : posts?.filter((post) => post.category === CATEGORY_LABEL_BY_SLUG[category]);
 
   if (posts?.length === 0) {
     return (
