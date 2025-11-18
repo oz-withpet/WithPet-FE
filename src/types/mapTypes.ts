@@ -18,34 +18,16 @@ export type Province = {
   code: string;
 };
 
-export type StoreCategory = {
-  id: string;
-  name: string;
-  code: string;
-};
-
-export type StoreAddress = {
-  province: string;
-  district: string;
-  neighborhood: string;
-  detail: string;
-  full_address: string;
-  postal_code: string;
-};
-
 export type Store = {
   id: number;
   name: string;
-  category: StoreCategory;
-  address: StoreAddress;
-  phone: string;
-  rating: number;
-  review_count: number;
-  tags: string[];
-  distance: number;
-  thumbnail_url: string;
-  latitude: number;
-  longitude: number;
+  category_name: string;
+  province: string;
+  district: string;
+  neighborhood?: string;
+  phone?: string;
+  latitude: string;
+  longitude: string;
 };
 
 export type LocationParams = {
@@ -89,16 +71,13 @@ export type MapCategory = {
 export type CategoryResponse = MapCategory[];
 
 export type StoreFilters = {
-  province?: string;
-  district?: string;
-  neighborhood?: string;
-  categoryCodes?: string[];
-  latitude?: number;
-  longitude?: number;
-  keyword?: string;
+  province_code?: string;
+  district_code?: string;
+  neighborhood_code?: string;
+  category?: string;
 };
 
 export type StoreResponse = {
-  success: boolean;
-  data: Store[];
+  count: number;
+  results: Store[];
 };

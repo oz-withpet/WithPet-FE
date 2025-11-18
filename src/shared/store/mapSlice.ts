@@ -1,9 +1,9 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 export interface MapLocationSelection {
-  province: string;
-  district: string;
-  neighborhood: string;
+  province_code: string;
+  district_code: string;
+  neighborhood_code: string;
 }
 
 export interface StoreMarker {
@@ -37,9 +37,9 @@ interface MapState {
 const initialState: MapState = {
   selectedCategory: null,
   selectedLocation: {
-    province: "",
-    district: "",
-    neighborhood: "",
+    province_code: "",
+    district_code: "",
+    neighborhood_code: "",
   },
   center: {
     latitude: 37.55319,

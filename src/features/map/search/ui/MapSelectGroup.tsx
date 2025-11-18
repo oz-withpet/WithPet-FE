@@ -76,18 +76,18 @@ export default function MapSelectGroup() {
     setProvince(value);
     setDistrict("");
     setNeighborhood("");
-    dispatch(setSelectedLocation({ province: value, district: "", neighborhood: "" }));
+    dispatch(setSelectedLocation({ province_code: value, district_code: "", neighborhood_code: "" }));
   };
 
   const handleDistrictChange = (value: string) => {
     setDistrict(value);
     setNeighborhood("");
-    dispatch(setSelectedLocation({ district: value, neighborhood: "" }));
+    dispatch(setSelectedLocation({ district_code: value, neighborhood_code: "" }));
   };
 
   const handleNeighborhoodChange = (value: string) => {
     setNeighborhood(value);
-    dispatch(setSelectedLocation({ neighborhood: value }));
+    dispatch(setSelectedLocation({ neighborhood_code: value }));
   };
 
   const isDistrictDisabled = !province || isDistrictLoading || districtOptions.length === 0;

@@ -22,11 +22,10 @@ interface MapStoreListProps {
  * - `useStoreQuery`가 API를 호출하고, 반환된 목록을 카드 형태로 보여줍니다.
  */
 export default function MapStoreList({ className }: MapStoreListProps) {
-  const { province, district, neighborhood } = useSelector(
+  const { province_code, district_code, neighborhood_code } = useSelector(
     (state: RootState) => state.map.selectedLocation,
   );
   const selectedCategory = useSelector((state: RootState) => state.map.selectedCategory);
-  const center = useSelector((state: RootState) => state.map.center);
 
   /**
    * 훅 사용을 위한 요청 조건 객체
@@ -35,19 +34,17 @@ export default function MapStoreList({ className }: MapStoreListProps) {
    */
   const filters = useMemo<StoreFilters>(
     () => ({
-      province: province || undefined,
-      district: district || undefined,
-      neighborhood: neighborhood || undefined,
-      categoryCodes: selectedCategory ? [selectedCategory] : undefined,
-      latitude: center.latitude,
-      longitude: center.longitude,
+      province_code: province_code ?? "",
+      district_code: district_code ?? "",
+      neighborhood_code: neighborhood_code ?? "",
+      category: selectedCategory ?? "",
     }),
-    [province, district, neighborhood, selectedCategory, center.latitude, center.longitude],
+    [province_code, district_code, neighborhood_code, selectedCategory],
   );
 
   const { data, isLoading, isError } = useStoreQuery(filters);
 
-  if (!district) {
+  if (!district_code) {
     return <p className="text-sm text-gray-500">시군구를 선택하면 가게 목록이 표시됩니다.</p>;
   }
 
