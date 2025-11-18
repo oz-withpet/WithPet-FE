@@ -1,21 +1,19 @@
 export type PostSummary = {
   id: string;
-  category: "free" | "qna" | "info";
-  title: string;
-  image_url: string;
   author: {
     user_id: string;
     nickname: string;
   };
-  content: string;
-  images: string[];
-  user: {
-    thumbnail: string;
-    name: string;
-  };
-  liked: boolean;
-  commentNum: number;
-  createdAt: string;
+  category: "자유게시판" | "질문게시판" | "정보공유";
+  comment_count: number;
+  content_snippet: string;
+  title: string;
+  image_url: string;
+  is_liked_by_me: boolean;
+  like_count: number;
+  created_at: string;
+  updated_at: string;
+  view_count: number;
 };
 
 export type GetPostsResponse = {
@@ -28,7 +26,7 @@ export type GetPostsParams = {
   view?: "main" | "community"; // "main"
   after?: string; // 커서
   limit?: number; // 12
-  category?: "all" | "free" | "qna" | "info";
+  category?: "전체" | "자유게시판" | "질문게시판" | "정보공유";
 };
 
 export type GetPostDetailParams = {
@@ -42,8 +40,9 @@ export type PostDetailSummary = {
   id: string;
   title: string;
   content: string;
-  category: "free" | "qna" | "info";
+  category: "자유게시판" | "질문게시판" | "정보공유";
   image_url: string;
+  images: string[];
   author: {
     user_id: string;
     nickname: string;

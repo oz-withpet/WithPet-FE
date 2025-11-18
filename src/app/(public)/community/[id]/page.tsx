@@ -42,9 +42,10 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
 export default async function CommunityPostDetailPage({ params }: { params: Promise<Params> }) {
   const { id } = await params;
 
-  if (!/^\d+$/.test(id)) {
-    return notFound();
-  }
+  // id가 숫자가 아닌 경우 notFound()리턴
+  // if (!/^\d+$/.test(id)) {
+  //   return notFound();
+  // }
 
   const queryClient = new QueryClient();
 
