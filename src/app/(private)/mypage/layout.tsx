@@ -1,6 +1,7 @@
-import { Metadata } from "next";
-
+// src/app/(private)/mypage/layout.tsx
 import CommonSubNav from "@/components/common/nav/CommonSubNav";
+
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "마이페이지",
@@ -16,7 +17,7 @@ export default function MyPageLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // 로그인 했는지 확인 코드 작성하기
+  // 🔥 여기서는 로그인 체크 안 한다 (middleware / 상위 layout에서 처리)
   return (
     <>
       <CommonSubNav />
