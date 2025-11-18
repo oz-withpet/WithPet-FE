@@ -68,7 +68,7 @@ export default function MyPagePostsShell({ category }: { category: Category }) {
               key={el.id}
               category="자유게시판"
               title="제목"
-              content_snippet=""
+              content=""
               author={{ nickname: "닉네임", user_id: "작성자" }}
               id={"1"}
               image_url={"/images/sample/post1.png"}

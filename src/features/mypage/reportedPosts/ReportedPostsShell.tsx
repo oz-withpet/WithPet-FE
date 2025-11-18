@@ -12,7 +12,7 @@ export default function ReportedPostsShell() {
               id={"1"}
               category="자유게시판"
               title="신고된 게시글 제목"
-              content_snippet="신고된 게시글 내용"
+              content="신고된 게시글 내용"
               author={{ nickname: "닉네임", user_id: "작성자" }}
               image_url={"/images/sample/post1.png"}
               comment_count={0}
