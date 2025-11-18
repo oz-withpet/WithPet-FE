@@ -8,7 +8,7 @@ export type PostSummary = {
   };
   category: Categories;
   comment_count: number;
-  content_snippet: string;
+  content: string;
   title: string;
   image_url: string;
   is_liked_by_me: boolean;

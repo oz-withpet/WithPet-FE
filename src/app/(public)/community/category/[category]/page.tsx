@@ -40,17 +40,16 @@ export default async function CommunityCategoryPage({
 
   if (!CATEGORIES.includes(category)) return notFound();
 
-  const listParams: GetPostsParams = {
+  const CATEGORY_LIST_PARAMS: GetPostsParams = {
     view: "main",
-    limit: 12,
   };
 
   const queryClient = new QueryClient();
 
   try {
     await queryClient.prefetchQuery({
-      queryKey: postKeys.list(listParams),
-      queryFn: () => getPostsServer(listParams),
+      queryKey: postKeys.list(CATEGORY_LIST_PARAMS),
+      queryFn: () => getPostsServer(CATEGORY_LIST_PARAMS),
     });
   } catch (error) {
     const err = error as ServerFetcherError;

@@ -1,15 +1,33 @@
-import MainCard from "@/components/common/cards/MainCard";
-import { DUMMY_MAIN_POSTS } from "@/mocks/data/post";
+import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
+import { Metadata } from "next";
 
-export default function Home() {
+import { getPostsServer } from "@/features/community/api/getPostsServer";
+import { postKeys } from "@/features/community/api/queryKeys";
+import { GetPostsParams } from "@/features/community/api/type";
+import MainPageClient from "@/features/home/MainPageClient";
+
+export const metadata: Metadata = {
+  title: "WithPet Main",
+  description: "강아지, 고양이 커뮤니티 최신 글을 확인하세요.",
+};
+
+const MAIN_LIST_PARAMS: GetPostsParams = {
+  view: "main",
+};
+
+export default async function Home() {
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery({
+    queryKey: postKeys.list(MAIN_LIST_PARAMS),
+    queryFn: () => getPostsServer(MAIN_LIST_PARAMS),
+  });
+
+  const dehydratedState = dehydrate(queryClient);
+
   return (
-    <div className="m-auto flex w-main flex-col items-center pt-12 text-gray-900">
-      <div className="text-2xl font-semibold">추천 콘텐츠</div>
-      <div className="flex flex-wrap justify-between">
-        {DUMMY_MAIN_POSTS?.map((el) => (
-          <MainCard key={el.id} {...el} />
-        ))}
-      </div>
-    </div>
+    <HydrationBoundary state={dehydratedState}>
+      <MainPageClient />
+    </HydrationBoundary>
   );
 }

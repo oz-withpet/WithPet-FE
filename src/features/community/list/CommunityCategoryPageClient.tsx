@@ -10,7 +10,7 @@ type Props = {
 };
 
 export default function CommunityCategoryPageClient({ category }: Props) {
-  const { data, isLoading, isError } = usePostsQuery({ view: "main", limit: 12 });
+  const { data, isLoading, isError } = usePostsQuery({ view: "main" });
 
   if (isLoading) {
     return <div className="mx-auto w-main py-8">게시글을 불러오는 중입니다...</div>;
