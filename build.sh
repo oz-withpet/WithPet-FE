@@ -10,11 +10,11 @@ rm -rf "$OUTPUT_DIR"
 mkdir -p "$OUTPUT_DIR"
 
 echo "[build.sh] copying project files (excluding node_modules/.next/output/.git)"
-rsync -av --delete \\
-  --exclude '.git' \\
-  --exclude '.next' \\
-  --exclude 'node_modules' \\
-  --exclude 'output' \\
+rsync -av --delete \
+  --exclude '.git' \
+  --exclude '.next' \
+  --exclude 'node_modules' \
+  --exclude 'output' \
   "$ROOT_DIR/" "$OUTPUT_DIR/"
 
 echo "[build.sh] output prepared at $OUTPUT_DIR"
