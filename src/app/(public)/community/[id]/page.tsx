@@ -19,10 +19,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   }
 
   try {
-    const { post } = await getPostDetailServer({
-      id,
-      comments_limit: 20,
-    });
+    const { post } = await getPostDetailServer({ post_id: id });
     const snippet = post.content.slice(0, 50);
 
     return {
@@ -53,11 +50,7 @@ export default async function CommunityPostDetailPage({ params }: { params: Prom
     // 서버에 미리 가지고 있기 = prefetch
     await queryClient.prefetchQuery({
       queryKey: postKeys.detail(id),
-      queryFn: () =>
-        getPostDetailServer({
-          id,
-          comments_limit: 20,
-        }),
+      queryFn: () => getPostDetailServer({ post_id: id, include: "comments" }),
     });
   } catch (error) {
     const err = error as ServerFetcherError;

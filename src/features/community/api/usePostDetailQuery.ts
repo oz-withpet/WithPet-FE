@@ -11,7 +11,7 @@ export function usePostDetailQuery(params: GetPostDetailParams) {
   return useQuery<GetPostDetailResponse>({
     // 데이터가 있으면 그대로 사용,
     // queryKey.detail(params.id) 우리가 찾는 주소
-    queryKey: postKeys.detail(params.id),
+    queryKey: postKeys.detail(params.post_id),
     // 없으면 getPostDetailClient로 서버에 물어본다.
     queryFn: () => getPostDetailClient(params),
     staleTime: 1000 * 10,

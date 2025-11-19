@@ -1,8 +1,11 @@
-import Image from "next/image";
+import type { CommentItemSummary } from "@/features/community/api/type";
+import { toRelativeKorean } from "@/lib/relativeTime";
 
-import { DUMMY_COMMENTS } from "@/mocks/data/comments";
+type Props = {
+  items: CommentItemSummary[];
+};
 
-export default function CommentForm() {
+export default function CommentForm({ items }: Props) {
   return (
     <div className="hover:cursor-default">
       <form className="my-4 flex h-[96px] w-main flex-col items-center justify-center bg-gray-200">
@@ -17,24 +20,17 @@ export default function CommentForm() {
         </div>
       </form>
 
-      {DUMMY_COMMENTS?.length !== 0 ? (
-        DUMMY_COMMENTS?.map((el) => (
+      {items?.length !== 0 ? (
+        items?.map((el) => (
           <div className="mb-3 rounded-sm border" key={el.id}>
             <div className="flex items-center justify-between">
               <div className="flex items-center">
-                <Image
-                  src={el.user.image}
-                  alt={el.comment}
-                  width={25}
-                  height={25}
-                  loading="lazy"
-                  className="mr-2 rounded-full"
-                />
-                <div className="text-sm">{el.user.name}</div>
+                <div className="mr-2 h-[25px] w-[25px] rounded-full bg-orange-300" />
+                <div className="text-sm">{el.author.nickname}</div>
               </div>
-              <div className="text-xs text-gray-400">{el.createdAt}</div>
+              <div className="text-xs text-gray-400">{toRelativeKorean(el.created_at)}</div>
             </div>
-            <div className="py-3">{el.comment}</div>
+            <div className="py-3">{el.content}</div>
             <div className="flex w-main justify-end">
               <div className="rounded-2xl border border-orange-300 px-3 py-1 text-xs hover:cursor-pointer hover:bg-orange-300 hover:font-semibold hover:text-white">
                 수정하기

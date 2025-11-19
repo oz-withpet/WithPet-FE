@@ -23,7 +23,7 @@ export default function PostItem(
             <div className="text-2xl font-semibold text-black">{pr?.category}</div>
           </div>
           <div className="mt-3">
-            <div className="mb-2 text-lg font-bold text-black">{pr?.title}</div>
+            <div className="mb-2 truncate text-lg font-bold text-black">{pr?.title}</div>
             <div className="line-clamp-2 h-[42px] w-[838px] text-sm text-gray-400">
               {pr.content}
             </div>
@@ -45,7 +45,7 @@ export default function PostItem(
       <div className="flex items-center text-xs text-gray-400">
         <div className="flex items-center p-2">
           <div className="h-[16px] w-[16px] rounded-full bg-orange-300" />
-          <div className="ml-1">{pr?.author.nickname}</div>
+          <div className="ml-1">{pr?.author.nickname || "nickname"}</div>
         </div>
         <div className="mx-3 p-2">댓글: {pr?.comment_count}</div>
         <div className="p-2">{toRelativeKorean(pr?.created_at)}</div>

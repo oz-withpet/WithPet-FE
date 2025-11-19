@@ -8,7 +8,8 @@ type Props = { id: string };
 // 클라이언트 컴포넌트
 export default function PostDetailPageClient({ id }: Props) {
   // 화면을 보게 한다.
-  const { data, isLoading, isError } = usePostDetailQuery({ id, comments_limit: 20 });
+  const { data, isLoading, isError } = usePostDetailQuery({ post_id: id, include: "comments" });
+
   // 로딩
   if (isLoading) {
     return <div className="mx-auto w-main py-8">게시글을 불러오는 중입니다...</div>;
@@ -18,5 +19,5 @@ export default function PostDetailPageClient({ id }: Props) {
     return <div className="mx-auto w-main py-8">게시글을 불러오지 못했습니다.</div>;
   }
 
-  return <PostDetailShell {...data.post} />;
+  return <PostDetailShell post={data.post} comments={data?.comments} />;
 }
