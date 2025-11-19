@@ -1,12 +1,20 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-echo "프리커밋 검사 중입니다...(코드 포맷 및 린트 확인)"
+echo "프리커밋 검사 중입니다...(lint-staged > 전체 린트)"
 
+echo "1) lint-staged 실행 중..."
+npx lint-staged
+if [ $? -ne 0 ]; then
+  echo "lint-staged 검사에서 오류가 발견되었습니다. 수정 후 다시 커밋해주세요."
+  exit 1
+fi
+
+echo "2) 전체 린트 실행 중..."
 npm run lint
 if [ $? -ne 0 ]; then
   echo "린트 오류가 발견되었습니다. 수정 후 다시 커밋해주세요."
   exit 1
 fi
 
-echo "린트 통과. 커밋을 계속 진행합니다."
+echo "모든 검사 통과. 커밋을 계속 진행합니다."
