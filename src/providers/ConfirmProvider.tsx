@@ -19,6 +19,7 @@ export type ConfirmOptions = {
   description?: string;
   confirmText?: string; // 기본 "예"
   cancelText?: string; // 기본 "아니오"
+  hideCancelButton?: boolean;
   variant?: "default" | "destructive";
   disableOutsideClick?: boolean;
 };
@@ -84,6 +85,7 @@ export function ConfirmDialog({
   description,
   confirmText = "예",
   cancelText = "아니오",
+  hideCancelButton = false,
   variant = "default",
   disableOutsideClick = false,
 }: ConfirmOptions & {
@@ -140,15 +142,17 @@ export function ConfirmDialog({
           </p>
         )}
 
-        <div className="mt-5 flex justify-center gap-10">
-          <button
-            type="button"
-            data-autofocus
-            onClick={onCancel}
-            className="rounded-lg border-2 border-orange-300 px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-200"
-          >
-            {cancelText}
-          </button>
+        <div className={`mt-5 flex ${hideCancelButton ? "justify-end" : "justify-center gap-10"}`}>
+          {!hideCancelButton && (
+            <button
+              type="button"
+              data-autofocus
+              onClick={onCancel}
+              className="rounded-lg border-2 border-orange-300 px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-200"
+            >
+              {cancelText}
+            </button>
+          )}
           <button
             type="button"
             onClick={onConfirm}

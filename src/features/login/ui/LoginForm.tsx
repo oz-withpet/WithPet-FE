@@ -32,7 +32,7 @@ export default function LoginForm() {
         title: "입력 확인",
         description: "이메일과 비밀번호를 모두 입력해주세요.",
         confirmText: "확인",
-        cancelText: "닫기",
+        hideCancelButton: true,
       });
       return;
     }
@@ -45,7 +45,7 @@ export default function LoginForm() {
           title: "환영합니다",
           description: "로그인에 성공했어요!",
           confirmText: "확인",
-          cancelText: "닫기",
+          hideCancelButton: true,
         });
         // 로그인 하면 홈으로 이동
         // todo: 모달 버튼 클릭시 이동하게 변경
@@ -63,14 +63,14 @@ export default function LoginForm() {
         title: "로그인 실패",
         description: detailMessage,
         confirmText: "확인",
-        cancelText: "닫기",
+        hideCancelButton: true,
       });
     } catch {
       await confirm({
         title: "오류",
         description: "서버와 통신에 실패했어요. 잠시 후 다시 시도해주세요.",
         confirmText: "확인",
-        cancelText: "닫기",
+        hideCancelButton: true,
         variant: "destructive",
       });
     }
