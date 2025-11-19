@@ -7,11 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Select from "@/components/common/select/Select";
 import type { AppDispatch, RootState } from "@/shared/store";
 import { setSelectedLocation } from "@/shared/store/mapSlice";
-import type {
-  DistrictResponse,
-  NeighborhoodResponse,
-  ProvinceResponse,
-} from "@/types/mapTypes";
+import type { DistrictResponse, NeighborhoodResponse, ProvinceResponse } from "@/types/mapTypes";
 
 import { useLocations } from "../api/useLocations";
 
@@ -48,10 +44,10 @@ export default function MapSelectGroup() {
   const districtOptions = useMemo(
     () =>
       province
-        ? districts?.map((item) => ({
+        ? (districts?.map((item) => ({
             label: item.district_name,
             value: String(item.district_code),
-          })) ?? []
+          })) ?? [])
         : [],
     [districts, province],
   );
@@ -59,16 +55,21 @@ export default function MapSelectGroup() {
   const neighborhoodOptions = useMemo(
     () =>
       province && district
-        ? neighborhoods?.map((item) => ({
-            label: item.neighborhood_name,
-            value: String(item.neighborhood_code),
-          })) ?? []
+        ? [
+            { label: "전체", value: "__all__" },
+            ...(neighborhoods?.map((item) => ({
+              label: item.neighborhood_name,
+              value: String(item.neighborhood_code),
+            })) ?? []),
+          ]
         : [],
     [neighborhoods, province, district],
   );
 
   const handleProvinceChange = (value: string) => {
-    dispatch(setSelectedLocation({ province_code: value, district_code: "", neighborhood_code: "" }));
+    dispatch(
+      setSelectedLocation({ province_code: value, district_code: "", neighborhood_code: "" }),
+    );
   };
 
   const handleDistrictChange = (value: string) => {
@@ -76,6 +77,10 @@ export default function MapSelectGroup() {
   };
 
   const handleNeighborhoodChange = (value: string) => {
+    if (value === "__all__") {
+      dispatch(setSelectedLocation({ neighborhood_code: "" }));
+      return;
+    }
     dispatch(setSelectedLocation({ neighborhood_code: value }));
   };
 
