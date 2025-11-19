@@ -1,37 +1,38 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
 import Link from "next/link";
 
 import { useDispatch } from "react-redux";
 
-import { getMyProfile, withdraw } from "@/features/mypage/api/mypageApi";
+import { withdraw } from "@/features/mypage/api/mypageApi";
 import { useConfirm } from "@/providers/ConfirmProvider";
 import { clearTokens } from "@/shared/store/authSlice";
-import { MyProfileData } from "@/types/mypage";
-export default function MypageProfileForm() {
-  const [profile, setProfile] = useState<MyProfileData | null>(null);
-  const [loading, setLoading] = useState(true);
 
+import { useMyProfileQuery } from "./useMyProfileQuery";
+
+export default function MypageProfileForm() {
   const confirm = useConfirm();
   const dispatch = useDispatch();
 
-  //  내 프로필 조회
-  useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const res = await getMyProfile();
-        setProfile(res.data);
-      } catch (error) {
-        console.error("[GET MY PROFILE ERROR]", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const { data, isLoading, isError } = useMyProfileQuery();
 
-    fetchProfile();
-  }, []);
+  console.log("MypageProfileForm", data);
+
+  if (isLoading) {
+    return (
+      <div className="flex w-wrapper items-center justify-center p-40 text-gray-900">
+        프로필 불러오는 중...
+      </div>
+    );
+  }
+
+  if (isError || !data) {
+    return (
+      <div className="flex w-wrapper items-center justify-center p-40 text-gray-900">
+        프로필 정보를 불러오지 못했습니다.
+      </div>
+    );
+  }
 
   //  회원탈퇴
   const onDelete = async () => {
@@ -72,40 +73,24 @@ export default function MypageProfileForm() {
     }
   };
 
-  // 2) 로딩/에러 처리
-  if (loading) {
-    return (
-      <div className="flex w-wrapper items-center justify-center p-40 text-gray-900">
-        프로필 불러오는 중...
-      </div>
-    );
-  }
-
-  if (!profile) {
-    return (
-      <div className="flex w-wrapper items-center justify-center p-40 text-gray-900">
-        프로필 정보를 불러오지 못했습니다.
-      </div>
-    );
-  }
   // 3) 표시용 값 가공
-  const genderText = profile.gender === "male" ? "남자" : "여자";
+  const genderText = data?.gender === "male" ? "남자" : "여자";
   let petText = "없음";
-  if (profile.pet_type === "dog") petText = "강아지";
-  else if (profile.pet_type === "cat") petText = "고양이";
+  if (data?.pet_type === "dog") petText = "강아지";
+  else if (data?.pet_type === "cat") petText = "고양이";
 
   return (
     <div className="flex w-wrapper items-center justify-center bg-orange-100 p-40 text-gray-900">
       <div className="flex w-edit flex-col rounded-xl border border-gray-300 p-3">
         <div className="mb-9 flex w-full items-center justify-center p-3 text-2xl">
-          {profile.nickname}님 프로필
+          {data?.nickname || "nickname"}님 프로필
         </div>
 
         <div className="flex h-[285px] flex-col justify-between">
           <div className="flex items-center hover:cursor-default">
             이름:
             <div className="ml-2 rounded-full border-2 border-orange-300 bg-white px-5 py-1">
-              {profile.username}
+              {data?.username || "이름없음"}
             </div>
           </div>
 
@@ -119,14 +104,14 @@ export default function MypageProfileForm() {
           <div className="flex items-center hover:cursor-default">
             이메일:
             <div className="ml-2 rounded-full border-2 border-orange-300 bg-white px-5 py-1">
-              {profile.email}
+              {data?.email}
             </div>
           </div>
 
           <div className="flex items-center hover:cursor-default">
             닉네임:
             <div className="ml-2 rounded-full border-2 border-orange-300 bg-white px-5 py-1">
-              {profile.nickname}
+              {data?.nickname || "nickname"}
             </div>
           </div>
 

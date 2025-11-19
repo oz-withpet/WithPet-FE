@@ -19,6 +19,10 @@ export const getMyProfile = () => {
     auth: "private",
   });
 };
+export const getMyProfileData = async () => {
+  const res = await getMyProfile();
+  return res.data;
+};
 
 // 2) 내 프로필 수정 PATCH /mypage/profile
 export const updateMyProfile = (payload: MyProfileUpdateRequest) => {
