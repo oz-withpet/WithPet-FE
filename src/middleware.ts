@@ -8,6 +8,7 @@ const LOGIN_PATH = "/login";
 const PUBLIC_PATHS = ["/login", "/signup", "/map"];
 
 const isPublicPath = (pathname: string) => {
+  console.log("pathname", pathname);
   if (pathname === "/") return true;
   return PUBLIC_PATHS.some((path) => pathname.startsWith(path));
 };
@@ -33,7 +34,7 @@ const redirectToLogin = (request: NextRequest) =>
   NextResponse.redirect(new URL(LOGIN_PATH, request.url));
 
 export async function middleware(request: NextRequest) {
-  //console.log(request);
+  console.log(request);
 
   if (isPublicPath(request.nextUrl.pathname)) {
     return NextResponse.next();
@@ -41,6 +42,8 @@ export async function middleware(request: NextRequest) {
 
   const accessToken = request.cookies.get(ACCESS_COOKIE)?.value ?? null;
   const refreshToken = request.cookies.get(REFRESH_COOKIE)?.value ?? null;
+  console.log("accessToken", accessToken);
+  console.log("refreshToken", refreshToken);
 
   if (accessToken) {
     return NextResponse.next();
