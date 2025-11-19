@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 
 import CommentForm from "@/components/common/comment/CommentForm";
@@ -35,18 +36,18 @@ export default function PostDetailShell(
       <div className="w-full py-6 text-base">{pr.content}</div>
 
       <div className="">
-        {/* {pr.image_url ? (
+        {pr.image_url ? (
           <Image
             src={pr?.image_url}
             alt={pr?.title}
             width={300}
             height={300}
-            loading="eager"
+            loading="lazy"
             className="mb-3 w-[300px] object-contain"
           />
-        ) : ( */}
-        <div className="h-[300px] w-[300px] rounded bg-gray-100" aria-label="no image" />
-        {/* )} */}
+        ) : (
+          <div className="h-[300px] w-[300px] rounded bg-gray-100" aria-label="no image" />
+        )}
       </div>
       <div className="py-9">
         <div className="flex h-14 w-14 flex-col items-center justify-center rounded-full border-2 border-gray-300 hover:cursor-pointer hover:border-0 hover:bg-orange-300 hover:font-bold hover:text-white">

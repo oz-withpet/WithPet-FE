@@ -1,5 +1,7 @@
 // src/types/mypage.ts
 
+import { Categories } from "./category";
+
 // ----------------------
 // 공통 타입
 // ----------------------
@@ -49,12 +51,13 @@ export interface PostAuthor {
   nickname: string;
 }
 
-export interface PostListItemCommunity {
+export type MyPostSummary = {
   id: string; // 예: "MTAx"
   title: string;
-  content_snippet: string;
-  category: string;
-  image_url: string | null;
+  content: string;
+  category: Categories;
+  image_url: string;
+  images: string[];
   author: PostAuthor;
   created_at: string;
   updated_at: string;
@@ -62,11 +65,10 @@ export interface PostListItemCommunity {
   like_count: number;
   comment_count: number;
   is_liked_by_me: boolean;
-}
-
+};
 // GET /mypage/posts
 export interface MyPostsListResponse {
-  posts: PostListItemCommunity[];
+  posts: MyPostSummary[];
   page: number;
   page_size: number;
   total: number;
@@ -74,7 +76,7 @@ export interface MyPostsListResponse {
 
 // GET /mypage/likes/posts
 export interface MyLikedPostsListResponse {
-  posts: PostListItemCommunity[];
+  posts: MyPostSummary[];
   page: number;
   page_size: number;
   total: number;

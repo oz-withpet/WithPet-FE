@@ -1,12 +1,16 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 
 import { PostSummary } from "@/features/community/api/type";
 import { toRelativeKorean } from "@/lib/relativeTime";
+import { MyPostSummary } from "@/types/mypage";
 
 export default function PostItem(
-  pr: Omit<PostSummary, "updated_at" | "view_count" | "like_count" | "is_liked_by_me">,
+  pr:
+    | Omit<PostSummary, "updated_at" | "view_count" | "like_count" | "is_liked_by_me">
+    | Omit<MyPostSummary, "updated_at" | "view_count" | "like_count" | "is_liked_by_me">,
 ) {
   return (
     <Link
@@ -25,18 +29,18 @@ export default function PostItem(
             </div>
           </div>
         </div>
-        {/* {pr?.image_url ? ( */}
-        <div className="h-[124px] w-[124px] rounded-xl bg-thumbnail-200 text-gray-400" />
-        {/* ) : (
+        {pr?.image_url ? (
           <Image
             src={pr?.image_url}
             alt={pr?.title}
             width={124}
             height={124}
-            loading="eager"
+            loading="lazy"
             className="h-[124px] w-[124px] rounded-xl bg-thumbnail-200 text-gray-400"
           />
-        )} */}
+        ) : (
+          <div className="h-[124px] w-[124px] rounded-xl bg-thumbnail-200 text-gray-400" />
+        )}
       </div>
       <div className="flex items-center text-xs text-gray-400">
         <div className="flex items-center p-2">

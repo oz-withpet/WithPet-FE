@@ -3,12 +3,13 @@
 import PostItem from "@/components/common/cards/PostItem";
 import EmptyState from "@/components/common/empty/EmptyState";
 import { CATEGORY_LABEL_BY_SLUG, CategorySlug } from "@/types/category";
+import { MyPostSummary } from "@/types/mypage";
 
 import { PostSummary } from "../api/type";
 
 type CommunityShellProps = {
   category: CategorySlug;
-  posts: PostSummary[];
+  posts: PostSummary[] | MyPostSummary[];
 };
 
 export default function CommunityShell({ category, posts }: CommunityShellProps) {
