@@ -1,10 +1,9 @@
 import { NextResponse, type NextRequest } from "next/server";
 
-const BACKEND_BASE_URL =
-  process.env.NEXT_PUBLIC_BACKEND_API_URL?.replace(/\/$/, "") ?? "https://oz-withpet.kro.kr";
+import { post } from "./shared/api/serverFetcher";
+
 const ACCESS_COOKIE = "access_token";
 const REFRESH_COOKIE = "refresh_token";
-const REFRESH_ENDPOINT = "/auth/token/refresh";
 const LOGIN_PATH = "/login";
 const PUBLIC_PATHS = ["/login", "/signup", "/map"];
 
@@ -14,19 +13,17 @@ const isPublicPath = (pathname: string) => {
 };
 
 const requestRefresh = async (refreshToken: string) => {
-  const response = await fetch(`${BACKEND_BASE_URL}${REFRESH_ENDPOINT}`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ refresh_token: refreshToken }),
-    cache: "no-store",
-  });
+  const data = await post<{ access?: string }>(
+    "/auth/token/refresh",
+    { refresh_token: refreshToken },
+    {
+      auth: "public",
+      cache: "no-store",
+      headers: { "Content-Type": "application/json" },
+    },
+  );
 
-  if (!response.ok) {
-    throw new Error("refresh failed");
-  }
-
-  const data = (await response.json()) as { access?: string };
-  if (!data.access) {
+  if (!data?.access) {
     throw new Error("no access token");
   }
   return data.access;
@@ -36,6 +33,8 @@ const redirectToLogin = (request: NextRequest) =>
   NextResponse.redirect(new URL(LOGIN_PATH, request.url));
 
 export async function middleware(request: NextRequest) {
+  //console.log(request);
+
   if (isPublicPath(request.nextUrl.pathname)) {
     return NextResponse.next();
   }
@@ -75,5 +74,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
 };
