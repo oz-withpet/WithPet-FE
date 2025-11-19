@@ -23,7 +23,7 @@ export default function PostItem(
             <div className="text-2xl font-semibold text-black">{pr?.category}</div>
           </div>
           <div className="mt-3">
-            <div className="mb-2 text-lg font-bold text-black">{pr?.title}</div>
+            <div className="mb-2 truncate text-lg font-bold text-black">{pr?.title}</div>
             <div className="line-clamp-2 h-[42px] w-[838px] text-sm text-gray-400">
               {pr.content}
             </div>

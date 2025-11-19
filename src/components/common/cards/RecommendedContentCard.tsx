@@ -5,9 +5,9 @@ import Link from "next/link";
 
 import { PostSummary } from "@/features/community/api/type";
 
-type MainCardProps = Pick<PostSummary, "id" | "image_url" | "author" | "content">;
+type MainCardProps = Pick<PostSummary, "id" | "image_url" | "author" | "title">;
 
-export default function RecommendedContentCard({ id, image_url, author, content }: MainCardProps) {
+export default function RecommendedContentCard({ id, image_url, author, title }: MainCardProps) {
   return (
     <Link
       href={`/community/${id}`}
@@ -26,7 +26,7 @@ export default function RecommendedContentCard({ id, image_url, author, content 
         <div className="h-[300px] w-big rounded-2xl bg-orange-200 object-cover transition hover:scale-105 hover:cursor-pointer" />
       )}
       <div className="flex flex-col">
-        <div className="mb-2 text-lg font-semibold">{content}</div>
+        <div className="mb-2 truncate text-lg font-semibold">{title}</div>
         <div className="text-sm text-gray-400">{author.nickname || "nickname"}</div>
       </div>
     </Link>
