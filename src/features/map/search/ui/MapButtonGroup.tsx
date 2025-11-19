@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Button from "@/components/common/button/Button";
 import type { RootState } from "@/shared/store";
 import { setSelectedCategory } from "@/shared/store/mapSlice";
-import type { FilterCategory } from "@/types/mapTypes";
+import type { MapCategory } from "@/types/mapTypes";
 
 import { useCategories } from "../api/useCategories";
 
@@ -20,7 +20,7 @@ export default function MapButtonGroup() {
   const activeCategoryCode = useSelector((state: RootState) => state.map.selectedCategory);
   const { data, isLoading, isError } = useCategories();
 
-  const categories: FilterCategory[] = data?.data ?? [];
+  const categories: MapCategory[] = data ?? [];
 
   const handleCategoryClick = (code: string) => {
     dispatch(setSelectedCategory(activeCategoryCode === code ? null : code));
@@ -38,17 +38,31 @@ export default function MapButtonGroup() {
     return <p className="text-sm text-gray-500">표시할 카테고리가 없습니다.</p>;
   }
 
+  const getCategoryLabel = (code: string, name: string) => {
+    const map: Record<string, string> = {
+      hospital: "동물병원",
+      care: "돌봄",
+      restaurant: "동반식당",
+      grooming: "미용",
+      adoption: "분양",
+      shop: "용품",
+      exhibition_cafe: "카페",
+      training: "훈련소",
+    };
+    return map[code] ?? name;
+  };
+
   return (
     <div className="flex gap-2 overflow-x-auto overflow-y-hidden pb-1">
       {categories.map((category) => (
         <Button
-          key={category.id}
+          key={category.code}
           status="primary"
           className="flex-none rounded-[4px]"
           isActive={activeCategoryCode === category.code}
           onClick={() => handleCategoryClick(category.code)}
         >
-          <span>{category.name}</span>
+          <span>{getCategoryLabel(category.code, category.name)}</span>
         </Button>
       ))}
     </div>

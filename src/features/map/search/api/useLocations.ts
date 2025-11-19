@@ -27,10 +27,12 @@ const resolveFetcher = (params?: LocationParams) => {
   if (!params?.province) {
     return getProvinces;
   }
+
   if (params.province && !params.district) {
-    return () => getDistricts({ province: params.province });
+    return () => getDistricts(params.province as string);
   }
-  return () => getNeighborhoods({ province: params.province, district: params.district });
+
+  return () => getNeighborhoods(params.province as string, params.district as string);
 };
 
 export const useLocations = (

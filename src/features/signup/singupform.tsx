@@ -23,6 +23,7 @@ import {
 } from "@/features/signup/api/signupApi";
 import { SignupFormValues, SignupRequest } from "@/types/singup";
 
+import AgreementToggles from "./ui/agreementToggles";
 export default function SignupForm() {
   // 닉네임 / 이메일 인증 관련 상태
   const [isCheckingNickname, setIsCheckingNickname] = useState(false);
@@ -189,18 +190,17 @@ export default function SignupForm() {
 
     setIsVerifyingCode(true);
     try {
-      const data = await verifyEmailCode({ email, code });
-      console.log("[email-code-verify]", data);
+      // ✅ 그냥 백엔드에 요청만 보내고, 응답은 콘솔로만 확인
+      const res = await verifyEmailCode({ email, code });
+      console.log("[email-code-verify] response:", res);
 
-      // 🔥 여기서 토큰(or 그냥 flag) 세팅
-
-      clearErrors("verificationCode");
+      // 👉 여기서는 아직 성공/실패에 따른 UI 처리는 안 함
+      //    나중에 백엔드랑 맞춰보고 여기서 verified, message 보고 처리하면 됨.
     } catch (error) {
       console.error("[EMAIL VERIFY ERROR]", error);
-      setVerificationToken(null);
       setError("verificationCode", {
         type: "server",
-        message: "인증코드가 올바르지 않습니다.",
+        message: "인증 처리 중 오류가 발생했습니다.",
       });
     } finally {
       setIsVerifyingCode(false);
@@ -258,17 +258,6 @@ export default function SignupForm() {
         message: msg,
       });
     }
-  };
-
-  // “전체 동의” 토글
-  const agreeTerms = watch("agreeTerms");
-  const agreePrivacy = watch("agreePrivacy");
-  const agreeMarketing = watch("agreeMarketing");
-  const allAgreed = agreeTerms && agreePrivacy && agreeMarketing;
-  const toggleAll = (checked: boolean) => {
-    setValue("agreeTerms", checked, { shouldValidate: true });
-    setValue("agreePrivacy", checked, { shouldValidate: true });
-    setValue("agreeMarketing", checked, { shouldValidate: true });
   };
 
   return (
@@ -521,82 +510,7 @@ export default function SignupForm() {
           </div>
 
           {/* 개인정보 동의 */}
-          <section className="mt-[24px] w-full rounded-[16px] border border-line-light bg-white p-[20px]">
-            <div className="mb-[12px] flex items-center justify-between">
-              <label className="flex items-center gap-[8px] text-[14px] font-semibold text-gray-900">
-                <input
-                  type="checkbox"
-                  className="h-[16px] w-[16px] accent-orange-300"
-                  checked={allAgreed}
-                  onChange={(e) => toggleAll(e.currentTarget.checked)}
-                />
-                전체 동의
-              </label>
-              <span className="text-[12px] text-gray-400">선택 포함</span>
-            </div>
-
-            <div className="mb-[12px] h-[1px] w-full bg-gray-300" />
-
-            <ul className="flex flex-col gap-[12px]">
-              <li className="flex items-start justify-between gap-[12px]">
-                <label className="flex flex-1 items-start gap-[8px] text-[14px] text-gray-900">
-                  <input
-                    type="checkbox"
-                    className="mt-[3px] h-[16px] w-[16px] accent-orange-300"
-                    {...register("agreeTerms", { required: "이용약관 동의가 필요합니다." })}
-                  />
-                  <span className="leading-[22px]">
-                    이용약관 동의 <span className="text-warning">*</span>
-                  </span>
-                </label>
-                <Button
-                  type="button"
-                  className="shrink-0 rounded-full border border-line-strong px-[12px] py-[6px] text-[12px] text-gray-900 transition hover:bg-orange-300"
-                >
-                  자세히
-                </Button>
-              </li>
-
-              <li className="flex items-start justify-between gap-[12px]">
-                <label className="flex flex-1 items-start gap-[8px] text-[14px] text-gray-900">
-                  <input
-                    type="checkbox"
-                    className="mt-[3px] h-[16px] w-[16px] accent-orange-300"
-                    {...register("agreePrivacy", {
-                      required: "개인정보 수집·이용 동의가 필요합니다.",
-                    })}
-                  />
-                  <span className="leading-[22px]">
-                    개인정보 수집 및 이용 동의 <span className="text-warning">*</span>
-                  </span>
-                </label>
-                <Button
-                  type="button"
-                  className="shrink-0 rounded-full border border-line-strong px-[12px] py-[6px] text-[12px] text-gray-900 transition hover:bg-orange-300"
-                >
-                  자세히
-                </Button>
-              </li>
-
-              <li className="flex items-start justify-between gap-[12px]">
-                <label className="flex flex-1 items-start gap-[8px] text-[14px] text-gray-900">
-                  <input
-                    type="checkbox"
-                    className="mt-[3px] h-[16px] w-[16px] accent-orange-300"
-                    {...register("agreeMarketing")}
-                  />
-                  <span className="leading-[22px]">마케팅 정보 수신 동의 (선택)</span>
-                </label>
-                <Button
-                  type="button"
-                  className="shrink-0 rounded-full border border-line-strong px-[12px] py-[6px] text-[12px] text-gray-900 transition hover:bg-orange-300"
-                >
-                  자세히
-                </Button>
-              </li>
-            </ul>
-          </section>
-
+          <AgreementToggles register={register} errors={errors} watch={watch} setValue={setValue} />
           {/* 제출 버튼 */}
           <div className="pt-[8px] text-center">
             <Button

@@ -40,7 +40,7 @@ export const checkEmailAvailability = (email: string) => {
 };
 // 이메일 인증코드 전송
 export const sendEmailCode = (email: string) => {
-  return clientFetcher<SendEmailCodeResponse>("/email/send/code/", {
+  return clientFetcher<SendEmailCodeResponse>("/email/code/send/", {
     method: "POST",
     auth: "public",
     body: JSON.stringify({ email }),
@@ -52,6 +52,6 @@ export const verifyEmailCode = (payload: VerifyEmailCodeRequest) => {
   return clientFetcher<VerifyEmailCodeResponse>("/email/code/verify/", {
     method: "POST",
     auth: "public",
-    body: JSON.stringify(payload), // { email, code } 라고 가정
+    body: JSON.stringify(payload),
   });
 };
