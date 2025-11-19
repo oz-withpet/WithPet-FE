@@ -19,6 +19,7 @@ export interface MyProfileData {
 }
 export interface MyProfileResponse {
   success: boolean;
+  message: string;
   data: MyProfileData;
 }
 
