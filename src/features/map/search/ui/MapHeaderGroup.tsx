@@ -1,13 +1,20 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 
 import type { AppDispatch, RootState } from "@/shared/store";
-import { setCenter, setUserLocation } from "@/shared/store/mapSlice";
+import {
+  resetSelectedLocation,
+  setCenter,
+  setCenterReady,
+  setInitialFetchDone,
+  setUserLocation,
+} from "@/shared/store/mapSlice";
 
 const USER_LOCATION_STORAGE_KEY = "withpet:userLocation";
+const DEFAULT_CENTER = { latitude: 37.55319, longitude: 126.9726 };
 
 /**
  * 지도 검색 영역 상단 헤더 + 현 위치 찾기 버튼
@@ -16,19 +23,41 @@ export default function MapHeaderGroup() {
   const dispatch = useDispatch<AppDispatch>();
   const userLocation = useSelector((state: RootState) => state.map.userLocation);
   const [isLocating, setIsLocating] = useState(false);
+  const hasHydratedRef = useRef(false);
 
   // 저장해 둔 위치 정보가 있으면 초기 렌더 시 바로 center/userLocation에 반영해서
   // 사용자가 새로고침해도 “현 위치” 버튼 누르자마자 빠르게 되돌아갈 수 있게 함
   useEffect(() => {
     if (typeof window === "undefined") return;
+    if (hasHydratedRef.current) return;
+    hasHydratedRef.current = true;
+
+    const applyCenter = (center: { latitude: number; longitude: number }) => {
+      dispatch(resetSelectedLocation());
+      dispatch(setCenter(center));
+      if (typeof window !== "undefined") {
+        requestAnimationFrame(() => {
+          dispatch(setInitialFetchDone(true));
+          dispatch(setCenterReady(true));
+        });
+      } else {
+        dispatch(setInitialFetchDone(true));
+        dispatch(setCenterReady(true));
+      }
+    };
+
     try {
       const saved = localStorage.getItem(USER_LOCATION_STORAGE_KEY);
-      if (!saved) return;
+      if (!saved) {
+        applyCenter(DEFAULT_CENTER);
+        return;
+      }
       const parsed = JSON.parse(saved) as { latitude: number; longitude: number };
       dispatch(setUserLocation(parsed));
-      dispatch(setCenter(parsed));
+      applyCenter(parsed);
     } catch (error) {
       console.warn("사용자 위치 정보를 불러오지 못했습니다.", error);
+      applyCenter(DEFAULT_CENTER);
     }
   }, [dispatch]);
 
@@ -39,6 +68,7 @@ export default function MapHeaderGroup() {
   const handleCurrentLocation = () => {
     if (userLocation) {
       dispatch(setCenter(userLocation));
+      dispatch(resetSelectedLocation());
       return;
     }
 
@@ -61,6 +91,7 @@ export default function MapHeaderGroup() {
         }
         const payload = { latitude: coords.latitude, longitude: coords.longitude };
         dispatch(setCenter(payload)); // 1,2. 위치 저장 후 지도 리렌더
+        dispatch(resetSelectedLocation());
         dispatch(setUserLocation(payload));
         if (typeof window !== "undefined") {
           localStorage.setItem(USER_LOCATION_STORAGE_KEY, JSON.stringify(payload));
