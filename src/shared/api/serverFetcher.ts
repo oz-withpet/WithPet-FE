@@ -18,7 +18,7 @@ const BASE_URL =
 
 async function getAccessTokenFromCookie() {
   const cookiesStore = await cookies(); // promise 타입으로 인식되어 있음.
-  return cookiesStore.get("accessToken")?.value ?? null;
+  return cookiesStore.get("access_token")?.value ?? null;
 }
 
 function buildUrl(path: string, query?: ServerFetcherOptions["query"]): string {

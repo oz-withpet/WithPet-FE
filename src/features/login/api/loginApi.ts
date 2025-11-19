@@ -16,6 +16,7 @@ export const loginRequest = async (payload: LoginRequestPayload): Promise<LoginR
       method: "POST",
       bodyType: "json",
       auth: "public",
+      credentials: "include",
       body: JSON.stringify(payload),
     });
 
