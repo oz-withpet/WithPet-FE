@@ -9,18 +9,19 @@ import type {
   StoreViewportRequest,
 } from "@/types/mapTypes";
 
-export const getProvinces = () => clientFetcher<ProvinceResponse>("/locations", { auth: "public" });
+export const getProvinces = () =>
+  clientFetcher<ProvinceResponse>("/locations/", { auth: "public" });
 
 export const getDistricts = (provinceCode: string) =>
-  clientFetcher<DistrictResponse>(`/locations/${provinceCode}`, { auth: "public" });
+  clientFetcher<DistrictResponse>(`/locations/${provinceCode}/`, { auth: "public" });
 
 export const getNeighborhoods = (provinceCode: string, districtCode: string) =>
-  clientFetcher<NeighborhoodResponse>(`/locations/${provinceCode}/${districtCode}`, {
+  clientFetcher<NeighborhoodResponse>(`/locations/${provinceCode}/${districtCode}/`, {
     auth: "public",
   });
 
 export const getCategories = () =>
-  clientFetcher<CategoryResponse>("/categories", { auth: "public" });
+  clientFetcher<CategoryResponse>("/categories/", { auth: "public" });
 
 const buildStorePayload = (filters?: StoreFilters) => {
   if (!filters) return {};
@@ -38,7 +39,7 @@ const buildStorePayload = (filters?: StoreFilters) => {
 export const getStores = (filters?: StoreFilters) => {
   const params = new URLSearchParams(buildStorePayload(filters));
   const query = params.toString();
-  const endpoint = query ? `/stores?${query}` : "/stores";
+  const endpoint = query ? `/stores/?${query}` : "/stores";
 
   return clientFetcher<StoreResponse>(endpoint, {
     method: "GET",
