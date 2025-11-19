@@ -50,7 +50,7 @@ export default async function CommunityPostDetailPage({ params }: { params: Prom
     // 서버에 미리 가지고 있기 = prefetch
     await queryClient.prefetchQuery({
       queryKey: postKeys.detail(id),
-      queryFn: () => getPostDetailServer({ post_id: id }),
+      queryFn: () => getPostDetailServer({ post_id: id, include: "comments" }),
     });
   } catch (error) {
     const err = error as ServerFetcherError;
