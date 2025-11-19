@@ -6,6 +6,7 @@ import type {
   ProvinceResponse,
   StoreFilters,
   StoreResponse,
+  StoreViewportRequest,
 } from "@/types/mapTypes";
 
 export const getProvinces = () => clientFetcher<ProvinceResponse>("/locations", { auth: "public" });
@@ -44,3 +45,11 @@ export const getStores = (filters?: StoreFilters) => {
     auth: "public",
   });
 };
+
+export const searchStoresByViewport = (payload: StoreViewportRequest) =>
+  clientFetcher<StoreResponse>("/stores/", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+    auth: "public",
+  });

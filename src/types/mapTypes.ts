@@ -18,16 +18,41 @@ export type Province = {
   code: string;
 };
 
+export type StoreCategoryInfo = {
+  code: string;
+  name: string;
+};
+
+export type StoreLocation = {
+  full_address: string;
+  latitude: number;
+  longitude: number;
+};
+
 export type Store = {
   id: number;
   name: string;
-  category_name: string;
-  province: string;
-  district: string;
+  category: StoreCategoryInfo;
+  address: StoreLocation;
+  phone?: string | null;
+  distance?: number;
+  distance_text?: string;
+};
+
+/**
+ * GET /stores 응답에서 내려오는 단순 정보 형태
+ */
+export type StoreSummary = {
+  id: number;
+  name: string;
+  category_name?: string;
+  province?: string;
+  district?: string;
   neighborhood?: string;
-  phone?: string;
-  latitude: string;
-  longitude: string;
+  address?: string;
+  phone?: string | null;
+  latitude?: number | string | null;
+  longitude?: number | string | null;
 };
 
 export type LocationParams = {
@@ -57,9 +82,7 @@ export type NeighborhoodLocation = {
 };
 
 export type ProvinceResponse = ProvinceLocation[];
-
 export type DistrictResponse = DistrictLocation[];
-
 export type NeighborhoodResponse = NeighborhoodLocation[];
 
 export type MapCategory = {
@@ -79,5 +102,28 @@ export type StoreFilters = {
 
 export type StoreResponse = {
   count: number;
-  results: Store[];
+  next: string | null;
+  previous: string | null;
+  results: Array<Store | StoreSummary>;
+  user_location?: {
+    latitude: number;
+    longitude: number;
+  };
+  radius_km?: number;
+  filters_applied?: {
+    category?: string;
+    province_code?: number;
+    district_code?: number;
+  };
+};
+
+export type StoreViewportRequest = {
+  latitude: number;
+  longitude: number;
+  radius: number;
+  filters: {
+    category?: string;
+    province_code?: number | string;
+    district_code?: number | string;
+  };
 };
