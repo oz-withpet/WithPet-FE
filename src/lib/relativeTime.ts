@@ -7,6 +7,11 @@ function parseAsKST(input: string | Date): Date {
   if (/^\d{4}-\d{2}-\d{2}$/.test(input)) {
     return new Date(`${input}T00:00:00+09:00`);
   }
+
+  // ISO UTC("Z") timestamp → 그대로 Date로 파싱하면 UTC 기준, 이후 diff 계산에서 자동 처리됨
+  if (/\dZ$/.test(input)) {
+    return new Date(input);
+  }
   return new Date(input); // ISO(타임존 포함) 권장: "2025-11-12T10:12:00+09:00"
 }
 
