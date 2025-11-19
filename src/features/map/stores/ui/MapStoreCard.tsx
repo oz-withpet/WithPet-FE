@@ -52,7 +52,7 @@ const MapStoreCard = forwardRef<HTMLDivElement, MapStoreCardProps>(
       >
         <div className="flex-between mb-2">
           <p className="font-semibold text-gray-900">{name}</p>
-          <button
+          {/* <button
             type="button"
             className="font-semibold text-gray-600"
             onClick={(event) => {
@@ -62,7 +62,7 @@ const MapStoreCard = forwardRef<HTMLDivElement, MapStoreCardProps>(
             aria-label={favorite ? "관심 목록에서 제거" : "관심 목록에 추가"}
           >
             {favorite ? "❤️" : "🩶"}
-          </button>
+          </button> */}
         </div>
 
         <div className="flex-between">
@@ -76,7 +76,10 @@ const MapStoreCard = forwardRef<HTMLDivElement, MapStoreCardProps>(
             }}
           >
             <span>{opened ? "접기" : "자세히"}</span>
-            <span aria-hidden="true" className={cn("transition-transform", opened ? "rotate-180" : "")}>
+            <span
+              aria-hidden="true"
+              className={cn("transition-transform", opened ? "rotate-180" : "")}
+            >
               ▼
             </span>
           </button>
