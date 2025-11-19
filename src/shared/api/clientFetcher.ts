@@ -5,7 +5,7 @@ import { store } from "@/shared/store";
 // 기본 URL
 // 환경변수에 들어온 주소를 우선 사용하고 없으면 운영 서버 주소를 기본값으로 둔다
 const BACKEND_BASE_URL =
-  process.env.NEXT_PUBLIC_BACKEND_API_URL?.replace(/\/$/, "") ?? "https://oz-withpet.kro.kr";
+  process.env.NEXT_PUBLIC_BACKEND_API_URL?.replace(/\/$/, "") ?? "https://api.withpet.space";
 
 // 옵션정의
 // 인증 여부나 바디 타입 정보까지 RequestInit에 얹어서 재사용 API마다 간단히 설정 가능

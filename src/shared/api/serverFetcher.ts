@@ -14,7 +14,7 @@ export interface ServerFetcherOptions extends RequestInit {
 }
 
 const BASE_URL =
-  process.env.NEXT_PUBLIC_API_SERVER_URL?.replace(/\/+$/, "") ?? "https://oz-withpet.kro.kr";
+  process.env.NEXT_PUBLIC_API_SERVER_URL?.replace(/\/+$/, "") ?? "https://api.withpet.space";
 
 async function getAccessTokenFromCookie() {
   const cookiesStore = await cookies(); // promise 타입으로 인식되어 있음.
