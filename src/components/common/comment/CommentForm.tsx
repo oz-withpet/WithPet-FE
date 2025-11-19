@@ -27,7 +27,7 @@ export default function CommentForm() {
                   alt={el.comment}
                   width={25}
                   height={25}
-                  loading="eager"
+                  loading="lazy"
                   className="mr-2 rounded-full"
                 />
                 <div className="text-sm">{el.user.name}</div>

@@ -5,15 +5,15 @@ import type {
   MyProfileUpdateRequest,
   PasswordChangeRequest,
   ApiSuccessWrapper,
-  MyPostsListResponse,
   MyLikedPostsListResponse,
   MyReportsListResponse,
   MyLikedStoreListResponse,
+  MyPostsListResponse,
 } from "@/types/mypage";
 
 // 1) 내 프로필 조회 GET /mypage/profile
 // export const getMyProfile = () => {
-//   return backendClient<MyProfileResponse>("/mypage/profile", {
+//   return clientFetcher<MyProfileResponse>("/mypage/profile", {
 //     method: "GET",
 //     auth: "private",
 //   });
