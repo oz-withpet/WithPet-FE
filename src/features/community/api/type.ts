@@ -32,7 +32,7 @@ export type GetPostsParams = {
 };
 
 export type GetPostDetailParams = {
-  id: string;
+  post_id: string;
   include?: "comments";
   comments_limit?: number; // 20
   comments_after?: string; // cmt_cursor_20251021_030600
@@ -56,7 +56,14 @@ export type PostDetailSummary = {
   comment_count: number;
   is_liked_by_me: boolean;
 };
+export type CommentSummary = {
+  items: string[];
+  total_count: number;
+  has_next: boolean;
+  next_after: string | null;
+};
 
 export type GetPostDetailResponse = {
   post: PostDetailSummary;
+  comment: CommentSummary[];
 };

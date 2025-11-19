@@ -8,13 +8,13 @@ type ClientFetcherFn = <T>(path: string, options?: ClientFetcherOptions) => Prom
 
 // 브라우저에서 React Query가 사용할 함수
 export async function getPostDetailClient(
-  { id, comments_limit, comments_after }: GetPostDetailParams,
+  { post_id, include, comments_limit, comments_after }: GetPostDetailParams,
   fetcher: ClientFetcherFn = clientFetcher,
 ): Promise<GetPostDetailResponse> {
-  return fetcher<GetPostDetailResponse>(`/posts/${id}`, {
+  return fetcher<GetPostDetailResponse>(`/posts/${post_id}`, {
     auth: "public",
     query: {
-      include: "comments",
+      include,
       comments_limit,
       comments_after,
     },

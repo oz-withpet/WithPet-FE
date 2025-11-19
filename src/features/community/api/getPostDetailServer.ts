@@ -6,13 +6,13 @@ type ServerFetcherFn = <T>(path: string, options?: ServerFetcherOptions) => Prom
 
 // 서버에서 상세 정보를 직접 가져올 때 사용
 export async function getPostDetailServer(
-  { id, comments_limit, comments_after }: GetPostDetailParams,
+  { post_id, include, comments_limit, comments_after }: GetPostDetailParams,
   fetcher: ServerFetcherFn = serverFetcher,
 ): Promise<GetPostDetailResponse> {
-  return fetcher<GetPostDetailResponse>(`/posts/${id}`, {
+  return fetcher<GetPostDetailResponse>(`/posts/${post_id}`, {
     auth: "public",
     query: {
-      include: "comments",
+      include,
       comments_limit,
       comments_after,
     },
