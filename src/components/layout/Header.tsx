@@ -33,7 +33,7 @@ export default function Header() {
     enabled: isLoggedIn,
   });
   const profile = profileRes?.data;
-  const displayName = profile?.username ?? profile?.nickname ?? tokens?.userEmail ?? "내 정보";
+  const displayName = profile?.nickname ?? profile?.username ?? tokens?.userEmail ?? "내 정보";
 
   return (
     <header className="flex h-[60px] w-full items-center justify-center border-b border-b-gray-200 bg-white">
@@ -82,7 +82,7 @@ export default function Header() {
                 status="primary"
                 className="mx-2 rounded-md border-[1px] px-4 py-2 text-sm"
               >
-                {displayName}
+                {displayName} 님
               </Button>
             </Link>
             <Button

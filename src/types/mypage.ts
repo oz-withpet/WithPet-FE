@@ -5,18 +5,18 @@ import { Categories } from "./category";
 // ----------------------
 // 공통 타입
 // ----------------------
-export type Gender = "male" | "female" | "other" | null;
-
+export type Gender = "male" | "female" | null;
+export type PetType = "dog" | "cat" | "none";
 // 프로필 ----------------
 export interface MyProfileData {
   email: string;
   nickname: string;
   username: string;
   gender: Gender;
-  has_pet: boolean;
+  pet_type: PetType;
+  is_email_verified: boolean;
   created_at: string;
 }
-
 export interface MyProfileResponse {
   success: boolean;
   data: MyProfileData;
@@ -26,13 +26,21 @@ export interface MyProfileResponse {
 export interface MyProfileUpdateRequest {
   nickname?: string;
   gender?: Gender;
-  has_pet?: boolean;
+  pet_type?: PetType;
 }
-
 // 비밀번호 변경 -------------
 export interface PasswordChangeRequest {
   new_password: string;
   new_password_confirm: string;
+}
+export interface ApiSuccessWrapper {
+  success: boolean;
+  message?: string;
+}
+// 닉네임 중복검사
+export interface NicknameCheckResponse {
+  success: boolean;
+  is_available: boolean;
 }
 
 // 공통 성공 응답 래퍼 ------

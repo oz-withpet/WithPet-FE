@@ -1,8 +1,6 @@
 "use client";
 
-import type { FormEvent } from "react";
-
-type Gender = "male" | "female";
+export type Gender = "male" | "female";
 
 /** 공용 성별 라디오 그룹 */
 export function GenderField({
@@ -62,32 +60,3 @@ export function GenderField({
 }
 
 /** 사용 예시: 폼 + 제출 */
-export default function GenderForm() {
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    // 브라우저 내장 검증(필수 선택) 사용
-    if (!e.currentTarget.checkValidity()) {
-      e.currentTarget.reportValidity();
-      return;
-    }
-
-    const fd = new FormData(e.currentTarget);
-    const gender = fd.get("gender") as Gender | null;
-    console.log("선택된 성별:", gender); // TODO: 서버 요청 등 처리
-  };
-
-  return (
-    <form onSubmit={onSubmit} className="space-y-4">
-      {/* 기본값 지정하려면 defaultValue="male" | "female" */}
-      <GenderField name="gender" required defaultValue={undefined} />
-
-      <button
-        type="submit"
-        className="rounded-lg bg-orange-500 px-4 py-2 font-semibold text-white hover:bg-orange-600"
-      >
-        저장
-      </button>
-    </form>
-  );
-}

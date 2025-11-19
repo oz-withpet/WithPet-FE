@@ -5,33 +5,21 @@ import type {
   MyProfileUpdateRequest,
   PasswordChangeRequest,
   ApiSuccessWrapper,
+  NicknameCheckResponse,
   MyLikedPostsListResponse,
+  MyPostsListResponse,
   MyReportsListResponse,
   MyLikedStoreListResponse,
-  MyPostsListResponse,
 } from "@/types/mypage";
 
-// 1) 내 프로필 조회 GET /mypage/profile
-// export const getMyProfile = () => {
-//   return clientFetcher<MyProfileResponse>("/mypage/profile", {
-//     method: "GET",
-//     auth: "private",
-//   });
-// };
-//  임시 목 데이터 버전 api 에러 해결시 위
-export const getMyProfile = async () => {
-  return {
-    success: true,
-    data: {
-      email: "test@test.com",
-      nickname: "테스트닉",
-      username: "테스트",
-      gender: "male",
-      has_pet: false,
-      created_at: "2025-11-06T12:00:00Z",
-    },
-  } satisfies MyProfileResponse;
+//1) 내 프로필 조회 GET /mypage/profile
+export const getMyProfile = () => {
+  return clientFetcher<MyProfileResponse>("/mypage/profile", {
+    method: "GET",
+    auth: "private",
+  });
 };
+
 // 2) 내 프로필 수정 PATCH /mypage/profile
 export const updateMyProfile = (payload: MyProfileUpdateRequest) => {
   return clientFetcher<ApiSuccessWrapper>("/mypage/profile", {
@@ -40,6 +28,15 @@ export const updateMyProfile = (payload: MyProfileUpdateRequest) => {
     body: JSON.stringify(payload),
   });
 };
+// 2.1) 내 프로필 수정 > 닉네임 중복검사
+export const checkMyNickname = (nickname: string) =>
+  clientFetcher<NicknameCheckResponse>(
+    `/mypage/profile/check-nickname?nickname=${encodeURIComponent(nickname)}`,
+    {
+      method: "GET",
+      auth: "private",
+    },
+  );
 
 // 3) 비밀번호 변경 POST /mypage/password
 export const changePassword = (payload: PasswordChangeRequest) => {

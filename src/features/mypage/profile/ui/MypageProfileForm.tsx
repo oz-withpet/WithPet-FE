@@ -1,25 +1,39 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
 import Link from "next/link";
 
-import { useQuery } from "@tanstack/react-query";
+import { useDispatch } from "react-redux";
 
-import { getMyProfile } from "@/features/mypage/api/mypageApi";
+import { getMyProfile, withdraw } from "@/features/mypage/api/mypageApi";
 import { useConfirm } from "@/providers/ConfirmProvider";
-// 나중에 탈퇴 붙일 땐 withdraw 도 가져오면 됨
-// import { withdraw } from "@/features/mypage/api/mypageApi";
-
+import { clearTokens } from "@/shared/store/authSlice";
+import { MyProfileData } from "@/types/mypage";
 export default function MypageProfileForm() {
+  const [profile, setProfile] = useState<MyProfileData | null>(null);
+  const [loading, setLoading] = useState(true);
+
   const confirm = useConfirm();
+  const dispatch = useDispatch();
 
-  // 1) 프로필 불러오기
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["mypage", "profile"],
-    queryFn: getMyProfile,
-  });
+  //  내 프로필 조회
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const res = await getMyProfile();
+        setProfile(res.data);
+      } catch (error) {
+        console.error("[GET MY PROFILE ERROR]", error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const profile = data?.data;
+    fetchProfile();
+  }, []);
 
+  //  회원탈퇴
   const onDelete = async () => {
     const ok = await confirm({
       title: "정말 회원탈퇴 하시겠습니까?",
@@ -30,13 +44,36 @@ export default function MypageProfileForm() {
     });
     if (!ok) return;
 
-    // TODO: 탈퇴 API 연동 (나중에)
-    // await withdraw();
-    console.log("삭제 진행!");
+    try {
+      await withdraw(); // 필요하면 비밀번호도 같이 넘길 수 있음
+
+      // 토큰 정리
+      dispatch(clearTokens());
+
+      await confirm({
+        title: "회원탈퇴 완료",
+        description: "그동안 WithPet을 이용해 주셔서 감사합니다.",
+        confirmText: "확인",
+        cancelText: "닫기",
+      });
+
+      if (typeof window !== "undefined") {
+        window.location.href = "/";
+      }
+    } catch (error) {
+      console.error("[WITHDRAW ERROR]", error);
+      await confirm({
+        title: "회원탈퇴 실패",
+        description: "잠시 후 다시 시도해주세요.",
+        confirmText: "확인",
+        cancelText: "닫기",
+        variant: "destructive",
+      });
+    }
   };
 
   // 2) 로딩/에러 처리
-  if (isLoading) {
+  if (loading) {
     return (
       <div className="flex w-wrapper items-center justify-center p-40 text-gray-900">
         프로필 불러오는 중...
@@ -44,62 +81,59 @@ export default function MypageProfileForm() {
     );
   }
 
-  if (isError || !profile) {
+  if (!profile) {
     return (
       <div className="flex w-wrapper items-center justify-center p-40 text-gray-900">
         프로필 정보를 불러오지 못했습니다.
       </div>
     );
   }
-
   // 3) 표시용 값 가공
-  const nickname = profile.nickname;
-  const username = profile.username;
-  const email = profile.email;
-  const genderLabel =
-    profile.gender === "male" ? "남자" : profile.gender === "female" ? "여자" : "-";
-  const hasPetLabel = profile.has_pet ? "있음" : "없음";
+  const genderText = profile.gender === "male" ? "남자" : "여자";
+  let petText = "없음";
+  if (profile.pet_type === "dog") petText = "강아지";
+  else if (profile.pet_type === "cat") petText = "고양이";
 
   return (
     <div className="flex w-wrapper items-center justify-center bg-orange-100 p-40 text-gray-900">
       <div className="flex w-edit flex-col rounded-xl border border-gray-300 p-3">
         <div className="mb-9 flex w-full items-center justify-center p-3 text-2xl">
-          {nickname}님 프로필
+          {profile.nickname}님 프로필
         </div>
 
         <div className="flex h-[285px] flex-col justify-between">
           <div className="flex items-center hover:cursor-default">
             이름:
             <div className="ml-2 rounded-full border-2 border-orange-300 bg-white px-5 py-1">
-              {username}
+              {profile.username}
             </div>
           </div>
 
           <div className="flex items-center hover:cursor-default">
             성별:
             <div className="ml-2 rounded-full border-2 border-orange-300 bg-white px-5 py-1">
-              {genderLabel}
+              {genderText}
             </div>
           </div>
 
           <div className="flex items-center hover:cursor-default">
             이메일:
             <div className="ml-2 rounded-full border-2 border-orange-300 bg-white px-5 py-1">
-              {email}
+              {profile.email}
             </div>
           </div>
 
           <div className="flex items-center hover:cursor-default">
             닉네임:
             <div className="ml-2 rounded-full border-2 border-orange-300 bg-white px-5 py-1">
-              {nickname}
+              {profile.nickname}
             </div>
           </div>
 
           <div className="flex items-center hover:cursor-default">
             반려동물 유무:
             <div className="ml-2 rounded-full border-2 border-orange-300 bg-white px-5 py-1">
-              {hasPetLabel}
+              {petText}
             </div>
           </div>
         </div>
