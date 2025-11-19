@@ -19,8 +19,6 @@ export function useLogin() {
     mutationKey: ["login"],
     mutationFn: (payload) => loginRequest(payload),
     onSuccess: (result, variables) => {
-      console.warn("login response", result);
-
       if (result.status >= 200 && result.status < 300 && isLoginSuccessResponse(result.body)) {
         // 토큰저장
         // 응답 받은 액세스 토큰만 Redux에 보관하고 리프레시 토큰은 서버가 내려준 httpOnly 쿠키에 맡김
