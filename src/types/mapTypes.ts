@@ -18,41 +18,41 @@ export type Province = {
   code: string;
 };
 
-export type FilterCategory = {
-  id: string;
-  name: string;
+export type StoreCategoryInfo = {
   code: string;
-  icon: string;
+  name: string;
 };
 
-export type StoreCategory = {
-  id: string;
-  name: string;
-  code: string;
-};
-
-export type StoreAddress = {
-  province: string;
-  district: string;
-  neighborhood: string;
-  detail: string;
+export type StoreLocation = {
   full_address: string;
-  postal_code: string;
+  latitude: number;
+  longitude: number;
 };
 
 export type Store = {
   id: number;
   name: string;
-  category: StoreCategory;
-  address: StoreAddress;
-  phone: string;
-  rating: number;
-  review_count: number;
-  tags: string[];
-  distance: number;
-  thumbnail_url: string;
-  latitude: number;
-  longitude: number;
+  category: StoreCategoryInfo;
+  address: StoreLocation;
+  phone?: string | null;
+  distance?: number;
+  distance_text?: string;
+};
+
+/**
+ * GET /stores 응답에서 내려오는 단순 정보 형태
+ */
+export type StoreSummary = {
+  id: number;
+  name: string;
+  category_name?: string;
+  province?: string;
+  district?: string;
+  neighborhood?: string;
+  address?: string;
+  phone?: string | null;
+  latitude?: number | string | null;
+  longitude?: number | string | null;
 };
 
 export type LocationParams = {
@@ -60,37 +60,70 @@ export type LocationParams = {
   district?: string;
 };
 
-export type ProvinceResponse = {
-  success: boolean;
-  data: Province[];
+export type ProvinceLocation = {
+  province_code: number;
+  province_name: string;
 };
 
-export type DistrictResponse = {
-  success: boolean;
-  data: District[];
+export type DistrictLocation = {
+  province_code: number;
+  district_code: number;
+  province_name: string;
+  district_name: string;
 };
 
-export type NeighborhoodResponse = {
-  success: boolean;
-  data: Neighborhood[];
+export type NeighborhoodLocation = {
+  province_code: number;
+  district_code: number;
+  neighborhood_code: number;
+  province_name: string;
+  district_name: string;
+  neighborhood_name: string;
 };
 
-export type CategoryResponse = {
-  success: boolean;
-  data: FilterCategory[];
+export type ProvinceResponse = ProvinceLocation[];
+export type DistrictResponse = DistrictLocation[];
+export type NeighborhoodResponse = NeighborhoodLocation[];
+
+export type MapCategory = {
+  code: string;
+  name: string;
+  count: number;
 };
+
+export type CategoryResponse = MapCategory[];
 
 export type StoreFilters = {
-  province?: string;
-  district?: string;
-  neighborhood?: string;
-  categoryCodes?: string[];
-  latitude?: number;
-  longitude?: number;
-  keyword?: string;
+  province_code?: string;
+  district_code?: string;
+  neighborhood_code?: string;
+  category?: string;
 };
 
 export type StoreResponse = {
-  success: boolean;
-  data: Store[];
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: Array<Store | StoreSummary>;
+  user_location?: {
+    latitude: number;
+    longitude: number;
+  };
+  radius_km?: number;
+  filters_applied?: {
+    category?: string;
+    province_code?: number;
+    district_code?: number;
+  };
+};
+
+export type StoreViewportRequest = {
+  latitude: number;
+  longitude: number;
+  radius: number;
+  filters: {
+    category?: string;
+    province_code?: number | string;
+    district_code?: number | string;
+  };
 };

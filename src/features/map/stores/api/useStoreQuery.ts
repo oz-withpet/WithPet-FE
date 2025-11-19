@@ -6,7 +6,12 @@ import { useQuery } from "@tanstack/react-query";
 import { useDispatch } from "react-redux";
 
 import { getStores } from "@/features/map/api/mapApi";
-import { setStoreDetails, setStoreMarkers, type StoreDetailInfo } from "@/shared/store/mapSlice";
+import {
+  setCenter,
+  setStoreDetails,
+  setStoreMarkers,
+  type StoreDetailInfo,
+} from "@/shared/store/mapSlice";
 import type { StoreFilters, StoreResponse } from "@/types/mapTypes";
 
 import { mapStoresToListItems } from "./storeMapper";
@@ -19,17 +24,18 @@ import { mapStoresToListItems } from "./storeMapper";
 // - useEffect에서 지도 마커랑 상세정보를 Redux에 저장해 MapContainer쪽에서 그대로 씀
 export function useStoreQuery(filters: StoreFilters) {
   const dispatch = useDispatch();
-  const enabled = Boolean(filters.district);
+  const enabled =
+    Boolean(filters.province_code && filters.district_code) || Boolean(filters.category);
 
   const query = useQuery<StoreResponse, Error, ReturnType<typeof mapStoresToListItems>>({
     queryKey: ["map", "stores", filters],
     queryFn: () => getStores(filters),
     enabled,
-    select: (response) => mapStoresToListItems(response.data),
+    select: (response) => mapStoresToListItems(response.results),
   });
 
   useEffect(() => {
-    if (query.data) {
+    if (query.data && query.data.length > 0) {
       const markers = query.data.map((store) => ({
         id: store.id,
         name: store.name,
@@ -49,6 +55,19 @@ export function useStoreQuery(filters: StoreFilters) {
 
       dispatch(setStoreMarkers(markers));
       dispatch(setStoreDetails(details));
+
+      const first = query.data[0];
+      if (first) {
+        dispatch(
+          setCenter({
+            latitude: first.latitude,
+            longitude: first.longitude,
+          }),
+        );
+      }
+    } else {
+      dispatch(setStoreMarkers([]));
+      dispatch(setStoreDetails([]));
     }
   }, [dispatch, query.data]);
 
