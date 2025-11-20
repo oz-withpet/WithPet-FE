@@ -2,25 +2,21 @@
 
 import { useState } from "react";
 
+import { useRouter } from "next/navigation";
+
 import { useForm } from "react-hook-form";
 
 import Button from "@/components/common/button/Button";
-import {
-  DialogHeader,
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
   checkNicknameAvailability,
-  sendEmailCode,
-  verifyEmailCode,
-  checkEmailAvailability,
+  // sendEmailCode,
+  // verifyEmailCode,
+  // checkEmailAvailability,
   signup,
 } from "@/features/signup/api/signupApi";
+import { useConfirm } from "@/providers/ConfirmProvider";
 import { SignupFormValues, SignupRequest } from "@/types/singup";
 
 import AgreementToggles from "./ui/agreementToggles";
@@ -29,15 +25,15 @@ export default function SignupForm() {
   const [isCheckingNickname, setIsCheckingNickname] = useState(false);
   const [isNicknameOk, setIsNicknameOk] = useState(false);
 
-  const [isSendingCode, setIsSendingCode] = useState(false);
-  const [isVerifyingCode, setIsVerifyingCode] = useState(false);
+  // const [isSendingCode, setIsSendingCode] = useState(false);
+  // const [isVerifyingCode, setIsVerifyingCode] = useState(false);
 
-  const [verificationToken, setVerificationToken] = useState<string | null>(null);
+  // const [verificationToken, setVerificationToken] = useState<string | null>(null);
 
-  const [isEmailAvailable, setIsEmailAvailable] = useState(false); // 이메일 중복검사 통과 여부
-  // 모달 상태
-  const [modalOpen, setModalOpen] = useState(false);
+  // const [isEmailAvailable, setIsEmailAvailable] = useState(false); // 이메일 중복검사 통과 여부
 
+  const router = useRouter();
+  const confirm = useConfirm();
   const {
     register,
     handleSubmit,
@@ -58,7 +54,7 @@ export default function SignupForm() {
       email: "",
       verificationCode: "",
       password: "",
-      passwordConfirm: "",
+      password2: "",
       agreeTerms: false,
       agreePrivacy: false,
       agreeMarketing: false,
@@ -99,163 +95,173 @@ export default function SignupForm() {
       setIsCheckingNickname(false);
     }
   };
-  const handleCheckEmail = async () => {
-    setIsEmailAvailable(false);
-    clearErrors("email");
+  // const handleCheckEmail = async () => {
+  //   setIsEmailAvailable(false);
+  //   clearErrors("email");
 
-    const email = getValues("email");
-    if (!email) {
-      setError("email", {
-        type: "manual",
-        message: "이메일을 입력하세요.",
-      });
-      return;
-    }
+  //   const email = getValues("email");
+  //   if (!email) {
+  //     setError("email", {
+  //       type: "manual",
+  //       message: "이메일을 입력하세요.",
+  //     });
+  //     return;
+  //   }
 
-    try {
-      const data = await checkEmailAvailability(email);
+  //   try {
+  //     const data = await checkEmailAvailability(email);
 
-      if (data.is_available) {
-        setIsEmailAvailable(true); // ✅ 이게 true 되면 밑에 인증 영역이 뜨게 할 거야
-        clearErrors("email");
-      } else {
-        setIsEmailAvailable(false);
-        setError("email", {
-          type: "server",
-          message: data.message || "이미 가입된 이메일입니다.",
-        });
-      }
-    } catch (error) {
-      console.error("[EMAIL CHECK ERROR]", error);
-      setIsEmailAvailable(false);
-      setError("email", {
-        type: "server",
-        message: "이메일 중복검사에 실패했습니다.",
-      });
-    }
-  };
+  //     if (data.is_available) {
+  //       setIsEmailAvailable(true); // ✅ 이게 true 되면 밑에 인증 영역이 뜨게 할 거야
+  //       clearErrors("email");
+  //     } else {
+  //       setIsEmailAvailable(false);
+  //       setError("email", {
+  //         type: "server",
+  //         message: data.message || "이미 가입된 이메일입니다.",
+  //       });
+  //     }
+  //   } catch (error) {
+  //     console.error("[EMAIL CHECK ERROR]", error);
+  //     setIsEmailAvailable(false);
+  //     setError("email", {
+  //       type: "server",
+  //       message: "이메일 중복검사에 실패했습니다.",
+  //     });
+  //   }
+  // };
 
-  // ✅ 이메일 인증코드 전송 (signupApi 사용)
-  const handleSendEmailCode = async () => {
-    setVerificationToken(null);
-    clearErrors("verificationCode");
+  // // ✅ 이메일 인증코드 전송 (signupApi 사용)
+  // const handleSendEmailCode = async () => {
+  //   setVerificationToken(null);
+  //   clearErrors("verificationCode");
 
-    const email = getValues("email");
+  //   const email = getValues("email");
 
-    if (!email) {
-      setError("email", {
-        type: "manual",
-        message: "이메일을 먼저 입력하세요.",
-      });
-      return;
-    }
+  //   if (!email) {
+  //     setError("email", {
+  //       type: "manual",
+  //       message: "이메일을 먼저 입력하세요.",
+  //     });
+  //     return;
+  //   }
 
-    setIsSendingCode(true);
+  //   setIsSendingCode(true);
 
-    try {
-      const res = await sendEmailCode(email);
-      console.log("[email-code-send] OK", res);
-      // 이 시점에서 실제 이메일로 코드가 발송됨
-    } catch (error) {
-      console.error("[EMAIL SEND ERROR]", error);
-      setError("email", {
-        type: "server",
-        message: "이메일 전송에 실패했습니다.",
-      });
-    } finally {
-      setIsSendingCode(false);
-    }
-  };
-  //
-  const handleVerifyCode = async () => {
-    clearErrors("verificationCode");
+  //   try {
+  //     const res = await sendEmailCode(email);
+  //     console.log("[email-code-send] OK", res);
+  //     // 이 시점에서 실제 이메일로 코드가 발송됨
+  //   } catch (error) {
+  //     console.error("[EMAIL SEND ERROR]", error);
+  //     setError("email", {
+  //       type: "server",
+  //       message: "이메일 전송에 실패했습니다.",
+  //     });
+  //   } finally {
+  //     setIsSendingCode(false);
+  //   }
+  // };
+  // //
+  // const handleVerifyCode = async () => {
+  //   clearErrors("verificationCode");
 
-    const email = getValues("email");
-    const code = getValues("verificationCode");
+  //   const email = getValues("email");
+  //   const code = getValues("verificationCode");
 
-    if (!email) {
-      setError("email", {
-        type: "manual",
-        message: "이메일을 먼저 입력하세요.",
-      });
-      return;
-    }
-    if (!code) {
-      setError("verificationCode", {
-        type: "manual",
-        message: "인증코드를 입력하세요.",
-      });
-      return;
-    }
+  //   if (!email) {
+  //     setError("email", {
+  //       type: "manual",
+  //       message: "이메일을 먼저 입력하세요.",
+  //     });
+  //     return;
+  //   }
+  //   if (!code) {
+  //     setError("verificationCode", {
+  //       type: "manual",
+  //       message: "인증코드를 입력하세요.",
+  //     });
+  //     return;
+  //   }
 
-    setIsVerifyingCode(true);
-    try {
-      // ✅ 그냥 백엔드에 요청만 보내고, 응답은 콘솔로만 확인
-      const res = await verifyEmailCode({ email, code });
-      console.log("[email-code-verify] response:", res);
+  //   setIsVerifyingCode(true);
+  //   try {
+  //     // ✅ 그냥 백엔드에 요청만 보내고, 응답은 콘솔로만 확인
+  //     const res = await verifyEmailCode({ email, code });
+  //     console.log("[email-code-verify] response:", res);
 
-      // 👉 여기서는 아직 성공/실패에 따른 UI 처리는 안 함
-      //    나중에 백엔드랑 맞춰보고 여기서 verified, message 보고 처리하면 됨.
-    } catch (error) {
-      console.error("[EMAIL VERIFY ERROR]", error);
-      setError("verificationCode", {
-        type: "server",
-        message: "인증 처리 중 오류가 발생했습니다.",
-      });
-    } finally {
-      setIsVerifyingCode(false);
-    }
-  };
+  //     // 👉 여기서는 아직 성공/실패에 따른 UI 처리는 안 함
+  //     //    나중에 백엔드랑 맞춰보고 여기서 verified, message 보고 처리하면 됨.
+  //   } catch (error) {
+  //     console.error("[EMAIL VERIFY ERROR]", error);
+  //     setError("verificationCode", {
+  //       type: "server",
+  //       message: "인증 처리 중 오류가 발생했습니다.",
+  //     });
+  //   } finally {
+  //     setIsVerifyingCode(false);
+  //   }
+  // };
   // 제출
   const onSubmit = async (values: SignupFormValues) => {
     // 1) 프론트에서만 쓰는 검증들 (서버 가기 전에 막을 것들)
 
     // 비밀번호/비번확인 - RHF에서 이미 검사하지만 안전빵으로 한 번 더
-    if (values.password !== values.passwordConfirm) {
+    if (values.password !== values.password2) {
       return;
     }
 
     // 이메일 인증을 필수로 강제하고 싶다면:
-    if (!verificationToken) {
-      setError("verificationCode", {
-        type: "manual",
-        message: "이메일 인증을 먼저 완료해주세요.",
-      });
-      return;
-    }
+    // if (!verificationToken) {
+    //   setError("verificationCode", {
+    //     type: "manual",
+    //     message: "이메일 인증을 먼저 완료해주세요.",
+    //   });
+    //   return;
 
     // (참고) pet 정보는 지금 백엔드 /auth/signup 스펙에는 없어서
-    // 안 보내지만, 프론트에서 쓰고 싶으면 이렇게 여전히 계산해둘 수 있음.
     const pets: Array<"dog" | "cat"> = [];
     if (values.petDog) pets.push("dog");
     if (values.petCat) pets.push("cat");
+    let pet_type: "dog" | "cat" | "both" | "none";
+    if (pets.length === 0) pet_type = "none";
+    else if (pets.length === 2) pet_type = "both";
+    else pet_type = pets[0];
 
     // 2) 백엔드가 원하는 형식(SignupRequest)에 맞춰 payload 만들기
     const payload: SignupRequest = {
       email: values.email.trim(),
       password: values.password,
+      password2: values.password2, // ✅ 백엔드에서 요구하는 필드
       username: values.userName.trim(),
       nickname: values.nickname.trim(),
-      verificationcode: values.verificationCode.trim(),
+      verificationcode: values.verificationCode.trim(), // 백엔드가 안 쓰면 그냥 무시될 것
+      gender: values.gender!, // 라디오 필수니까 ! 사용
+      pet_type,
     };
 
     try {
-      // 3) 회원가입 API 호출
-      const res = await signup(payload); // res: SignupResponse 타입
-
+      const res = await signup(payload);
       console.log("[SIGNUP SUCCESS]", res);
 
-      // 성공 시 기존처럼 모달 오픈
-      setModalOpen(true);
+      const accepted = await confirm({
+        title: "🎉 회원가입 완료",
+        description: `${values.userName}님의 가입이 성공적으로 처리되었습니다!`,
+        confirmText: "메인으로 이동",
+        cancelText: "닫기",
+      });
+
+      if (accepted) {
+        router.push("/"); // 메인 페이지로
+      }
     } catch (error) {
       console.error("[SIGNUP ERROR]", error);
 
-      // 🔸 간단 버전: 이메일 필드에 서버 에러 메시지 달아주기
-      const msg = error instanceof Error ? error.message : "회원가입 중 오류가 발생했습니다.";
-
-      setError("email", {
-        type: "server",
-        message: msg,
+      await confirm({
+        title: "회원가입 실패",
+        description: "잠시 후 다시 시도해주세요.",
+        confirmText: "확인",
+        variant: "destructive",
       });
     }
   };
@@ -288,7 +294,7 @@ export default function SignupForm() {
               />
               <Label
                 htmlFor="pet-dog"
-                className="cursor-pointer rounded-full border border-line-strong px-[16px] py-[8px] text-[14px] text-gray-900 hover:bg-orange-300 hover:text-gray-50 peer-checked:border-line-strong peer-checked:bg-orange-300 peer-checked:text-gray-50 peer-focus-visible:outline-none peer-focus-visible:ring-2 peer-focus-visible:ring-orange-200"
+                className="cursor-pointer rounded-full border border-line-strong px-[16px] py-[8px] text-[14px] text-gray-900 hover:bg-orange-300 hover:text-gray-50 peer-checked:border-line-strong peer-checked:bg-orange-300 peer-focus-visible:outline-none peer-focus-visible:ring-2 peer-focus-visible:ring-orange-200"
               >
                 강아지
               </Label>
@@ -303,7 +309,7 @@ export default function SignupForm() {
               />
               <Label
                 htmlFor="pet-cat"
-                className="cursor-pointer rounded-full border border-line-strong px-[16px] py-[8px] text-[14px] text-gray-900 hover:bg-orange-300 hover:text-gray-50 peer-checked:border-line-strong peer-checked:bg-orange-300 peer-checked:text-gray-50 peer-focus-visible:outline-none peer-focus-visible:ring-2 peer-focus-visible:ring-orange-200"
+                className="cursor-pointer rounded-full border border-line-strong px-[16px] py-[8px] text-[14px] text-gray-900 hover:bg-orange-300 hover:text-gray-50 peer-checked:border-line-strong peer-checked:bg-orange-300 peer-focus-visible:outline-none peer-focus-visible:ring-2 peer-focus-visible:ring-orange-200"
               >
                 고양이
               </Label>
@@ -313,7 +319,7 @@ export default function SignupForm() {
           {/* 성별 */}
           <div className="mt-[12px]">
             <p className="mb-[8px] text-[17px] font-semibold text-gray-900">
-              성별 <span className="text-warning">* 필수</span>
+              성별 <span className="text-[15px] text-warning">* 필수</span>
             </p>
 
             <div className="flex items-center gap-[12px]">
@@ -354,6 +360,7 @@ export default function SignupForm() {
 
           {/* 이름 */}
           <div>
+            <p className="text-[17px] font-semibold text-gray-900">성명</p>
             <Input
               className="text-gray-900"
               placeholder="[필수] 성명을 입력해 주세요"
@@ -370,6 +377,7 @@ export default function SignupForm() {
           {/* 닉네임 + 중복검사 */}
           <div className="grid grid-cols-[1fr_auto] items-center gap-[12px]">
             <div>
+              <p className="text-[17px] font-semibold text-gray-900">닉네임</p>
               <Input
                 className="text-gray-900"
                 placeholder="[필수] 닉네임을 입력해 주세요"
@@ -399,7 +407,8 @@ export default function SignupForm() {
 
           {/* 이메일 + 인증하기 */}
           <div className="grid grid-cols-[1fr_auto] items-center gap-[12px]">
-            <div>
+            <div className="mb-[12px]">
+              <p className="text-[17px] font-semibold text-gray-900">이메일</p>
               <Input
                 className="text-gray-900"
                 type="email"
@@ -415,23 +424,11 @@ export default function SignupForm() {
               {errors.email && (
                 <p className="mt-1 text-[12px] text-red-500">{errors.email.message}</p>
               )}
-              {isEmailAvailable && !errors.email && (
-                <p className="mt-1 text-[12px] text-green-600">사용 가능한 이메일입니다 ✅</p>
-              )}
             </div>
-
-            <Button
-              type="button"
-              onClick={handleCheckEmail}
-              disabled={isSendingCode} // or 별도 상태 만들어도 됨
-              className="rounded-full border-line-strong px-[12px] text-[12px] transition hover:bg-orange-300"
-            >
-              이메일 중복검사
-            </Button>
           </div>
 
           {/* 이메일 인증하기 + 인증코드 입력 (항상 표시) */}
-          <div className="mt-2 flex justify-end">
+          {/* <div className="mt-2 flex justify-end">
             <Button
               type="button"
               onClick={handleSendEmailCode}
@@ -468,10 +465,11 @@ export default function SignupForm() {
             {verificationToken && !errors.verificationCode && (
               <p className="text-xs text-green-600">이메일 인증 완료 ✅</p>
             )}
-          </div>
+          </div>  */}
 
           {/* 비밀번호 */}
           <div className="space-y-[4px]">
+            <p className="text-[17px] font-semibold text-gray-900">비밀번호</p>
             <Input
               className="text-gray-900"
               type="password"
@@ -494,18 +492,19 @@ export default function SignupForm() {
 
           {/* 비밀번호 확인 */}
           <div className="space-y-[4px]">
+            <p className="text-[17px] font-semibold text-gray-900">비밀번호 재확인</p>
             <Input
               className="text-gray-900"
               type="password"
               placeholder="[필수] 비밀번호를 확인해 주세요"
-              {...register("passwordConfirm", {
+              {...register("password2", {
                 required: "비밀번호를 다시 입력하세요.",
                 validate: (v) => v === getValues("password") || "비밀번호가 일치하지 않습니다.",
               })}
             />
             <p className="text-[12px] text-gray-300">· 위 비밀번호와 동일하게 작성해주세요.</p>
-            {errors.passwordConfirm && (
-              <p className="text-[12px] text-red-500">{errors.passwordConfirm.message}</p>
+            {errors.password2 && (
+              <p className="text-[12px] text-red-500">{errors.password2.message}</p>
             )}
           </div>
 
@@ -514,7 +513,6 @@ export default function SignupForm() {
           {/* 제출 버튼 */}
           <div className="pt-[8px] text-center">
             <Button
-              disabled={!isNicknameOk || !verificationToken}
               type="submit"
               className="inline-block rounded-full border border-line-strong px-[32px] py-[8px] text-sm font-semibold text-gray-900 transition hover:bg-orange-300 active:scale-[0.99]"
             >
@@ -522,31 +520,6 @@ export default function SignupForm() {
             </Button>
           </div>
         </form>
-
-        <Dialog open={modalOpen} onOpenChange={setModalOpen}>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>🎉 회원가입 완료</DialogTitle>
-              <DialogDescription>
-                {watch("userName")}님의 가입이 성공적으로 처리되었습니다!
-              </DialogDescription>
-            </DialogHeader>
-
-            <div className="mt-4 text-gray-900">
-              <p>메인 페이지로 이동하시겠습니까?</p>
-            </div>
-
-            <div className="mt-4 flex justify-end">
-              <button
-                type="button"
-                onClick={() => setModalOpen(false)}
-                className="rounded bg-green-500 p-2 text-white"
-              >
-                이동
-              </button>
-            </div>
-          </DialogContent>
-        </Dialog>
       </div>
     </section>
   );

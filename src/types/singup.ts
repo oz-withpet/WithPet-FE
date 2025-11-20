@@ -12,7 +12,7 @@ export type SignupFormValues = {
   email: string;
   verificationCode: string;
   password: string;
-  passwordConfirm: string;
+  password2: string;
 
   agreeTerms: boolean;
   agreePrivacy: boolean;
@@ -23,22 +23,25 @@ export type NicknameCheckResponse = {
   is_available: boolean;
 };
 // 이메일 사용 가능 여부 검사
-export type EmailValidationResponse = {
-  email: string;
-  success: boolean;
-  is_available: boolean;
-  message?: string;
-};
+// export type EmailValidationResponse = {
+//   email: string;
+//   success: boolean;
+//   is_available: boolean;
+//   message?: string;
+// };
 
-export type SendEmailCodeResponse = unknown; // 아직 안 씀
-export type VerifyEmailCodeRequest = { email: string; code: string };
-export type VerifyEmailCodeResponse = unknown; // 아직 안 씀
+// export type SendEmailCodeResponse = unknown; // 아직 안 씀
+// export type VerifyEmailCodeRequest = { email: string; code: string };
+// export type VerifyEmailCodeResponse = unknown; // 아직 안 씀
 
 export type SignupRequest = {
   email: string;
   password: string;
+  password2: string;
   username: string;
   nickname: string;
+  gender: Gender | string;
+  pet_type: "dog" | "cat" | "both" | "none";
   verificationcode: string;
 };
 
