@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 
 import CommentForm from "@/components/common/comment/CommentForm";
 import { toRelativeKorean } from "@/lib/relativeTime";
@@ -24,7 +23,7 @@ export default function PostDetailShell({ post, comments }: Props) {
       <div className="flex w-full items-center justify-between border-b border-gray-200 py-2 text-lg">
         <div className="text-lg">{post?.title}</div>
         <div className="flex items-center">
-          <Link
+          {/* <Link
             href={`/community/${post?.id}/edit`}
             className="rounded-full border-2 border-orange-300 bg-white px-5 py-1 text-sm hover:cursor-pointer hover:bg-orange-300 hover:font-semibold hover:text-white"
           >
@@ -32,7 +31,7 @@ export default function PostDetailShell({ post, comments }: Props) {
           </Link>
           <button className="ml-4 rounded-full border-2 border-red-600 bg-white px-5 py-1 text-sm hover:cursor-pointer hover:bg-red-600 hover:font-semibold hover:text-white">
             삭제
-          </button>
+          </button> */}
         </div>
       </div>
 
@@ -53,7 +52,7 @@ export default function PostDetailShell({ post, comments }: Props) {
         )}
       </div>
       <div className="py-9">
-        <div className="flex h-14 w-14 flex-col items-center justify-center rounded-full border-2 border-gray-300 hover:cursor-pointer hover:border-0 hover:bg-orange-300 hover:font-bold hover:text-white">
+        <div className="flex h-14 w-14 cursor-default flex-col items-center justify-center rounded-full border-2 border-gray-300">
           <LikeSVG size="20" color="black" />
           {post?.like_count}
         </div>

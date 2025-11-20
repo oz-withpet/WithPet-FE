@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -40,7 +41,7 @@ export default function Header() {
       <nav className="flex w-wrapper items-center justify-between">
         <div className="flex w-[285px] items-center justify-between">
           <Link href="/" className="text-lg font-bold text-gray-900">
-            WithPet
+            <Image src="/WithPet_Logo.png" alt="WithPet Logo" width={75} height={75} />
           </Link>
           <Link
             href="/map"
