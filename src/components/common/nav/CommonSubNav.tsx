@@ -8,8 +8,8 @@ export default function CommonSubNav() {
   const isActive = pathname.includes("/mypage/profile");
   const isPostActive = pathname.includes("/mypage/myPosts");
   const isLikeActive = pathname === "/mypage/likedPosts";
-  const isSaveActive = pathname === "/mypage/savedPlaces";
-  const isReportedActive = pathname === "/mypage/reportedPosts";
+  // const isSaveActive = pathname === "/mypage/savedPlaces";
+  // const isReportedActive = pathname === "/mypage/reportedPosts";
 
   return (
     <div className="flex h-12 w-full items-center justify-center border-b border-b-gray-200 bg-white">
@@ -35,20 +35,20 @@ export default function CommonSubNav() {
         >
           좋아요 게시글
         </Link>
-        <Link
+        {/* <Link
           href="/mypage/savedPlaces"
           aria-current={isSaveActive ? "page" : undefined}
           className="cursor-pointer text-gray-400 hover:font-bold hover:text-orange-400 aria-[current=page]:font-semibold aria-[current=page]:text-orange-300"
         >
           관심 장소
-        </Link>
-        <Link
+        </Link> */}
+        {/* <Link
           href="/mypage/reportedPosts"
           aria-current={isReportedActive ? "page" : undefined}
           className="cursor-pointer text-gray-400 hover:font-bold hover:text-orange-400 aria-[current=page]:font-semibold aria-[current=page]:text-orange-300"
         >
           신고 게시글
-        </Link>
+        </Link> */}
       </div>
     </div>
   );
