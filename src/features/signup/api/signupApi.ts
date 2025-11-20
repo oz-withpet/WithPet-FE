@@ -4,10 +4,10 @@ import type {
   SignupRequest,
   SignupResponse,
   NicknameCheckResponse,
-  SendEmailCodeResponse,
-  VerifyEmailCodeRequest,
-  VerifyEmailCodeResponse,
-  EmailValidationResponse,
+  // SendEmailCodeResponse,
+  // VerifyEmailCodeRequest,
+  // VerifyEmailCodeResponse,
+  // EmailValidationResponse,
 } from "@/types/singup";
 
 // 회원가입
@@ -29,29 +29,29 @@ export const checkNicknameAvailability = (nickname: string) => {
   });
 };
 
-export const checkEmailAvailability = (email: string) => {
-  return clientFetcher<EmailValidationResponse>(
-    `/validation/email/?email=${encodeURIComponent(email)}`,
-    {
-      method: "GET",
-      auth: "public",
-    },
-  );
-};
-// 이메일 인증코드 전송
-export const sendEmailCode = (email: string) => {
-  return clientFetcher<SendEmailCodeResponse>("/email/code/send/", {
-    method: "POST",
-    auth: "public",
-    body: JSON.stringify({ email }),
-  });
-};
+// export const checkEmailAvailability = (email: string) => {
+//   return clientFetcher<EmailValidationResponse>(
+//     `/validation/email/?email=${encodeURIComponent(email)}`,
+//     {
+//       method: "GET",
+//       auth: "public",
+//     },
+//   );
+// };
+// // 이메일 인증코드 전송
+// export const sendEmailCode = (email: string) => {
+//   return clientFetcher<SendEmailCodeResponse>("/email/code/send/", {
+//     method: "POST",
+//     auth: "public",
+//     body: JSON.stringify({ email }),
+//   });
+// };
 
-// 이메일 인증코드 검증
-export const verifyEmailCode = (payload: VerifyEmailCodeRequest) => {
-  return clientFetcher<VerifyEmailCodeResponse>("/email/code/verify/", {
-    method: "POST",
-    auth: "public",
-    body: JSON.stringify(payload),
-  });
-};
+// // 이메일 인증코드 검증
+// export const verifyEmailCode = (payload: VerifyEmailCodeRequest) => {
+//   return clientFetcher<VerifyEmailCodeResponse>("/email/code/verify/", {
+//     method: "POST",
+//     auth: "public",
+//     body: JSON.stringify(payload),
+//   });
+// };
