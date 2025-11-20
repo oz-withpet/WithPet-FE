@@ -1,4 +1,4 @@
-import { useRouter } from "next/router";
+import Link from "next/link";
 
 type EmptyStateProps = {
   title?: string;
@@ -13,20 +13,18 @@ export default function EmptyState({
   actionLabel,
   routerPush,
 }: EmptyStateProps) {
-  const router = useRouter();
-
   return (
     <div className="flex flex-col items-center justify-center py-16 text-center text-gray-500">
       <p className="text-sm font-medium">{title}</p>
       {description && <p className="mt-1 text-xs text-gray-400">{description}</p>}
       {actionLabel && routerPush && (
-        <button
+        <Link
+          href={"/"}
           type="button"
-          onClick={() => router.push(routerPush)}
           className="mt-4 rounded-2xl border border-orange-400 px-4 py-1.5 text-xs font-medium text-orange-500 hover:bg-orange-50"
         >
           {actionLabel}
-        </button>
+        </Link>
       )}
     </div>
   );
