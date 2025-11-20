@@ -2,21 +2,13 @@
 
 import Link from "next/link";
 
-import { useDispatch } from "react-redux";
-
-import { withdraw } from "@/features/mypage/api/mypageApi";
-import { useConfirm } from "@/providers/ConfirmProvider";
-import { clearTokens } from "@/shared/store/authSlice";
-
 import { useMyProfileQuery } from "./useMyProfileQuery";
 
 export default function MypageProfileForm() {
-  const confirm = useConfirm();
-  const dispatch = useDispatch();
+  // const confirm = useConfirm();
+  // const dispatch = useDispatch();
 
   const { data, isLoading, isError } = useMyProfileQuery();
-
-  console.log("MypageProfileForm", data);
 
   if (isLoading) {
     return (
@@ -35,43 +27,43 @@ export default function MypageProfileForm() {
   }
 
   //  회원탈퇴
-  const onDelete = async () => {
-    const ok = await confirm({
-      title: "정말 회원탈퇴 하시겠습니까?",
-      description: "이 작업은 되돌릴 수 없습니다.",
-      confirmText: "예",
-      cancelText: "아니오",
-      variant: "destructive",
-    });
-    if (!ok) return;
+  // const onDelete = async () => {
+  //   const ok = await confirm({
+  //     title: "정말 회원탈퇴 하시겠습니까?",
+  //     description: "이 작업은 되돌릴 수 없습니다.",
+  //     confirmText: "예",
+  //     cancelText: "아니오",
+  //     variant: "destructive",
+  //   });
+  //   if (!ok) return;
 
-    try {
-      await withdraw(); // 필요하면 비밀번호도 같이 넘길 수 있음
+  //   try {
+  //     await withdraw(); // 필요하면 비밀번호도 같이 넘길 수 있음
 
-      // 토큰 정리
-      dispatch(clearTokens());
+  //     // 토큰 정리
+  //     dispatch(clearTokens());
 
-      await confirm({
-        title: "회원탈퇴 완료",
-        description: "그동안 WithPet을 이용해 주셔서 감사합니다.",
-        confirmText: "확인",
-        cancelText: "닫기",
-      });
+  //     await confirm({
+  //       title: "회원탈퇴 완료",
+  //       description: "그동안 WithPet을 이용해 주셔서 감사합니다.",
+  //       confirmText: "확인",
+  //       cancelText: "닫기",
+  //     });
 
-      if (typeof window !== "undefined") {
-        window.location.href = "/";
-      }
-    } catch (error) {
-      console.error("[WITHDRAW ERROR]", error);
-      await confirm({
-        title: "회원탈퇴 실패",
-        description: "잠시 후 다시 시도해주세요.",
-        confirmText: "확인",
-        cancelText: "닫기",
-        variant: "destructive",
-      });
-    }
-  };
+  //     if (typeof window !== "undefined") {
+  //       window.location.href = "/";
+  //     }
+  //   } catch (error) {
+  //     console.error("[WITHDRAW ERROR]", error);
+  //     await confirm({
+  //       title: "회원탈퇴 실패",
+  //       description: "잠시 후 다시 시도해주세요.",
+  //       confirmText: "확인",
+  //       cancelText: "닫기",
+  //       variant: "destructive",
+  //     });
+  //   }
+  // };
 
   // 3) 표시용 값 가공
   const genderText = data?.gender === "male" ? "남자" : "여자";
@@ -137,12 +129,12 @@ export default function MypageProfileForm() {
             비밀번호 변경
           </Link>
 
-          <button
+          {/* <button
             onClick={onDelete}
             className="rounded-full border-2 border-orange-300 bg-white px-5 py-3 text-lg font-semibold hover:cursor-pointer hover:bg-orange-300 hover:font-bold hover:text-white"
           >
             회원탈퇴
-          </button>
+          </button> */}
         </div>
       </div>
     </div>
