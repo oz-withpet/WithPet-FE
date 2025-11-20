@@ -2,17 +2,19 @@
 
 import { FormEvent, useEffect, useState } from "react";
 
+import { useRouter } from "next/navigation";
+
 import Button from "@/components/common/button/Button";
 import { changePassword, getMyProfile } from "@/features/mypage/api/mypageApi";
 import { useConfirm } from "@/providers/ConfirmProvider";
 import type { MyProfileData } from "@/types/mypage";
-
 export default function PasswordChangePage() {
   const [saving, setSaving] = useState(false);
   const [newPassword, setNewPassword] = useState("");
   const [newPasswordConfirm, setNewPasswordConfirm] = useState("");
   const [nickname, setNickname] = useState<string>("");
   const confirm = useConfirm();
+  const router = useRouter();
   useEffect(() => {
     const fetchProfile = async () => {
       try {
@@ -36,6 +38,7 @@ export default function PasswordChangePage() {
         confirmText: "확인",
         cancelText: "닫기",
       });
+
       return;
     }
 
@@ -71,6 +74,7 @@ export default function PasswordChangePage() {
         confirmText: "확인",
         cancelText: "닫기",
       });
+      router.push("/");
       setNewPassword("");
       setNewPasswordConfirm("");
     } catch (error) {
