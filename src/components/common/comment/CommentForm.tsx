@@ -10,11 +10,15 @@ export default function CommentForm({ items }: Props) {
     <div className="hover:cursor-default">
       <form className="my-4 flex h-[96px] w-main flex-col items-center justify-center bg-gray-200">
         <input
-          className="w-[930px] bg-white p-1 text-sm outline-none"
+          disabled
+          className="w-[930px] bg-white p-1 text-sm outline-none disabled:bg-gray-100"
           placeholder="댓글을 입력해주세요."
         />
         <div className="flex w-[932px] items-center justify-end">
-          <button className="my-2 rounded-3xl border-2 border-orange-300 bg-white px-5 py-1 text-xs hover:bg-orange-300 hover:text-white">
+          <button
+            disabled
+            className="disabled: border-grey-300 my-2 rounded-3xl border-2 bg-white px-5 py-1 text-xs disabled:bg-gray-100"
+          >
             등록
           </button>
         </div>
