@@ -1,4 +1,3 @@
-import "./globals.css";
 import { cookies } from "next/headers";
 
 import Header from "@/components/layout/Header";
@@ -7,6 +6,7 @@ import MSWProvider from "@/providers/MSWProvider";
 import QueryProvider from "@/providers/QueryProvider";
 import TokenHydrator from "@/providers/TokenHydrator";
 import ReduxProvider from "@/shared/store/ReduxProvider";
+import "./globals.css";
 
 import type { Metadata } from "next";
 
